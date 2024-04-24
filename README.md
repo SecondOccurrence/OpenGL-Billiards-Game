@@ -25,7 +25,7 @@ When beginning work on our task, whatever it may be, we will create a branch of 
     - Switching branches can be as simple as clicking the top branch bar and select the branch you want to work on
 - For git (CLI)
     - running ```git branch``` will list all your current branches
-    - run ```git branch -b <new branch> <branch to base off>``` to create a new branch based off another branch (in most cases ```main```)
+    - run ```git checkout -b <new branch> <branch to base off>``` to create a new branch based off another branch (in most cases ```main```)
       - This will create a branch based on the most current revision, (most recent version after ```git push/pull```
       - Switching branches can be done through ```git checkout <branch>```. Say, if you want to change from ```main``` to ```feature/pool-table```:
           - ```git checkout feature/pool-table```
