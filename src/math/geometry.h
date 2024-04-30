@@ -1,3 +1,15 @@
+/*
+ * FILE: geometry.h
+ * PURPOSE: type definitions of various types of geometry used throughout the program
+ * DATE: 30/04/2024
+ *
+ * VERSION HISTORY:
+ * - v1.0 (30/04/2024): initial file state
+ *   Contributed by Josh S, 34195182
+ *
+ */
+
+
 #ifndef geometry_h
 #define geometry_h
 

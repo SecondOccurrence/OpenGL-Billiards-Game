@@ -1,11 +1,14 @@
 /*
- * AUTHOR: Josh S
- * STUDENT NUMBER: 34195182
- * DATE: 24/04/2024
+ * FILE: vector_operations.h
+ * PURPOSE: function definitions for elementary vector operations
+ * DATE: 30/04/2024
  *
- * DESCRIPTION: Function declarations for vector operations
+ * VERSION HISTORY:
+ * - v1.0 (30/04/2024): initial file state
+ *   Contributed by Josh S, 34195182
  *
  */
+
 
 #ifndef vector_operations_h
 #define vector_operations_h

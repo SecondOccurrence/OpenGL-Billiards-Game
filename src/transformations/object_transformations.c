@@ -1,11 +1,15 @@
 /*
- * AUTHOR: Josh S
- * STUDENT NUMBER: 34195182
- * DATE: 30/03/2024
+ * FILE: object_transformations.c
+ * PURPOSE: function implementations that are responsible for any form of transformations
+ *      on a 3d object in the scene
+ * DATE: 30/04/2024
  *
- * DESCRIPTION: Function implementations for object transformations
+ * VERSION HISTORY:
+ * - v1.0 (30/04/2024): initial file state
+ *   Contributed by Josh S, 34195182
  *
  */
+
 
 #include "../../lib/opengl/opengl.h"
 

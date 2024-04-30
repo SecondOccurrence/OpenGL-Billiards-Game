@@ -1,11 +1,14 @@
 /*
- * AUTHOR: Josh S
- * STUDENT NUMBER: 34195182
- * DATE: 24/04/2024
+ * FILE: display_functions.c
+ * PURPOSE: function implementations for 3d object display.
+ * DATE: 30/04/2024
  *
- * DESCRIPTION: Function implementations for functions used in myDisplay found in main_functions.c/h
+ * VERSION HISTORY:
+ * - v1.0 (30/04/2024): initial file state
+ *   Contributed by Josh S, 34195182
  *
  */
+
 
 #include "display_functions.h"
 

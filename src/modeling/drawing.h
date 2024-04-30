@@ -1,11 +1,14 @@
 /*
- * AUTHOR: Josh S
- * STUDENT NUMBER: 34195182
- * DATE: 24/04/2024
+ * FILE: drawing.h
+ * PURPOSE: function definitions for opengl drawing functions; the actual code for generating the vertices on the screen
+ * DATE: 30/04/2024
  *
- * DESCRIPTION: Function declarations for drawing 3D geometry
+ * VERSION HISTORY:
+ * - v1.0 (30/04/2024): initial file state
+ *   Contributed by Josh S, 34195182
  *
  */
+
 
 #ifndef drawing_h
 #define drawing_h

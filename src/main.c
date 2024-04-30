@@ -1,11 +1,14 @@
 /*
- * AUTHOR: Josh S
- * STUDENT NUMBER: 34195182
- * DATE: 24/4/2024
+ * FILE: main.c
+ * PURPOSE: Main program
+ * DATE: 30/04/2024
  *
- * DESCRIPTION: Main OpenGL program
+ * VERSION HISTORY:
+ * - v1.0 (30/04/2024): initial file state
+ *   Contributed by Josh S, 34195182
  *
  */
+
 
 #include "../lib/opengl/opengl.h"
 

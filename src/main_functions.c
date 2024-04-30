@@ -1,9 +1,11 @@
 /*
- * AUTHOR: Josh S
- * STUDENT NUMBER: 34195182
- * DATE: 24/04/2024
+ * FILE: main_functions.c
+ * PURPOSE: contains functions that are used exclusively in the main (main.c) file.
+ * DATE: 30/04/2024
  *
- * DESCRIPTION: Function implementations for the main program
+ * VERSION HISTORY:
+ * - v1.0 (30/04/2024): initial file state
+ *   Contributed by Josh S, 34195182
  *
  */
 
