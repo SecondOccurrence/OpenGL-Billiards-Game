@@ -1,11 +1,14 @@
 /*
- * AUTHOR: Josh S
- * STUDENT NUMBER: 34195182
- * DATE: 24/04/2024
+ * FILE: drawing.c
+ * PURPOSE: function implementations for opengl drawing functions
+ * DATE: 30/04/2024
  *
- * DESCRIPTION: Function implementations for drawing 3D geometry
+ * VERSION HISTORY:
+ * - v1.0 (30/04/2024): initial file state
+ *   Contributed by Josh S, 34195182
  *
  */
+
 
 #include "../../lib/opengl/opengl.h"
 

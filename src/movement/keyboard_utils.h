@@ -1,11 +1,15 @@
 /*
- * AUTHOR: Josh S
- * STUDENT NUMBER: 34195182
- * DATE: 24/04/2024
+ * FILE: keyboard_utils.h
+ * PURPOSE: function definitions for keyboard utility functions
+ *      any function which is called after a keyboard event belongs here
+ * DATE: 30/04/2024
  *
- * DESCRIPTION: Function declarations for opengl keyboard utilities
+ * VERSION HISTORY:
+ * - v1.0 (30/04/2024): initial file state
+ *   Contributed by Josh S, 34195182
  *
  */
+
 
 #ifndef keyboard_utils_h
 #define keyboard_utils_h

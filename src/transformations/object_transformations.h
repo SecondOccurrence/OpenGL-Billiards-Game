@@ -1,11 +1,15 @@
 /*
- * AUTHOR: Josh S
- * STUDENT NUMBER: 34195182
- * DATE: 24/04/2024
+ * FILE: object_transformations.h
+ * PURPOSE: function definitions that are responsible for any sort of transformations on
+ *      objects within the 3d scene
+ * DATE: 30/04/2024
  *
- * DESCRIPTION: Function declarations for object transformations
+ * VERSION HISTORY:
+ * - v1.0 (30/04/2024): initial file state
+ *   Contributed by Josh S, 34195182
  *
  */
+
 
 #ifndef object_transformations_h
 #define object_transformations_h

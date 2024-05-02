@@ -1,11 +1,14 @@
 /*
- * AUTHOR: Josh S
- * STUDENT NUMBER: 34195182
- * DATE: 24/04/2024
+ * FILE: main_functions.h
+ * PURPOSE: function definitions for functions used in the main program file
+ * DATE: 30/04/2024
  *
- * DESCRIPTION: Function declarations for the main program
+ * VERSION HISTORY:
+ * - v1.0 (30/04/2024): initial file state
+ *   Contributed by Josh S, 34195182
  *
  */
+
 
 #ifndef main_functions_h
 #define main_functions_h

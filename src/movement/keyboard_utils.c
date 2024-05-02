@@ -1,11 +1,14 @@
 /*
- * AUTHOR: Josh S
- * STUDENT NUMBER: 34195182
- * DATE: 24/04/2024
+ * FILE: keyboard_utils.c
+ * PURPOSE: function implementation for keyboard utility functions
+ * DATE: 30/04/2024
  *
- * DESCRIPTION: Function implementations for opengl keyboard utilities
+ * VERSION HISTORY:
+ * - v1.0 (30/04/2024): initial file state
+ *   Contributed by Josh S, 34195182
  *
  */
+
 
 #include "keyboard_utils.h"
 

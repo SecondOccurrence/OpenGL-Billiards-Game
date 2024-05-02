@@ -1,11 +1,14 @@
 /*
- * AUTHOR: Josh S
- * STUDENT NUMBER: 34195182
- * DATE: 24/04/2024
+ * FILE: drawing_utilities.c
+ * PURPOSE: function implementations for utilities used within drawing functions in the program
+ * DATE: 30/04/2024
  *
- * DESCRIPTION: Implementations for 3D object utility functions
+ * VERSION HISTORY:
+ * - v1.0 (30/04/2024): initial file state
+ *   Contributed by Josh S, 34195182
  *
  */
+
 
 #include "drawing_utilities.h"
 
