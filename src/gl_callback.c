@@ -1,7 +1,7 @@
 /*
  * FILE: gl_callback.c
  * PURPOSE: callback functions used in opengl functions.
- * DATE: 30/04/2024
+ * DATE: 05/05/2024
  *
  * VERSION HISTORY:
  * - v1.0 (05/05/2024): initial file state
