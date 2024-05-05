@@ -12,13 +12,11 @@
 
 #include "../lib/opengl/opengl.h"
 
-#include "main_functions.h"
+#include "initialisation.h"
+#include "gl_callback.h"
 
 #include "math/geometry.h"
-#include "modeling/drawing_utilities.h"
 #include "movement/keyboard_utils.h"
-
-Object3D bone;
 
 int main(int argc, char** argv) {
     glutInit(&argc,argv);

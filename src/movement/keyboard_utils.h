@@ -16,8 +16,6 @@
 
 #include "../math/geometry.h"
 
-void keys(unsigned char key, int x, int y);
-
 void cameraKeys(unsigned char key, int x, int y);
 
 void strafeLeft();

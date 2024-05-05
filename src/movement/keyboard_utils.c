@@ -22,35 +22,6 @@ int hideObjects = 0;
 
 extern Camera camera;
 
-extern Object3D bone;
-
-void keys(unsigned char key, int x, int y) {
-    switch(key) {
-    case 'Q':
-    case 'q':
-        exit(0);
-        break;
-    case 'G':
-    case 'g':
-        hideGrid ^= 1;
-        break;
-    case 'O':
-    case 'o':
-        hideAxis ^= 1;
-        break;
-    case 'L':
-    case 'l':
-        hideObjects ^= 1;
-        break;
-    }
-
-    cameraKeys(key, x, y);
-
-    transformKeys(key, x, y, &bone);
-
-    glutPostRedisplay();
-}
-
 void cameraKeys(unsigned char key, int x, int y) {
     switch(key) {
     case 'X':
@@ -277,7 +248,7 @@ void transformKeys(unsigned char key, int x, int y, Object3D* obj) {
 }
 
 void specialKeys(int key, int x, int y) {
-    rotationKeys(key, x, y, &bone);
+    //rotationKeys(key, x, y, &bone);
 
     glutPostRedisplay();
 }
