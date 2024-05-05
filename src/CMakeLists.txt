@@ -9,6 +9,7 @@ target_sources(output PRIVATE
     DataStructures.h
 )
 
+add_subdirectory(data_structures)
 add_subdirectory(modeling)
 add_subdirectory(rendering)
 add_subdirectory(movement)

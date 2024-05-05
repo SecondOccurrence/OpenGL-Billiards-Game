@@ -6,12 +6,15 @@
  * VERSION HISTORY:
  * - v1.0 (30/04/2024): initial file state
  *   Contributed by Josh S, 34195182
+ * - v1.1 (05/05/2024): introduced mainKeys, for inputs that manipulate the core scene. also clean up of unused parameters
+ *   Contributed by Josh S, 34195182
  *
  */
 
 
 #include "keyboard_utils.h"
 
+#include "../data_structures/camera.h"
 #include "../math/geometry.h"
 #include "../math/vector_operations.h"
 #include "../transformations/object_transformations.h"
@@ -20,9 +23,28 @@ int hideGrid = 0;
 int hideAxis = 0;
 int hideObjects = 0;
 
-extern Camera camera;
+void mainKeys(unsigned char key) {
+    switch(key) {
+    case 'Q':
+    case 'q':
+        exit(0);
+        break;
+    case 'G':
+    case 'g':
+        hideGrid ^= 1;
+        break;
+    case 'O':
+    case 'o':
+        hideAxis ^= 1;
+        break;
+    case 'L':
+    case 'l':
+        hideObjects ^= 1;
+        break;
+    }   
+}
 
-void cameraKeys(unsigned char key, int x, int y) {
+void cameraKeys(unsigned char key) {
     switch(key) {
     case 'X':
         strafeLeft();
@@ -187,7 +209,7 @@ void viewLeft() {
     }
 }
 
-void transformKeys(unsigned char key, int x, int y, Object3D* obj) {
+void transformKeys(unsigned char key, Object3D* obj) {
     Vector3 transformation = {0.0, 0.0, 0.0};
     switch(key) {
     case 'a':
@@ -253,7 +275,7 @@ void specialKeys(int key, int x, int y) {
     glutPostRedisplay();
 }
 
-void rotationKeys(int key, int x, int y, Object3D* obj) {
+void rotationKeys(int key, Object3D* obj) {
     switch(key) {
     case GLUT_KEY_LEFT:
         rotateObject(obj, -10, 'x');

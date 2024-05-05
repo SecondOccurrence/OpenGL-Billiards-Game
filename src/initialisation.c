@@ -16,17 +16,15 @@
 
 #include "initialisation.h"
 
+#include "data_structures/camera.h"
 #include "math/vector_operations.h"
 #include "rendering/display_functions.h"
 #include "modeling/drawing.h"
 
-enum CameraType {
-    ORTHO2D, PERSPECTIVE, FRUSTUM, ORTHO
-} cameraMode = PERSPECTIVE;
+Camera camera;
+enum CameraType cameraMode;
 
-static Camera camera;
-
-void init(Camera camera) { 
+void init() { 
     setLight();
 
     glClearColor(0.0, 0.0, 0.0, 1.0);
@@ -76,11 +74,11 @@ void setLight(void){
     glEnable (GL_DEPTH_TEST);
 }
 
-void setCamera(int cameraMode) {
-    if(cameraMode == ORTHO2D) {
+void setCamera(int mode) {
+    if(mode == ORTHO2D) {
         gluOrtho2D(0.0, 500.0, 0.0, 500.0);
     }
-    else if(cameraMode == ORTHO) {
+    else if(mode == ORTHO) {
         GLdouble left = -2;
         GLdouble right = 2;
         GLdouble bottom = -1;
@@ -90,7 +88,7 @@ void setCamera(int cameraMode) {
 
         glOrtho(left, right, bottom, top, nearVal, farVal);
     }
-    else if(cameraMode == PERSPECTIVE) {
+    else if(mode == PERSPECTIVE) {
         GLdouble fov = 60;
         GLdouble aspect = 1;
         GLdouble nearVal = 0.1;
@@ -98,7 +96,7 @@ void setCamera(int cameraMode) {
 
         gluPerspective(fov, aspect, nearVal, farVal);
     }
-    else if(cameraMode == FRUSTUM) {
+    else if(mode == FRUSTUM) {
         GLdouble left = -1;
         GLdouble right = 1;
         GLdouble bottom = -1;

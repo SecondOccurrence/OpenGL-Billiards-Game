@@ -11,13 +11,10 @@
 
 #include "../lib/opengl/opengl.h"
 
+#include "data_structures/camera.h"
 #include "math/geometry.h"
 #include "rendering/display_functions.h"
 #include "movement/keyboard_utils.h"
-
-enum cameraMode;
-
-extern Camera camera;
 
 void myDisplay(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -88,27 +85,9 @@ void myReshape(int width, int height) {
 }
 
 void keys(unsigned char key, int x, int y) {
-    // TODO: refactor
-    switch(key) {
-    case 'Q':
-    case 'q':
-        exit(0);
-        break;
-    case 'G':
-    case 'g':
-        hideGrid ^= 1;
-        break;
-    case 'O':
-    case 'o':
-        hideAxis ^= 1;
-        break;
-    case 'L':
-    case 'l':
-        hideObjects ^= 1;
-        break;
-    }
+    mainKeys(key);
 
-    cameraKeys(key, x, y);
+    cameraKeys(key);
 
     //transformKeys(key, x, y);
 
