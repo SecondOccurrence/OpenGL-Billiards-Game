@@ -17,7 +17,7 @@
 
 #include "../data_structures/camera.h"
 #include "../data_structures/flags.h"
-#include "../math/geometry.h"
+#include "../data_structures/geometry.h"
 
 void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid_flag, AxisFlag* axis_flag, ObjectsFlag* objects_flag);
 

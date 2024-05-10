@@ -1,7 +1,7 @@
 #ifndef camera_h
 #define camera_h
 
-#include "../math/geometry.h"
+#include "geometry.h"
 
 typedef enum {
     ORTHO2D, PERSPECTIVE, FRUSTUM, ORTHO

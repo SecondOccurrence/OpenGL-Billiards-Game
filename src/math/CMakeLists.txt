@@ -8,7 +8,6 @@ set(SOURCES
 set(HEADERS
     matrix_operations.h
     vector_operations.h
-    geometry.h
 )
 
 target_sources(output PRIVATE ${SOURCES} ${HEADERS})

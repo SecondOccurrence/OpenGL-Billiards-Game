@@ -13,7 +13,7 @@
 #ifndef drawing_h
 #define drawing_h
 
-#include "../math/geometry.h"
+#include "../data_structures/geometry.h"
 
 void centerOfMass(Point3 c, Object3D* obj);
 

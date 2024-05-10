@@ -15,7 +15,7 @@
 #include "initialisation.h"
 #include "gl_callback.h"
 
-#include "math/geometry.h"
+#include "data_structures/geometry.h"
 #include "movement/keyboard_utils.h"
 
 int main(int argc, char** argv) {

@@ -23,7 +23,7 @@ typedef int Face[3];
 
 typedef GLfloat Matrix4[4][4];
 
-typedef struct Object3D {
+typedef struct {
     int nvert, nfaces, nedges;
     Point3* vertices;
     Face* faces;

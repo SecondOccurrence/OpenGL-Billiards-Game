@@ -13,7 +13,7 @@
 
 #include "../lib/opengl/opengl.h"
 
-#include "math/geometry.h"
+#include "data_structures/geometry.h"
 #include "rendering/display_functions.h"
 #include "movement/keyboard_utils.h"
 
