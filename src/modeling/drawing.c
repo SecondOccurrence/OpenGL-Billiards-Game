@@ -6,6 +6,8 @@
  * VERSION HISTORY:
  * - v1.0 (30/04/2024): initial file state
  *   Contributed by Josh S, 34195182
+ * - v1.1 (10/05/2024): removed unused functions and refactor functions
+ *   Contributed by Josh S, 34195182
  *
  */
 
@@ -42,66 +44,13 @@ void drawObject(Object3D* obj) {
     }
 }
 
-void drawHouse() {
-    drawFloor();
-    drawWalls();
-    drawPyramid();
-}
-
-void drawFloor() {
-    Point3 floor[4] = {{0.0, 0.0, 0.0},
-                       {0.0, 0.0, 1.0},
-                       {1.0, 0.0, 1.0},
-                       {1.0, 0.0, 0.0}};
-
-    glBegin(GL_POLYGON);
-        glColor3f(0, 1, 0);
-        glVertex3fv(floor[0]);
-        glVertex3fv(floor[1]);
-        glVertex3fv(floor[2]);
-        glVertex3fv(floor[3]);
+void drawTriangle(Point3* vertices) {
+    glBegin(GL_TRIANGLES);
+    glColor3f(1.0, 0.0, 0.0);
+    glVertex3fv(vertices[0]);
+    glVertex3fv(vertices[1]);
+    glVertex3fv(vertices[2]);
     glEnd();
-}
-
-void drawWalls() {
-    Point3 leftWall[4] = {{0.0, 0.0, 0.0},
-                          {0.0, 1.0, 0.0},
-                          {0.0, 1.0, 1.0},
-                          {0.0, 0.0, 1.0}};
-
-    Point3 rightWall[4] = {{1.0, 0.0, 0.0},
-                           {1.0, 1.0, 0.0},
-                           {1.0, 1.0, 1.0},
-                           {1.0, 0.0, 1.0}};
-
-    Point3 backWall[4] = {{0.0, 0.0, 0.0},
-                          {0.0, 1.0, 0.0},
-                          {1.0, 1.0, 0.0},
-                          {1.0, 0.0, 0.0}};
-
-    drawSquare(leftWall);
-    drawSquare(rightWall);
-    drawSquare(backWall);
-
-
-    Point3 frontWallLeft[4] = {{0.0, 0.0, 1.0},
-                               {0.0, 1.0, 1.0},
-                               {0.25, 1.0, 1.0},
-                               {0.25, 0.0, 1.0}};
-
-    Point3 frontWallRight[4] = {{1.0, 0.0, 1.0},
-                                {1.0, 1.0, 1.0},
-                                {0.75, 1.0, 1.0},
-                                {0.75, 0.0, 1.0}};
-
-    Point3 frontWallTop[4] = {{0.25, 0.75, 1.0},
-                              {0.25, 1.0, 1.0},
-                              {0.75, 1.0, 1.0},
-                              {0.75, 0.75, 1.0}};
-
-    drawSquare(frontWallLeft);
-    drawSquare(frontWallRight);
-    drawSquare(frontWallTop);
 }
 
 void drawSquare(Point3* vertices) {
@@ -114,74 +63,35 @@ void drawSquare(Point3* vertices) {
     glEnd();
 }
 
-void drawPyramid() {
-    Point3 leftTriangle[3] = {{ 0.0f,  1.0f,  0.0f},
-                              { 0.0f,  1.0f,  1.0f},
-                              { 0.5f,  1.5f,  0.5f}};
+void drawAxis(GLfloat length) {
+    Point3 vertices[4] = {{0.0   , 0.0   , 0.0   },
+                          {length, 0.0   , 0.0   },
+                          {0.0   , length, 0.0   },
+                          {0.0   , 0.0   , length}};
 
-    Point3 rightTriangle[3] = {{ 1.0f,  1.0f,  0.0f},
-                               { 1.0f,  1.0f,  1.0f},
-                               { 0.5f,  1.5f,  0.5f}};
-
-    Point3 backTriangle[3] = {{ 0.0f,  1.0f,  0.0f},
-                              { 1.0f,  1.0f,  0.0f},
-                              { 0.5f,  1.5f,  0.5f}};
-
-    Point3 frontTriangle[3] = {{ 0.0f,  1.0f,  1.0f},
-                               { 1.0f,  1.0f,  1.0f},
-                               { 0.5f,  1.5f,  0.5f}};
-
-    drawTriangle(leftTriangle);
-    drawTriangle(rightTriangle);
-    drawTriangle(backTriangle);
-    drawTriangle(frontTriangle);
+    Point3 rgb = {1.0f, 0.0f, 0.0f};
+    drawLine(vertices[0], vertices[1], rgb, 3.0f);
+    rgb[0] = 0.0f;
+    rgb[1] = 1.0f;
+    drawLine(vertices[0], vertices[2], rgb, 3.0f);
+    rgb[1] = 0.0f;
+    rgb[2] = 1.0f;
+    drawLine(vertices[0], vertices[3], rgb, 3.0f);
 }
 
-void drawTriangle(Point3* vertices) {
-    glBegin(GL_TRIANGLES);
-        glColor3f(1.0, 0.0, 0.0);
-        glVertex3fv(vertices[0]);
-        glVertex3fv(vertices[1]);
-        glVertex3fv(vertices[2]);
-    glEnd();
-}
-
-void drawAxis() {
-    Point3 vertices[4] = {{0.0, 0.0, 0.0},
-                          {2.0, 0.0, 0.0},
-                          {0.0, 2.0, 0.0},
-                          {0.0, 0.0, 2.0}};
-
+void drawLine(Point3 p1, Point3 p2, Point3 rgb, GLfloat width) {
+    glLineWidth(width);
     glBegin(GL_LINES);
-        glColor3f(1.0, 0.0, 0.0);
-        glVertex3fv(vertices[0]);
-        glVertex3fv(vertices[1]);
-    glEnd();
-
-    glBegin(GL_LINES);
-        glColor3f(0.0, 1.0, 0.0);
-        glVertex3fv(vertices[0]);
-        glVertex3fv(vertices[2]);
-    glEnd();
-
-    glBegin(GL_LINES);
-        glColor3f(0.0, 0.0, 1.0);
-        glVertex3fv(vertices[0]);
-        glVertex3fv(vertices[3]);
-    glEnd();
-}
-
-void drawLine(Point3 vertices[2]) {
-    glBegin(GL_LINES);
-        glColor3f(1.0, 1.0, 1.0);
-        glVertex3fv(vertices[0]);
-        glVertex3fv(vertices[1]);
+        glColor3fv(rgb);
+        glVertex3fv(p1);
+        glVertex3fv(p2);
     glEnd(); 
 }
 
-void drawWiredGrid(const int rows, const int columns, const float length) {
+void drawWiredGrid(const int rowsCols, const float length) {
+    Point3 rgb = {1.0f, 1.0f, 1.0f};
     const float lengths[2] = {(-1 * length), length};
-    const float interval = (length / rows) * 2;
+    const float interval = (length / rowsCols) * 2;
     float position = lengths[0];
 
     Point3 vertices[2];
@@ -193,7 +103,7 @@ void drawWiredGrid(const int rows, const int columns, const float length) {
         vertices[0][2] = position;
         vertices[1][2] = position;
 
-        drawLine(vertices);
+        drawLine(vertices[0], vertices[1], rgb, 1.0f);
 
         position += interval;
     }
@@ -205,34 +115,8 @@ void drawWiredGrid(const int rows, const int columns, const float length) {
         vertices[0][0] = position;
         vertices[1][0] = position;
 
-        drawLine(vertices);
+        drawLine(vertices[0], vertices[1], rgb, 1.0f);
 
         position += interval;
     }
-}
-
-void drawGridSquare(Point3* vertices) {
-    glBegin(GL_LINES);
-        glColor3f(1.0, 1.0, 1.0);
-        glVertex3fv(vertices[2]);
-        glVertex3fv(vertices[1]);
-    glEnd();
-
-    glBegin(GL_LINES);
-        glColor3f(1.0, 1.0, 1.0);
-        glVertex3fv(vertices[3]);
-        glVertex3fv(vertices[2]);
-    glEnd();
-
-    glBegin(GL_LINES);
-        glColor3f(1.0, 1.0, 1.0);
-        glVertex3fv(vertices[0]);
-        glVertex3fv(vertices[1]);
-    glEnd();
-
-    glBegin(GL_LINES);
-        glColor3f(1.0, 1.0, 1.0);
-        glVertex3fv(vertices[3]);
-        glVertex3fv(vertices[0]);
-    glEnd();
 }

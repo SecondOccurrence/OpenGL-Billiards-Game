@@ -29,7 +29,7 @@ void displayObject(ObjectsFlag objects_flag) {
 void displayAxis(AxisFlag axis_flag) {
     glPushMatrix();
     if(axis_flag == AXIS_ENABLED) {
-        drawAxis();
+        drawAxis(5.0);
     }
     glPopMatrix();
 }
@@ -37,7 +37,7 @@ void displayAxis(AxisFlag axis_flag) {
 void displayGrid(GridFlag grid_flag) {
     glPushMatrix();
     if(grid_flag == GRID_ENABLED) {
-        drawWiredGrid(8.0f, 8.0f, 2.0f);
+        drawWiredGrid(30.0, 4.0);
     }
     glPopMatrix();
 }

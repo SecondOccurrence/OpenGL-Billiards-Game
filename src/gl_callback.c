@@ -30,11 +30,11 @@ void myDisplay(void) {
               camera.lookat[0], camera.lookat[1], camera.lookat[2],
               camera.up[0], camera.up[1], camera.up[2]);
 
-    displayObject(objects_flag);
     displayGrid(grid_flag);
     displayAxis(axis_flag);
+    displayObject(objects_flag);
 
-    glFlush();
+    glutSwapBuffers();
 }
 
 void myReshape(int width, int height) {
@@ -68,7 +68,7 @@ void myReshape(int width, int height) {
 
     }
     else if(camera.cameraMode == PERSPECTIVE) {
-        GLdouble fov = 60;
+        GLdouble fov = 80;
         GLdouble aspect = 1.0 * width / height;
         GLdouble nearVal = 0.1;
         GLdouble farVal = 100;

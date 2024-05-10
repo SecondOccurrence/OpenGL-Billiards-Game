@@ -37,7 +37,6 @@ void init() {
 
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glColor3f(1.0, 0.0, 0.0);
-    glLineWidth(2.0);
 
     camera.position[0] = 1.f;
     camera.position[1] = 1.1f;
