@@ -9,6 +9,8 @@
  * - v1.1 (05/05/2024): extracting opengl callback functiong, leaving only intialisation functions
  *      renamed file from main_functions to intialisation
  *   Contributed by Josh S, 34195182
+ * - v1.1 (10/05/2024): restructured globals
+ *   Contributed by Josh S, 34195182
  *
  */
 
@@ -16,13 +18,13 @@
 
 #include "initialisation.h"
 
-#include "data_structures/camera.h"
 #include "math/vector_operations.h"
 #include "rendering/display_functions.h"
 #include "modeling/drawing.h"
 
+#include "globals/camera.h"
+
 Camera camera;
-enum CameraType cameraMode;
 
 void init() { 
     setLight();
@@ -46,8 +48,8 @@ void init() {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    cameraMode = PERSPECTIVE;
-    setCamera(cameraMode);
+    camera.cameraMode= PERSPECTIVE;
+    setCamera(camera.cameraMode);
 }
 
 void setLight(void){

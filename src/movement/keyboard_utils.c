@@ -8,16 +8,19 @@
  *   Contributed by Josh S, 34195182
  * - v1.1 (05/05/2024): introduced mainKeys, for inputs that manipulate the core scene. also clean up of unused parameters
  *   Contributed by Josh S, 34195182
+ * - v1.1 (10/05/2024): restructured globals
+ *   Contributed by Josh S, 34195182
  *
  */
 
 
 #include "keyboard_utils.h"
 
-#include "../data_structures/camera.h"
 #include "../math/geometry.h"
 #include "../math/vector_operations.h"
 #include "../transformations/object_transformations.h"
+
+#include "../globals/camera.h"
 
 int hideGrid = 0;
 int hideAxis = 0;
