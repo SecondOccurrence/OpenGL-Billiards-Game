@@ -15,7 +15,7 @@
 
 #include "../../lib/opengl/opengl.h"
 
-#include "geometry.h"
+#include "../data_structures/geometry.h"
 
 void multiplyByVector3(Vector4 result, Matrix4 matrixInput, Vector3 vector3Input);
 
