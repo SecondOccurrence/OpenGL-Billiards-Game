@@ -21,26 +21,26 @@
 
 void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid_flag, AxisFlag* axis_flag, ObjectsFlag* objects_flag);
 
-void cameraKeys(unsigned char key, Camera camera);
+void cameraKeys(unsigned char key, Camera* camera);
 
-void strafeLeft();
+void strafeLeft(Camera* camera);
 
-void strafeRight();
+void strafeRight(Camera* camera);
 
-void moveForward();
+void moveForward(Camera* camera);
 
-void moveBackward();
+void moveBackward(Camera* camera);
 
-void viewFront();
+void viewFront(Camera* camera);
 
-void viewRear();
+void viewRear(Camera* camera);
 
-void viewTop();
+void viewTop(Camera* camera);
 
-void viewBottom();
+void viewBottom(Camera* camera);
 
-void viewRight();
+void viewRight(Camera* camera);
 
-void viewLeft();
+void viewLeft(Camera* camera);
 
 #endif

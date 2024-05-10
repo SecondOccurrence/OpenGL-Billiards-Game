@@ -92,7 +92,7 @@ void myReshape(int width, int height) {
 void keys(unsigned char key, int x, int y) {
     toggleKeys(key, &animation_flag, &grid_flag, &axis_flag, &objects_flag);
 
-    //cameraKeys(key, camera);
+    cameraKeys(key, &camera);
 
     glutPostRedisplay();
 }

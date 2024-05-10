@@ -15,7 +15,6 @@
 
 #include "keyboard_utils.h"
 
-#include "../data_structures/camera.h"
 #include "../math/vector_operations.h"
 
 void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid_flag, AxisFlag* axis_flag, ObjectsFlag* objects_flag) {
@@ -64,169 +63,169 @@ void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid
     }   
 }
 
-void cameraKeys(unsigned char key, Camera camera) {
+void cameraKeys(unsigned char key, Camera* camera) {
     switch(key) {
     case 'X':
-        strafeLeft();
+        strafeLeft(camera);
         break;
     case 'x':
-        strafeRight();
+        strafeRight(camera);
         break;
     case 'Y':
-        camera.position[1] -= 0.1;
-        camera.lookat[1] -= 0.1;
+        camera->position[1] -= 0.1;
+        camera->lookat[1] -= 0.1;
         break;
     case 'y':
-        camera.position[1] += 0.1;
-        camera.lookat[1] += 0.1;
+        camera->position[1] += 0.1;
+        camera->lookat[1] += 0.1;
         break;
     case 'Z':
-        moveForward();
+        moveForward(camera);
         break;
     case 'z':
-        moveBackward();
+        moveBackward(camera);
         break;
     case 'F':
-        viewFront();
+        viewFront(camera);
         break;
     case 'R':
-        viewRear();
+        viewRear(camera);
         break;
     case 'T':
-        viewTop();
+        viewTop(camera);
         break;
     case 'B':
-        viewBottom();
+        viewBottom(camera);
         break;
     case 'I':
-        viewLeft();
+        viewLeft(camera);
         break;
     case 'L':
-        viewRight();
+        viewRight(camera);
         break;
     default:
         break;
     }
 }
 
-void strafeLeft(Camera camera) {
+void strafeLeft(Camera* camera) {
     Vector3 direction, result;
 
-    subtractVectors(direction, camera.lookat, camera.position);
-    calcCrossProduct(result, direction, camera.up);
+    subtractVectors(direction, camera->lookat, camera->position);
+    calcCrossProduct(result, direction, camera->up);
 
     calcNormal(result);
     multiplyByScalar(result, 0.5);
 
-    subtractVectors(camera.position, camera.position, result);
-    subtractVectors(camera.lookat, camera.lookat, result);
+    subtractVectors(camera->position, camera->position, result);
+    subtractVectors(camera->lookat, camera->lookat, result);
 }
 
-void strafeRight(Camera camera) {
+void strafeRight(Camera* camera) {
     Vector3 direction, result;
 
-    subtractVectors(direction, camera.lookat, camera.position);
-    calcCrossProduct(result, direction, camera.up);
+    subtractVectors(direction, camera->lookat, camera->position);
+    calcCrossProduct(result, direction, camera->up);
 
     calcNormal(result);
     multiplyByScalar(result, 0.5);
 
-    addVectors(camera.position, camera.position, result);
-    addVectors(camera.lookat, camera.lookat, result);
+    addVectors(camera->position, camera->position, result);
+    addVectors(camera->lookat, camera->lookat, result);
 }
 
-void moveForward(Camera camera) {
+void moveForward(Camera* camera) {
     Vector3 result;
 
-    subtractVectors(result, camera.lookat, camera.position);
+    subtractVectors(result, camera->lookat, camera->position);
 
     calcNormal(result);
     multiplyByScalar(result, 0.5);
 
-    subtractVectors(camera.position, camera.position, result);
-    subtractVectors(camera.lookat, camera.lookat, result);
+    subtractVectors(camera->position, camera->position, result);
+    subtractVectors(camera->lookat, camera->lookat, result);
 }
 
-void moveBackward(Camera camera) {
+void moveBackward(Camera* camera) {
     Vector3 result;
 
-    subtractVectors(result, camera.lookat, camera.position);
+    subtractVectors(result, camera->lookat, camera->position);
 
     calcNormal(result);
     multiplyByScalar(result, 0.5);
 
-    addVectors(camera.position, camera.position, result);
-    addVectors(camera.lookat, camera.lookat, result);
+    addVectors(camera->position, camera->position, result);
+    addVectors(camera->lookat, camera->lookat, result);
 }
 
-void viewFront(Camera camera) {
-    camera.position[0] = 0.0f;
-    camera.position[1] = 0.0f;
-    camera.position[2] = 3.0f;
+void viewFront(Camera* camera) {
+    camera->position[0] = 0.0f;
+    camera->position[1] = 0.0f;
+    camera->position[2] = 3.0f;
 
-    if(camera.up[2] != 0.0f) {
-        camera.up[0] = 0.0f;
-        camera.up[1] = 1.0f;
-        camera.up[2] = 0.0f;
+    if(camera->up[2] != 0.0f) {
+        camera->up[0] = 0.0f;
+        camera->up[1] = 1.0f;
+        camera->up[2] = 0.0f;
     }
 }
 
-void viewRear(Camera camera) {
-    camera.position[0] = 0.0f;
-    camera.position[1] = 0.0f;
-    camera.position[2] = -3.0f;
+void viewRear(Camera* camera) {
+    camera->position[0] = 0.0f;
+    camera->position[1] = 0.0f;
+    camera->position[2] = -3.0f;
 
-    if(camera.up[2] != 0.0f) {
-        camera.up[0] = 0.0f;
-        camera.up[1] = 1.0f;
-        camera.up[2] = 0.0f;
+    if(camera->up[2] != 0.0f) {
+        camera->up[0] = 0.0f;
+        camera->up[1] = 1.0f;
+        camera->up[2] = 0.0f;
     }
 }
 
-void viewTop(Camera camera) {
-    camera.position[0] = 0.0f;
-    camera.position[1] = 3.0f;
-    camera.position[2] = 0.0f;
+void viewTop(Camera* camera) {
+    camera->position[0] = 0.0f;
+    camera->position[1] = 3.0f;
+    camera->position[2] = 0.0f;
 
-    if(camera.up[1] != 0.0f) {
-        camera.up[0] = 0.0f;
-        camera.up[1] = 0.0f;
-        camera.up[2] = 1.0f;
+    if(camera->up[1] != 0.0f) {
+        camera->up[0] = 0.0f;
+        camera->up[1] = 0.0f;
+        camera->up[2] = 1.0f;
     }
 }
 
-void viewBottom(Camera camera) {
-    camera.position[0] = 0.0f;
-    camera.position[1] = -3.0f;
-    camera.position[2] = 0.0f;
+void viewBottom(Camera* camera) {
+    camera->position[0] = 0.0f;
+    camera->position[1] = -3.0f;
+    camera->position[2] = 0.0f;
 
-    if(camera.up[1] != 0.0f) {
-        camera.up[0] = 0.0f;
-        camera.up[1] = 0.0f;
-        camera.up[2] = 1.0f;
+    if(camera->up[1] != 0.0f) {
+        camera->up[0] = 0.0f;
+        camera->up[1] = 0.0f;
+        camera->up[2] = 1.0f;
     }
 }
 
-void viewRight(Camera camera) {
-    camera.position[0] = 3.0f;
-    camera.position[1] = 0.0f;
-    camera.position[2] = 0.0f;
+void viewRight(Camera* camera) {
+    camera->position[0] = 3.0f;
+    camera->position[1] = 0.0f;
+    camera->position[2] = 0.0f;
 
-    if(camera.up[2] != 0.0f) {
-        camera.up[0] = 0.0f;
-        camera.up[1] = 1.0f;
-        camera.up[2] = 0.0f;
+    if(camera->up[2] != 0.0f) {
+        camera->up[0] = 0.0f;
+        camera->up[1] = 1.0f;
+        camera->up[2] = 0.0f;
     }
 }
 
-void viewLeft(Camera camera) {
-    camera.position[0] = -3.0f;
-    camera.position[1] = 0.0f;
-    camera.position[2] = 0.0f;
+void viewLeft(Camera* camera) {
+    camera->position[0] = -3.0f;
+    camera->position[1] = 0.0f;
+    camera->position[2] = 0.0f;
 
-    if(camera.up[2] != 0.0f) {
-        camera.up[0] = 0.0f;
-        camera.up[1] = 1.0f;
-        camera.up[2] = 0.0f;
+    if(camera->up[2] != 0.0f) {
+        camera->up[0] = 0.0f;
+        camera->up[1] = 1.0f;
+        camera->up[2] = 0.0f;
     }
 }
