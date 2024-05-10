@@ -18,6 +18,7 @@
 #include "movement/keyboard_utils.h"
 
 #include "globals/camera.h"
+#include "globals/flags.h"
 
 void myDisplay(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -29,8 +30,9 @@ void myDisplay(void) {
               camera.lookat[0], camera.lookat[1], camera.lookat[2],
               camera.up[0], camera.up[1], camera.up[2]);
 
-    displayAxis();
-    displayGrid();
+    displayObject(objects_flag);
+    displayGrid(grid_flag);
+    displayAxis(axis_flag);
 
     glFlush();
 }
@@ -53,7 +55,7 @@ void myReshape(int width, int height) {
         GLdouble bottom = -1;
         GLdouble top = 1;
         GLdouble nearVal = 0.1;
-        GLdouble farVal = 100;     // near and far clipping planes
+        GLdouble farVal = 100;
 
         if(width <= height) {
             GLfloat aspect = (GLfloat) height / (GLfloat) width;
@@ -88,11 +90,9 @@ void myReshape(int width, int height) {
 }
 
 void keys(unsigned char key, int x, int y) {
-    mainKeys(key);
+    toggleKeys(key, &animation_flag, &grid_flag, &axis_flag, &objects_flag);
 
-    cameraKeys(key);
-
-    //transformKeys(key, x, y);
+    //cameraKeys(key, camera);
 
     glutPostRedisplay();
 }

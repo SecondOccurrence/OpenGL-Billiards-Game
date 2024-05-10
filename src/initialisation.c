@@ -23,8 +23,14 @@
 #include "modeling/drawing.h"
 
 #include "globals/camera.h"
+#include "globals/flags.h"
 
 Camera camera;
+
+AnimationFlag animation_flag = ANIMATION_DISABLED;
+GridFlag grid_flag = GRID_ENABLED;
+AxisFlag axis_flag = AXIS_ENABLED;
+ObjectsFlag objects_flag = OBJECTS_ENABLED;
 
 void init() { 
     setLight();

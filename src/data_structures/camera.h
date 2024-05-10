@@ -3,12 +3,12 @@
 
 #include "../math/geometry.h"
 
-enum CameraType {
+typedef enum {
     ORTHO2D, PERSPECTIVE, FRUSTUM, ORTHO
-};
+} CameraType;
 
 typedef struct Camera {
-    enum CameraType cameraMode;
+    CameraType cameraMode;
     Point3 position;
     Point3 lookat;
     Vector3 up;
