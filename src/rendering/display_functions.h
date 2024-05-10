@@ -7,6 +7,8 @@
  * VERSION HISTORY:
  * - v1.0 (30/04/2024): initial file state
  *   Contributed by Josh S, 34195182
+ * - v1.1 (10/05/2024): removed globals
+ *   Contributed by Josh S, 34195182
  *
  */
 
@@ -14,14 +16,12 @@
 #ifndef display_functions_h
 #define display_functions_h
 
-#include "../math/geometry.h"
+#include "../data_structures/flags.h"
 
-void displayObject(Object3D* obj);
+void displayObject(ObjectsFlag objects_flag);
 
-void displayHouse();
+void displayAxis(AxisFlag axis_flag);
 
-void displayAxis();
+void displayGrid(GridFlag grid_flag);
 
-void displayGrid();
-
-#endif // display_functions_h
+#endif

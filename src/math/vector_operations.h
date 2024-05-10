@@ -15,7 +15,7 @@
 
 #include "../../lib/opengl/opengl.h"
 
-#include "geometry.h"
+#include "../data_structures/geometry.h"
 
 void multiplyByScalar(Vector3 v, GLfloat scalar);
 

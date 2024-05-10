@@ -10,8 +10,8 @@ target_sources(output PRIVATE
 )
 
 add_subdirectory(data_structures)
+add_subdirectory(globals)
 add_subdirectory(modeling)
 add_subdirectory(rendering)
 add_subdirectory(movement)
 add_subdirectory(math)
-add_subdirectory(transformations)

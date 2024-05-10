@@ -15,36 +15,32 @@
 #ifndef keyboard_utils_h
 #define keyboard_utils_h
 
-#include "../math/geometry.h"
+#include "../data_structures/camera.h"
+#include "../data_structures/flags.h"
+#include "../data_structures/geometry.h"
 
-void mainKeys(unsigned char key);
+void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid_flag, AxisFlag* axis_flag, ObjectsFlag* objects_flag);
 
-void cameraKeys(unsigned char key);
+void cameraKeys(unsigned char key, Camera* camera);
 
-void strafeLeft();
+void strafeLeft(Camera* camera);
 
-void strafeRight();
+void strafeRight(Camera* camera);
 
-void moveForward();
+void moveForward(Camera* camera);
 
-void moveBackward();
+void moveBackward(Camera* camera);
 
-void viewFront();
+void viewFront(Camera* camera);
 
-void viewRear();
+void viewRear(Camera* camera);
 
-void viewTop();
+void viewTop(Camera* camera);
 
-void viewBottom();
+void viewBottom(Camera* camera);
 
-void viewRight();
+void viewRight(Camera* camera);
 
-void viewLeft();
-
-void transformKeys(unsigned char key, Object3D* trans);
-
-void specialKeys(int key, int x, int y);
-
-void rotationKeys(int key, Object3D* obj);
+void viewLeft(Camera* camera);
 
 #endif

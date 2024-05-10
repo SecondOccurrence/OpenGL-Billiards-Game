@@ -16,8 +16,6 @@
 #ifndef initialisation_h
 #define initialisation_h
 
-#include "math/geometry.h"
-
 void init();
 
 void setLight(void);

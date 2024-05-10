@@ -6,15 +6,19 @@
  * VERSION HISTORY:
  * - v1.0 (05/05/2024): initial file state
  *   Contributed by Josh S, 34195182
+ * - v1.1 (10/05/2024): restructured globals
+ *   Contributed by Josh S, 34195182
  *
  */
 
 #include "../lib/opengl/opengl.h"
 
-#include "data_structures/camera.h"
-#include "math/geometry.h"
+#include "data_structures/geometry.h"
 #include "rendering/display_functions.h"
 #include "movement/keyboard_utils.h"
+
+#include "globals/camera.h"
+#include "globals/flags.h"
 
 void myDisplay(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -26,10 +30,11 @@ void myDisplay(void) {
               camera.lookat[0], camera.lookat[1], camera.lookat[2],
               camera.up[0], camera.up[1], camera.up[2]);
 
-    displayAxis();
-    displayGrid();
+    displayGrid(grid_flag);
+    displayAxis(axis_flag);
+    displayObject(objects_flag);
 
-    glFlush();
+    glutSwapBuffers();
 }
 
 void myReshape(int width, int height) {
@@ -44,13 +49,13 @@ void myReshape(int width, int height) {
         width = 1.0;
     }
 
-    if(cameraMode == ORTHO) {
+    if(camera.cameraMode == ORTHO) {
         GLdouble left = -2;
         GLdouble right = 2;
         GLdouble bottom = -1;
         GLdouble top = 1;
         GLdouble nearVal = 0.1;
-        GLdouble farVal = 100;     // near and far clipping planes
+        GLdouble farVal = 100;
 
         if(width <= height) {
             GLfloat aspect = (GLfloat) height / (GLfloat) width;
@@ -62,8 +67,8 @@ void myReshape(int width, int height) {
         }
 
     }
-    else if(cameraMode == PERSPECTIVE) {
-        GLdouble fov = 60;
+    else if(camera.cameraMode == PERSPECTIVE) {
+        GLdouble fov = 80;
         GLdouble aspect = 1.0 * width / height;
         GLdouble nearVal = 0.1;
         GLdouble farVal = 100;
@@ -71,7 +76,7 @@ void myReshape(int width, int height) {
         gluPerspective(fov, aspect, nearVal, farVal);
 
     }
-    else if(cameraMode == FRUSTUM) {
+    else if(camera.cameraMode == FRUSTUM) {
         GLdouble left = -1;
         GLdouble right= 1;
         GLdouble bottom = -1;
@@ -85,11 +90,9 @@ void myReshape(int width, int height) {
 }
 
 void keys(unsigned char key, int x, int y) {
-    mainKeys(key);
+    toggleKeys(key, &animation_flag, &grid_flag, &axis_flag, &objects_flag);
 
-    cameraKeys(key);
-
-    //transformKeys(key, x, y);
+    cameraKeys(key, &camera);
 
     glutPostRedisplay();
 }
