@@ -10,6 +10,8 @@
  *   Contributed by Josh S, 34195182
  * - v1.1 (10/05/2024): removed globals
  *   Contributed by Josh S, 34195182
+ * - v1.2 (12/05/2024): added keys to alter ball velocity
+ *   Contributed by Josh S, 34195182
  *
  */
 
@@ -61,6 +63,33 @@ void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid
     default:
         break;
     }   
+}
+
+BallProperties objectKeys(unsigned char key, BallProperties* objectProperties) {
+    switch(key) {
+    case 'd':
+        objectProperties->velocity[0] += 0.5f;
+        break;
+    case 'a':
+        objectProperties->velocity[0] -= 0.5f;
+        break;
+    case 'w':
+        objectProperties->velocity[1] += 1.0f;
+        break;
+    case 's':
+        objectProperties->velocity[1] -= 1.0f;
+        break;
+    case 'q':
+        objectProperties->velocity[2] += 0.5f;
+        break;
+    case 'e':
+        objectProperties->velocity[2] -= 0.5f;
+        break;
+    default:
+        break;
+    }
+
+    return *objectProperties;
 }
 
 void cameraKeys(unsigned char key, Camera* camera) {

@@ -31,12 +31,10 @@ extern const int TIMERMSECS;
 #include <stdio.h>
 
 void animate() {
-    /*
     if(animation_flag == ANIMATION_ENABLED) {
+        ballMovement(0.02);
     }
-    */
 
-    ballMovement(0.02);
     glutPostRedisplay();
     glutTimerFunc(TIMERMSECS, animate, 0);
 }

@@ -19,6 +19,7 @@
 
 #include "globals/camera.h"
 #include "globals/flags.h"
+#include "globals/objects.h"
 
 void myDisplay(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -91,6 +92,8 @@ void myReshape(int width, int height) {
 
 void keys(unsigned char key, int x, int y) {
     toggleKeys(key, &animation_flag, &grid_flag, &axis_flag, &objects_flag);
+
+    ballProperties = objectKeys(key, &ballProperties);
 
     cameraKeys(key, &camera);
 

@@ -12,10 +12,6 @@
  *
  */
 
-// TODO: do not include objects.h globals
-//  separate objects.h into typedefs and globals
-//      then include only the typedefs
-
 #include "collision.h"
 
 #include "../data_structures/geometry.h"
