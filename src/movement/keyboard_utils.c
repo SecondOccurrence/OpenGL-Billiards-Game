@@ -10,6 +10,8 @@
  *   Contributed by Josh S, 34195182
  * - v1.1 (10/05/2024): removed globals
  *   Contributed by Josh S, 34195182
+ * - v1.2 (12/05/2024): added keys to alter ball velocity
+ *   Contributed by Josh S, 34195182
  *
  */
 
@@ -63,6 +65,33 @@ void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid
     }   
 }
 
+BallProperties objectKeys(unsigned char key, BallProperties* objectProperties) {
+    switch(key) {
+    case 'd':
+        objectProperties->velocity[0] += 0.5f;
+        break;
+    case 'a':
+        objectProperties->velocity[0] -= 0.5f;
+        break;
+    case 'w':
+        objectProperties->velocity[1] += 1.0f;
+        break;
+    case 's':
+        objectProperties->velocity[1] -= 1.0f;
+        break;
+    case 'q':
+        objectProperties->velocity[2] += 0.5f;
+        break;
+    case 'e':
+        objectProperties->velocity[2] -= 0.5f;
+        break;
+    default:
+        break;
+    }
+
+    return *objectProperties;
+}
+
 void cameraKeys(unsigned char key, Camera* camera) {
     switch(key) {
     case 'X':
@@ -114,7 +143,7 @@ void strafeLeft(Camera* camera) {
     subtractVectors(direction, camera->lookat, camera->position);
     calcCrossProduct(result, direction, camera->up);
 
-    calcNormal(result);
+    normaliseVector(result);
     multiplyByScalar(result, 0.5);
 
     subtractVectors(camera->position, camera->position, result);
@@ -127,7 +156,7 @@ void strafeRight(Camera* camera) {
     subtractVectors(direction, camera->lookat, camera->position);
     calcCrossProduct(result, direction, camera->up);
 
-    calcNormal(result);
+    normaliseVector(result);
     multiplyByScalar(result, 0.5);
 
     addVectors(camera->position, camera->position, result);
@@ -139,7 +168,7 @@ void moveForward(Camera* camera) {
 
     subtractVectors(result, camera->lookat, camera->position);
 
-    calcNormal(result);
+    normaliseVector(result);
     multiplyByScalar(result, 0.5);
 
     subtractVectors(camera->position, camera->position, result);
@@ -151,7 +180,7 @@ void moveBackward(Camera* camera) {
 
     subtractVectors(result, camera->lookat, camera->position);
 
-    calcNormal(result);
+    normaliseVector(result);
     multiplyByScalar(result, 0.5);
 
     addVectors(camera->position, camera->position, result);

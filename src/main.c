@@ -17,6 +17,9 @@
 
 #include "data_structures/geometry.h"
 #include "movement/keyboard_utils.h"
+#include "rendering/animation/animation.h"
+
+const int TIMERMSECS = 20;
 
 int main(int argc, char** argv) {
     glutInit(&argc,argv);
@@ -36,6 +39,7 @@ int main(int argc, char** argv) {
 
     init();
 
+    glutTimerFunc(TIMERMSECS, animate, 0);
     glutMainLoop();
 
     return 0;

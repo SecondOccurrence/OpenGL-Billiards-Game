@@ -19,6 +19,7 @@
 
 #include "globals/camera.h"
 #include "globals/flags.h"
+#include "globals/objects.h"
 
 void myDisplay(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -30,9 +31,9 @@ void myDisplay(void) {
               camera.lookat[0], camera.lookat[1], camera.lookat[2],
               camera.up[0], camera.up[1], camera.up[2]);
 
-    displayGrid(grid_flag);
-    displayAxis(axis_flag);
     displayObject(objects_flag);
+    displayAxis(axis_flag);
+    displayGrid(grid_flag);
 
     glutSwapBuffers();
 }
@@ -91,6 +92,8 @@ void myReshape(int width, int height) {
 
 void keys(unsigned char key, int x, int y) {
     toggleKeys(key, &animation_flag, &grid_flag, &axis_flag, &objects_flag);
+
+    ballProperties = objectKeys(key, &ballProperties);
 
     cameraKeys(key, &camera);
 
