@@ -55,7 +55,6 @@ void drawTriangle(Point3* vertices) {
 
 void drawSquare(Point3* vertices) {
     glBegin(GL_POLYGON);
-        glColor3f(0, 1, 1);
         glVertex3fv(vertices[0]);
         glVertex3fv(vertices[1]);
         glVertex3fv(vertices[2]);

@@ -23,12 +23,14 @@ void addVectors(Vector3 result, Vector3 v1, Vector3 v2);
 
 void subtractVectors(Vector3 result, Vector3 v1, Vector3 v2);
 
-void calcDotProduct(Vector3 result, Vector3 v1, Vector3 v2);
+GLfloat calcDotProduct(Vector3 v1, Vector3 v2);
 
 void calcCrossProduct(Vector3 result, Vector3 v1, Vector3 v2);
 
 float calcVecMagnitude(Vector3 v);
 
-void calcNormal(Vector3 v);
+void normaliseVector(Vector3 v);
+
+void calcUnitNormal(Vector3 result, Vector3 A, Vector3 B, Vector3 C);
 
 #endif

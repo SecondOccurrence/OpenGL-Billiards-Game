@@ -114,7 +114,7 @@ void strafeLeft(Camera* camera) {
     subtractVectors(direction, camera->lookat, camera->position);
     calcCrossProduct(result, direction, camera->up);
 
-    calcNormal(result);
+    normaliseVector(result);
     multiplyByScalar(result, 0.5);
 
     subtractVectors(camera->position, camera->position, result);
@@ -127,7 +127,7 @@ void strafeRight(Camera* camera) {
     subtractVectors(direction, camera->lookat, camera->position);
     calcCrossProduct(result, direction, camera->up);
 
-    calcNormal(result);
+    normaliseVector(result);
     multiplyByScalar(result, 0.5);
 
     addVectors(camera->position, camera->position, result);
@@ -139,7 +139,7 @@ void moveForward(Camera* camera) {
 
     subtractVectors(result, camera->lookat, camera->position);
 
-    calcNormal(result);
+    normaliseVector(result);
     multiplyByScalar(result, 0.5);
 
     subtractVectors(camera->position, camera->position, result);
@@ -151,7 +151,7 @@ void moveBackward(Camera* camera) {
 
     subtractVectors(result, camera->lookat, camera->position);
 
-    calcNormal(result);
+    normaliseVector(result);
     multiplyByScalar(result, 0.5);
 
     addVectors(camera->position, camera->position, result);

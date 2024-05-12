@@ -23,9 +23,22 @@
 #include "modeling/drawing.h"
 
 #include "globals/camera.h"
+#include "globals/objects.h"
 #include "globals/flags.h"
 
 Camera camera;
+
+BallProperties ballProperties = {
+    {0.5, 1.0, 0.0},
+    {0.0, 0.0, 0.0},
+    1.0f, 0.1};
+PlaneProperties planeProperties = {
+    {{-5.0, 0.0, -5.0},
+     { 5.0, 0.0, -5.0},
+     { 5.0, 0.0,  5.0},
+     {-5.0, 0.0,  5.0}},
+    0.8, 0.9
+};
 
 AnimationFlag animation_flag = ANIMATION_DISABLED;
 GridFlag grid_flag = GRID_ENABLED;
