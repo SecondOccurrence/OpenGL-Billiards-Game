@@ -21,6 +21,8 @@
 #include "globals/flags.h"
 #include "globals/objects.h"
 
+extern Object3D* table;
+
 void myDisplay(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -31,7 +33,7 @@ void myDisplay(void) {
               camera.lookat[0], camera.lookat[1], camera.lookat[2],
               camera.up[0], camera.up[1], camera.up[2]);
 
-    displayObject(objects_flag);
+    displayObject3D(table, objects_flag);
     displayAxis(axis_flag);
     displayGrid(grid_flag);
 

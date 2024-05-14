@@ -18,10 +18,18 @@
 #include "data_structures/geometry.h"
 #include "movement/keyboard_utils.h"
 #include "rendering/animation/animation.h"
+#include "modeling/object_loading.h"
+
+#include <stdbool.h>
 
 const int TIMERMSECS = 20;
+Object3D* table;
 
 int main(int argc, char** argv) {
+    // Load object
+    table = readOFFFile("Table_Coloured.off", true);
+
+    // OpenGL/Glut stuff
     glutInit(&argc,argv);
 
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB  | GLUT_DEPTH);

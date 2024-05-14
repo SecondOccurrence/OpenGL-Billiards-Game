@@ -1,3 +1,5 @@
 .ccls-cache/
 
 build/
+/lib/opengl
+/lib/opengl
