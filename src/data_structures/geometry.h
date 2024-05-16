@@ -8,6 +8,8 @@
  *   Contributed by Josh S, 34195182
  * - v1.1 (12/05/2024): added properties for faces to store more than 3 vertices per face and store colours for its faces
  *   Contributed by Kaden R, 34606207
+ * - v1.2 (16/05/2024): changed type of Colour from struct to GLfloat array
+ *   Contributed by Kaden R, 34606207
  *
  */
 
@@ -26,9 +28,7 @@ typedef Point3 Vector3;
 typedef GLfloat Vector4[4];
 typedef GLfloat Matrix4[4][4];
 
-typedef struct {
-    GLfloat red, blue, green;
-} Colour;
+typedef GLfloat Colour[3];
 
 typedef struct {
     int vertexCount;                  // number of vertices

@@ -10,6 +10,8 @@
  *   Contributed by Josh S, 34195182
  * - v1.2 (13/05/2024): changed drawObject to suit changes in Object3D struct
  *   Contributed by Kaden R, 34606207
+ * - v1.3 (16/05/2024): changed colour processing to suit changes with Colour type
+ *   Contributed by Kaden R, 34606207
  *
  */
 
@@ -27,7 +29,7 @@ void drawObject(Object3D* obj) {
             glBegin(GL_POLYGON); // begin drawing polygon
 
             // set colour
-            if (obj->hasColour) glColor3f(obj->faces[i].colour.red, obj->faces[i].colour.green, obj->faces[i].colour.blue);
+            if (obj->hasColour) glColor3f(obj->faces[i].colour[0], obj->faces[i].colour[1], obj->faces[i].colour[2]);
             else glColor3f(1,1,1); // default for no colour
             for (int j = 0; j < obj->faces[i].vertexCount; j++) { // for each vertex of face
                 int vertexNum = obj->faces[i].vertices[j];

@@ -6,6 +6,8 @@
  * VERSION HISTORY:
  * - v1.0 (12/05/2024): initial file state
  *   Contributed by Kaden R, 34606207
+ * - v1.1 (16/05/2024): changed colour input processing to suit changes with Colour type
+ *   Contributed by Kaden R, 34606207
  *
  */
 
@@ -85,23 +87,20 @@ Object3D* readOFFFile(const char* file_name, bool hasColour){
                     line[j] = ' ';
                 }
 
+                Colour c = {0,0,0};
                 int redInt, greenInt, blueInt;
                 GLfloat red, green, blue;
 
                 sscanf(line, " %i %i %i", &redInt, &greenInt, &blueInt);
 
-                red = (GLfloat)redInt / 255.f;
-                green = (GLfloat)greenInt / 255.f;
-                blue = (GLfloat)blueInt / 255.f;
-
-                o->faces[currentFaceIndex].colour.red = red;
-                o->faces[currentFaceIndex].colour.green = green;
-                o->faces[currentFaceIndex].colour.blue = blue;
+                o->faces[currentFaceIndex].colour[0] = (GLfloat)redInt / 255.f;
+                o->faces[currentFaceIndex].colour[1] = (GLfloat)greenInt / 255.f;
+                o->faces[currentFaceIndex].colour[2] = (GLfloat)blueInt / 255.f;
             }
             else {
-                o->faces[currentFaceIndex].colour.red = 1;
-                o->faces[currentFaceIndex].colour.green = 1;
-                o->faces[currentFaceIndex].colour.blue = 1;
+                for (int i = 0; i < 3; i++) {
+                o->faces[currentFaceIndex].colour[i] = 1;
+                }
             }
         }
         lineNum++; // increment line number
