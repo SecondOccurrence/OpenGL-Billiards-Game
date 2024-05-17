@@ -11,6 +11,8 @@
  * - v1.2 (18/05/2024): updated "file not found" error to include filename
  *                      readOFFFile now returns Object3D (changed from Object3D*)
  *   Contributed by Kaden R, 34606207
+ * - v1.3 (18/05/2024): readOFFFile now automatically detects colour
+ *   Contributed by Kaden R, 34606207
  *
  */
 
@@ -19,7 +21,7 @@
 #include "../../lib/opengl/opengl.h"
 #include "stdio.h"
 
-Object3D readOFFFile(const char* file_name, bool hasColour) {
+Object3D readOFFFile(const char* file_name) {
     FILE* fp;
     char line[1000];
     int lineNum = 0;
@@ -60,7 +62,7 @@ Object3D readOFFFile(const char* file_name, bool hasColour) {
     o->nvert = nvert;
     o->nfaces = nfaces;
 
-    o->hasColour = hasColour;
+    bool hasColour = false;
 
     while (fgets(line, 1000, fp) != NULL) {
         if (lineNum < (o->nvert + 2)) { // all vertices
@@ -83,7 +85,15 @@ Object3D readOFFFile(const char* file_name, bool hasColour) {
                 sscanf(line, " %i%n", &o->faces[currentFaceIndex].vertices[i], &linePosition); // read next vertex and insert into the face's vertex array
             }
 
-            // read colour
+            // If first time iterating, check if colour exists
+            if (currentFaceIndex == 0) {
+                int redInt, greenInt, blueInt;
+                int scanfReturnValue = sscanf(line, " %i %i %i", &redInt, &greenInt, &blueInt);
+                if (scanfReturnValue == 3) hasColour = true; // if 3 values were read colour exists in file
+                else hasColour = false;
+            }
+
+            // read colour if available, else set colour to white (1,1,1)
             if (hasColour) {
                 // set currently read characters to whitespace
                 for (int j = 0; j < linePosition; j++) {
@@ -101,14 +111,15 @@ Object3D readOFFFile(const char* file_name, bool hasColour) {
                 o->faces[currentFaceIndex].colour[2] = (GLfloat)blueInt / 255.f;
             }
             else {
-                for (int i = 0; i < 3; i++) {
-                o->faces[currentFaceIndex].colour[i] = 1;
-                }
+                for (int i = 0; i < 3; i++) o->faces[currentFaceIndex].colour[i] = 1;
             }
         }
         lineNum++; // increment line number
     }
     fclose(fp);
+
+    // add colour detection result
+    o->hasColour = hasColour;
 
     Object3D outputObject = *o;
     free(o);

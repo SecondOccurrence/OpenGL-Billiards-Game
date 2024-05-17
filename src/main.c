@@ -27,8 +27,8 @@ Shape table;
 
 int main(int argc, char** argv) {
     // Load objects
-    table.collision = readOFFFile("Table Collision_Simplified.off", false);
-    table.drawing   = readOFFFile("table_coloured.off", true);
+    table.collision = readOFFFile("Table Collision_Simplified.off");
+    table.drawing   = readOFFFile("table_coloured.off");
 
     // OpenGL/Glut stuff
     glutInit(&argc,argv);
