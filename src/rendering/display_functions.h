@@ -11,6 +11,8 @@
  *   Contributed by Josh S, 34195182
  * - v1.2 (13/05/2024): added function to display an Object3D object
  *   Contributed by Kaden R, 34606207
+ * - v1.3 (18/05/2024): changed all Object3D* types to Object3D
+ *   Contributed by Kaden R, 34606207
  *
  */
 
@@ -23,7 +25,7 @@
 
 void displayObject(ObjectsFlag objects_flag);
 
-void displayObject3D(Object3D* obj, ObjectsFlag objects_flag);
+void displayObject3D(Object3D obj, ObjectsFlag objects_flag);
 
 void displayAxis(AxisFlag axis_flag);
 

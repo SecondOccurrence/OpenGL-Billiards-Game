@@ -23,11 +23,12 @@
 #include <stdbool.h>
 
 const int TIMERMSECS = 20;
-Object3D* table;
+Shape table;
 
 int main(int argc, char** argv) {
-    // Load object
-    table = readOFFFile("Table_Coloured.off", true);
+    // Load objects
+    table.collision = readOFFFile("Table Collision_Simplified.off", false);
+    table.drawing   = readOFFFile("table_coloured.off", true);
 
     // OpenGL/Glut stuff
     glutInit(&argc,argv);

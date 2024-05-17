@@ -8,6 +8,9 @@
  *   Contributed by Kaden R, 34606207
  * - v1.1 (16/05/2024): changed colour input processing to suit changes with Colour type
  *   Contributed by Kaden R, 34606207
+ * - v1.2 (18/05/2024): updated "file not found" error to include filename
+ *                      readOFFFile now returns Object3D (changed from Object3D*)
+ *   Contributed by Kaden R, 34606207
  *
  */
 
@@ -16,7 +19,7 @@
 #include "../../lib/opengl/opengl.h"
 #include "stdio.h"
 
-Object3D* readOFFFile(const char* file_name, bool hasColour){
+Object3D readOFFFile(const char* file_name, bool hasColour) {
     FILE* fp;
     char line[1000];
     int lineNum = 0;
@@ -25,7 +28,7 @@ Object3D* readOFFFile(const char* file_name, bool hasColour){
     // Open file
     fp = fopen(file_name, "r");
     if (fp == NULL){
-        printf("Error: file could not be opened.\n Press any key to exit ...");
+        printf("Error: file \"%s\" could not be found.\n Press any key to exit ...", file_name);
         getchar();
         exit(0);
     }
@@ -107,5 +110,7 @@ Object3D* readOFFFile(const char* file_name, bool hasColour){
     }
     fclose(fp);
 
-    return o;
+    Object3D outputObject = *o;
+    free(o);
+    return outputObject;
 }

@@ -10,6 +10,8 @@
  *   Contributed by Kaden R, 34606207
  * - v1.2 (16/05/2024): changed type of Colour from struct to GLfloat array
  *   Contributed by Kaden R, 34606207
+ * - v1.3 (18/05/2024): added Shape struct to store a drawing Object3D and collision Object3D
+ *   Contributed by Kaden R, 34606207
  *
  */
 
@@ -42,5 +44,11 @@ typedef struct {
     Point3* vertices;
     Face* faces;
 } Object3D;
+
+typedef struct {
+    Object3D drawing;
+    Object3D collision;
+} Shape;
+
 
 #endif
