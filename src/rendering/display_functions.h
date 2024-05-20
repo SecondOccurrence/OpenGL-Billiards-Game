@@ -13,6 +13,8 @@
  *   Contributed by Kaden R, 34606207
  * - v1.3 (18/05/2024): changed all Object3D* types to Object3D
  *   Contributed by Kaden R, 34606207
+ * - v1.4 (20/05/2024): reverted v1.3
+ *   Contributed by Kaden R, 34606207
  *
  */
 
@@ -25,7 +27,7 @@
 
 void displayObject(ObjectsFlag objects_flag);
 
-void displayObject3D(Object3D obj, ObjectsFlag objects_flag);
+void displayObject3D(Object3D* obj, ObjectsFlag objects_flag);
 
 void displayAxis(AxisFlag axis_flag);
 

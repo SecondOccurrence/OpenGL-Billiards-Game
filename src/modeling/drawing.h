@@ -14,6 +14,8 @@
  *   Contributed by Kaden R, 34606207
  * - v1.4 (18/05/2024): changed all Object3D* types to Object3D
  *   Contributed by Kaden R, 34606207
+ * - v1.5 (20/05/2024): reverted change in v1.4
+ *   Contributed by Kaden R, 34606207
  *
  */
 
@@ -23,7 +25,7 @@
 
 #include "../data_structures/geometry.h"
 
-void drawObject(Object3D obj);
+void drawObject(Object3D* obj);
 
 void drawTriangle(Point3* vertices);
 

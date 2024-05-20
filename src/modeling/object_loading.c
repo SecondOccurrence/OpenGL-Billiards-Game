@@ -13,6 +13,8 @@
  *   Contributed by Kaden R, 34606207
  * - v1.3 (18/05/2024): readOFFFile now automatically detects colour
  *   Contributed by Kaden R, 34606207
+ * - v1.4 (20/05/2024): Reverted change from Object3D* to Object3D (is now Object3D*)
+ *   Contributed by Kaden R, 34606207
  *
  */
 
@@ -21,7 +23,7 @@
 #include "../../lib/opengl/opengl.h"
 #include "stdio.h"
 
-Object3D readOFFFile(const char* file_name) {
+Object3D* readOFFFile(const char* file_name) {
     FILE* fp;
     char line[1000];
     int lineNum = 0;
@@ -120,8 +122,5 @@ Object3D readOFFFile(const char* file_name) {
 
     // add colour detection result
     o->hasColour = hasColour;
-
-    Object3D outputObject = *o;
-    free(o);
-    return outputObject;
+    return o;
 }

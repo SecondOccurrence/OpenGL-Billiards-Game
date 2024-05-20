@@ -14,6 +14,8 @@
  *   Contributed by Kaden R, 34606207
  * - v1.4 (18/05/2024): changed all Object3D* types to Object3D
  *   Contributed by Kaden R, 34606207
+ * - v1.5 (20/05/2024): reverted change in v1.4
+ *   Contributed by Kaden R, 34606207
  *
  */
 
@@ -24,18 +26,18 @@
 
 #include <stdio.h>
 
-void drawObject(Object3D obj) {
+void drawObject(Object3D* obj) {
         //// draw the object
-        for (int i = 0; i < obj.nfaces; i++) { // for each face in object
+        for (int i = 0; i < obj->nfaces; i++) { // for each face in object
             //// draw the polygon
             glBegin(GL_POLYGON); // begin drawing polygon
 
             // set colour
-            if (obj.hasColour) glColor3f(obj.faces[i].colour[0], obj.faces[i].colour[1], obj.faces[i].colour[2]);
+            if (obj->hasColour) glColor3f(obj->faces[i].colour[0], obj->faces[i].colour[1], obj->faces[i].colour[2]);
             else glColor3f(1,1,1); // default for no colour
-            for (int j = 0; j < obj.faces[i].vertexCount; j++) { // for each vertex of face
-                int vertexNum = obj.faces[i].vertices[j];
-                glVertex3fv(obj.vertices[vertexNum]); // add vertex to polygon
+            for (int j = 0; j < obj->faces[i].vertexCount; j++) { // for each vertex of face
+                int vertexNum = obj->faces[i].vertices[j];
+                glVertex3fv(obj->vertices[vertexNum]); // add vertex to polygon
             }
 
             glEnd();

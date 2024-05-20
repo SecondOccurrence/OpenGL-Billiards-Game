@@ -12,6 +12,8 @@
  *   Contributed by Kaden R, 34606207
  * - v1.3 (18/05/2024): added Shape struct to store a drawing Object3D and collision Object3D
  *   Contributed by Kaden R, 34606207
+ * - v1.4 (20/05/2024): changed Shape struct's Object3D variables to Object3D*
+ *   Contributed by Kaden R, 34606207
  *
  */
 
@@ -46,8 +48,8 @@ typedef struct {
 } Object3D;
 
 typedef struct {
-    Object3D drawing;
-    Object3D collision;
+    Object3D* drawing;
+    Object3D* collision;
 } Shape;
 
 
