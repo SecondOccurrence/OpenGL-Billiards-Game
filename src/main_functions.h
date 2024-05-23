@@ -16,6 +16,12 @@ void setLight(void);
 
 void setCamera(int cameraMode);
 
+void userInput();
+
+void displayRectangle();
+
+void displayTriangle();
+
 void myDisplay();
 
 void myReshape(int width, int height);

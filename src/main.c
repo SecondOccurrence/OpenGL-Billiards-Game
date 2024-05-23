@@ -18,6 +18,8 @@
 Object3D bone;
 
 int main(int argc, char** argv) {
+    userInput();
+
     glutInit(&argc,argv);
 
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB  | GLUT_DEPTH);

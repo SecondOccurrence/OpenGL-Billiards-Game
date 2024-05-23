@@ -220,7 +220,7 @@ void transformKeys(unsigned char key, int x, int y, Object3D* obj) {
         transformation[0] = -0.25;
         transformation[1] = 0.0;
         transformation[2] = 0.0;
-        translateObject(obj, transformation); 
+        translateObject(obj, transformation);
         break;
     case 'd':
         transformation[0] = 0.25;
@@ -293,5 +293,5 @@ void rotationKeys(int key, int x, int y, Object3D* obj) {
     case GLUT_KEY_DOWN:
         rotateObject(obj, -10, 'y');
         break;
-    } 
+    }
 }

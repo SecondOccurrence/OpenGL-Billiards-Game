@@ -26,7 +26,10 @@ Camera camera;
 
 extern Object3D bone;
 
-void init(void) { 
+int choice;
+int N;
+
+void init(void) {
     setLight();
 
     glClearColor(0.0, 0.0, 0.0, 1.0);
@@ -110,6 +113,65 @@ void setCamera(int cameraMode) {
     }
 }
 
+void userInput(){
+    printf("Triangle/Rectangle (T/R): ");
+    scanf("%s", &choice); // User input for the number of spheres
+
+    printf("Enter the number of spheres to display: ");
+    scanf("%d", &N); // User input for the number of spheres
+}
+
+void displayRectangle() {
+    // Initial positions for the first sphere
+    float initialX = 0.0;
+    float initialZ = 0.0;
+    // Draw multiple solid spheres
+
+    float sphereSpacing = 0.15; // Spacing between spheres
+
+    for (int i = 0; i < N; i++) {
+        if (i % 5 == 0 && i != 0) {
+            // New row, increment Z offset
+            initialZ += 0.15;
+        }
+
+        glPushMatrix();
+        glTranslatef(initialX + (i % 5) * sphereSpacing, 0.0, initialZ); // Translate each sphere
+        glColor3f(1.0, 0.0, 0.0); // red color
+        glutSolidSphere(0.1, 20, 20); // draw a solid sphere
+        glPopMatrix();
+    }
+    glFlush();
+}
+
+void displayTriangle() {
+
+    float sphereSpacing = 0.15; // Spacing between spheres
+
+    int spheresDrawn = 0;
+    int row = 1;
+
+    while (spheresDrawn < N) {
+        // Calculate the starting X position for the current row
+        float initialX = -0.15 * (row - 1) / 2.0;
+
+        for (int i = 0; i < row && spheresDrawn < N; i++) {
+            float x = initialX + i * sphereSpacing;
+            float z = row * sphereSpacing;
+
+            glPushMatrix();
+            glTranslatef(x, 0.0, z); // Translate each sphere
+            glColor3f(1.0, 0.0, 0.0); // red color
+            glutSolidSphere(0.1, 20, 20); // draw a solid sphere
+            glPopMatrix();
+
+            spheresDrawn++;
+        }
+        row++;
+    }
+    glFlush();
+}
+
 void myDisplay(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -124,6 +186,14 @@ void myDisplay(void) {
 
     displayAxis();
     displayGrid();
+
+    if((choice == 'R') || (choice == 'r')) {
+        displayRectangle();
+    }
+
+    if((choice == 'T') || (choice == 't')) {
+        displayTriangle();
+    }
 
     glFlush();
 }
