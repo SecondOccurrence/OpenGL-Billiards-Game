@@ -8,6 +8,14 @@
  *   Contributed by Josh S, 34195182
  * - v1.1 (10/05/2024): removed unused functions and refactor functions
  *   Contributed by Josh S, 34195182
+ * - v1.2 (13/05/2024): changed drawObject to suit changes in Object3D struct
+ *   Contributed by Kaden R, 34606207
+ * - v1.3 (16/05/2024): changed colour processing to suit changes with Colour type
+ *   Contributed by Kaden R, 34606207
+ * - v1.4 (18/05/2024): changed all Object3D* types to Object3D
+ *   Contributed by Kaden R, 34606207
+ * - v1.5 (20/05/2024): reverted change in v1.4
+ *   Contributed by Kaden R, 34606207
  *
  */
 
@@ -19,29 +27,22 @@
 #include <stdio.h>
 
 void drawObject(Object3D* obj) {
-    int facesSize = obj->nfaces;
+        //// draw the object
+        for (int i = 0; i < obj->nfaces; i++) { // for each face in object
+            //// draw the polygon
+            glBegin(GL_POLYGON); // begin drawing polygon
 
-    Face currentFace;
-    Point3 triVertices[3];
-    for(int i = 0; i < facesSize; i++) {
-        currentFace[0] = obj->faces[i][0];
-        currentFace[1] = obj->faces[i][1];
-        currentFace[2] = obj->faces[i][2];
+            // set colour
+            if (obj->hasColour) glColor3f(obj->faces[i].colour[0], obj->faces[i].colour[1], obj->faces[i].colour[2]);
+            else glColor3f(1,1,1); // default for no colour
+            for (int j = 0; j < obj->faces[i].vertexCount; j++) { // for each vertex of face
+                int vertexNum = obj->faces[i].vertices[j];
+                glVertex3fv(obj->vertices[vertexNum]); // add vertex to polygon
+            }
 
-        triVertices[0][0] = obj->vertices[currentFace[0]][0];
-        triVertices[0][1] = obj->vertices[currentFace[0]][1];
-        triVertices[0][2] = obj->vertices[currentFace[0]][2];
+            glEnd();
 
-        triVertices[1][0] = obj->vertices[currentFace[1]][0];
-        triVertices[1][1] = obj->vertices[currentFace[1]][1];
-        triVertices[1][2] = obj->vertices[currentFace[1]][2];
-
-        triVertices[2][0] = obj->vertices[currentFace[2]][0];
-        triVertices[2][1] = obj->vertices[currentFace[2]][1];
-        triVertices[2][2] = obj->vertices[currentFace[2]][2];
-
-        drawTriangle(triVertices);
-    }
+        }
 }
 
 void drawTriangle(Point3* vertices) {
@@ -84,7 +85,7 @@ void drawLine(Point3 p1, Point3 p2, Point3 rgb, GLfloat width) {
         glColor3fv(rgb);
         glVertex3fv(p1);
         glVertex3fv(p2);
-    glEnd(); 
+    glEnd();
 }
 
 void drawWiredGrid(const int rowsCols, const float length) {

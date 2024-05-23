@@ -18,10 +18,19 @@
 #include "data_structures/geometry.h"
 #include "movement/keyboard_utils.h"
 #include "rendering/animation/animation.h"
+#include "modeling/object_loading.h"
+
+#include <stdbool.h>
 
 const int TIMERMSECS = 20;
+Shape table;
 
 int main(int argc, char** argv) {
+    // Load objects
+    table.collision = readOFFFile("Table Collision_Simplified.off");
+    table.drawing   = readOFFFile("table_coloured.off");
+
+    // OpenGL/Glut stuff
     glutInit(&argc,argv);
 
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB  | GLUT_DEPTH);

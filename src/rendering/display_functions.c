@@ -8,6 +8,12 @@
  *   Contributed by Josh S, 34195182
  * - v1.1 (10/05/2024): removed globals
  *   Contributed by Josh S, 34195182
+ * - v1.2 (13/05/2024): added function to display an Object3D object
+ *   Contributed by Kaden R, 34606207
+ * - v1.3 (18/05/2024): changed all Object3D* types to Object3D
+ *   Contributed by Kaden R, 34606207
+ * - v1.4 (20/05/2024): reverted v1.3
+ *   Contributed by Kaden R, 34606207
  *
  */
 
@@ -31,6 +37,12 @@ void displayObject(ObjectsFlag objects_flag) {
         glTranslatef(ballProperties.position[0], ballProperties.position[1], ballProperties.position[2]);
         glutSolidSphere(ballProperties.radius, 10, 10);
         glPopMatrix();
+    }
+}
+
+void displayObject3D(Object3D* obj, ObjectsFlag objects_flag) {
+    if(objects_flag == OBJECTS_ENABLED) {
+        drawObject(obj);
     }
 }
 
