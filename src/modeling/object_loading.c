@@ -21,7 +21,7 @@
 #include "object_loading.h"
 
 #include "../../lib/opengl/opengl.h"
-#include "stdio.h"
+#include <stdio.h>
 
 Object3D* readOFFFile(const char* file_name) {
     FILE* fp;

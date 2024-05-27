@@ -21,12 +21,15 @@
 #include "math/vector_operations.h"
 #include "rendering/display_functions.h"
 #include "modeling/drawing.h"
+#include "modeling/object_loading.h"
 
 #include "globals/camera.h"
 #include "globals/objects.h"
 #include "globals/flags.h"
 
 Camera camera;
+
+Shape table;
 
 BallProperties ballProperties = {
     {0.5, 1.0, 0.0},
@@ -46,6 +49,9 @@ AxisFlag axis_flag = AXIS_ENABLED;
 ObjectsFlag objects_flag = OBJECTS_ENABLED;
 
 void init() { 
+    table.collision = readOFFFile("../public/3D-data/Table Collision_Simplified.off");
+    table.drawing   = readOFFFile("../public/3D-data/Table_Coloured.off");
+
     setLight();
 
     glClearColor(0.0, 0.0, 0.0, 1.0);
@@ -76,7 +82,7 @@ void setLight(void){
     GLfloat  mat_shininess[] =  {50.0};
 
     GLfloat  light_position[] =  {1.0, 1.0, 2.0, 0.0 };
-    GLfloat  lmodel_ambient[] =  {0.2, 0.2, 0.2, 1.0};
+    GLfloat  lmodel_ambient[] =  {0.7, 0.7, 0.7, 1.0};
 
     glLightfv (GL_LIGHT0, GL_POSITION, light_position);
 

@@ -18,26 +18,22 @@
 #include "data_structures/geometry.h"
 #include "movement/keyboard_utils.h"
 #include "rendering/animation/animation.h"
-#include "modeling/object_loading.h"
 
 #include <stdbool.h>
 
 const int TIMERMSECS = 20;
-Shape table;
+
+const int windowWidth = 1024;
+const int windowHeight = 786;
 
 int main(int argc, char** argv) {
-    // Load objects
-    table.collision = readOFFFile("Table Collision_Simplified.off");
-    table.drawing   = readOFFFile("table_coloured.off");
-
-    // OpenGL/Glut stuff
     glutInit(&argc,argv);
 
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB  | GLUT_DEPTH);
 
-    glutInitWindowSize(500,500);
+    glutInitWindowSize(windowWidth, windowHeight);
     glutInitWindowPosition(0,0);
-    glutCreateWindow("Exercise 2.1");
+    glutCreateWindow("ICT289");
 
     glutDisplayFunc(myDisplay);
 

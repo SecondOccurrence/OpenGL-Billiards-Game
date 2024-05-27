@@ -17,7 +17,6 @@
  *
  */
 
-
 #ifndef geometry_h
 #define geometry_h
 
@@ -35,14 +34,14 @@ typedef GLfloat Matrix4[4][4];
 typedef GLfloat Colour[3];
 
 typedef struct {
-    int vertexCount;                  // number of vertices
-    int vertices[MAX_FACE_VERTICES];  // the vertices
-    Colour colour;                    // colour of the face
+    int vertexCount;
+    int vertices[MAX_FACE_VERTICES];
+    Colour colour;
 } Face;
 
 typedef struct {
     int nvert, nfaces, nedges;
-    bool hasColour; // true if object has associated RGB values. Affects how OFF file is read and how object is rendered
+    bool hasColour; // Affects how OFF file is read and how object is rendered
     Point3* vertices;
     Face* faces;
 } Object3D;
@@ -51,6 +50,5 @@ typedef struct {
     Object3D* drawing;
     Object3D* collision;
 } Shape;
-
 
 #endif
