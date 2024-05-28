@@ -22,10 +22,12 @@
 #include "rendering/display_functions.h"
 #include "modeling/drawing.h"
 #include "modeling/object_loading.h"
+#include "input/user_input.h"
 
 #include "globals/camera.h"
 #include "globals/objects.h"
 #include "globals/flags.h"
+#include "globals/general.h"
 
 Camera camera;
 
@@ -47,10 +49,15 @@ AnimationFlag animation_flag = ANIMATION_DISABLED;
 GridFlag grid_flag = GRID_ENABLED;
 AxisFlag axis_flag = AXIS_ENABLED;
 ObjectsFlag objects_flag = OBJECTS_ENABLED;
+ObjectBallsShape object_balls_shape = TRIANGLE;
+
+int object_balls_amount = 0;
 
 void init() { 
-    table.collision = readOFFFile("../public/3D-data/Table Collision_Simplified.off");
-    table.drawing   = readOFFFile("../public/3D-data/Table_Coloured.off");
+    userInput();
+
+    table.collision = readOFFFile("./public/3D-data/Table Collision_Simplified.off");
+    table.drawing   = readOFFFile("./public/3D-data/Table_Coloured.off");
 
     setLight();
 

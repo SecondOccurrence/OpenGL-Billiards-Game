@@ -11,10 +11,6 @@
  *   Contributed by Josh S, 34195182
  * - v1.2 (13/05/2024): added function to display an Object3D object
  *   Contributed by Kaden R, 34606207
- * - v1.3 (18/05/2024): changed all Object3D* types to Object3D
- *   Contributed by Kaden R, 34606207
- * - v1.4 (20/05/2024): reverted v1.3
- *   Contributed by Kaden R, 34606207
  *
  */
 
@@ -24,6 +20,10 @@
 
 #include "../data_structures/flags.h"
 #include "../data_structures/geometry.h"
+
+void displayTriangle();
+
+void displayRectangle();
 
 void displayObject(ObjectsFlag objects_flag);
 

@@ -37,6 +37,13 @@ void myDisplay(void) {
     displayAxis(axis_flag);
     displayGrid(grid_flag);
 
+    if(object_balls_shape == TRIANGLE) {
+        displayTriangle();
+    }
+    else {
+        displayRectangle();
+    }
+
     glutSwapBuffers();
 }
 

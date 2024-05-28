@@ -17,4 +17,8 @@ typedef enum {
     OBJECTS_DISABLED = 0, OBJECTS_ENABLED = 1
 } ObjectsFlag;
 
+typedef enum {
+    TRIANGLE = 0, RECTANGLE = 1
+} ObjectBallsShape;
+
 #endif
