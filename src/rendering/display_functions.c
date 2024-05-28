@@ -79,11 +79,6 @@ void displayRectangle() {
 void displayObject(ObjectsFlag objects_flag) {
     if(objects_flag == OBJECTS_ENABLED) {
         glPushMatrix();
-        glColor3f(0.7 ,0.7, 0.7);
-        drawSquare(planeProperties.points);
-        glPopMatrix();
-
-        glPushMatrix();
         glColor3f(1.0, 1.0, 0.0);
         glTranslatef(ballProperties.position[0], ballProperties.position[1], ballProperties.position[2]);
         glutSolidSphere(ballProperties.radius, 10, 10);

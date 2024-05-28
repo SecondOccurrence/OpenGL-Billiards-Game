@@ -18,8 +18,7 @@
 #include "data_structures/geometry.h"
 #include "movement/keyboard_utils.h"
 #include "rendering/animation/animation.h"
-
-#include <stdbool.h>
+#include "input/user_input.h"
 
 const int TIMERMSECS = 20;
 

@@ -33,6 +33,7 @@ void myDisplay(void) {
               camera.lookat[0], camera.lookat[1], camera.lookat[2],
               camera.up[0], camera.up[1], camera.up[2]);
 
+    displayObject(objects_flag);
     displayObject3D(table.drawing, objects_flag);
     displayAxis(axis_flag);
     displayGrid(grid_flag);
