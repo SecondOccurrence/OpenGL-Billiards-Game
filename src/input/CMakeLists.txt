@@ -1,11 +1,13 @@
 cmake_minimum_required(VERSION 3.29)
 
 set(SOURCES
-    object_transformations.c
+    keyboard_utils.c
+    user_input.c
 )
 
 set(HEADERS
-    object_transformations.h
+    keyboard_utils.h
+    user_input.h
 )
 
 target_sources(output PRIVATE ${SOURCES} ${HEADERS})

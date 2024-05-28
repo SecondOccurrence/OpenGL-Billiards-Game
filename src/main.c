@@ -1,21 +1,30 @@
 /*
- * AUTHOR: Josh S
- * STUDENT NUMBER: 34195182
- * DATE: 24/4/2024
+ * FILE: main.c
+ * PURPOSE: Main program
+ * DATE: 30/04/2024
  *
- * DESCRIPTION: Main OpenGL program
+ * VERSION HISTORY:
+ * - v1.0 (30/04/2024): initial file state
+ *   Contributed by Josh S, 34195182
  *
  */
 
+
 #include "../lib/opengl/opengl.h"
 
-#include "main_functions.h"
+#include "initialisation.h"
+#include "gl_callback.h"
 
-#include "math/geometry.h"
-#include "modeling/drawing_utilities.h"
+#include "data_structures/geometry.h"
 #include "movement/keyboard_utils.h"
+#include "rendering/animation/animation.h"
 
-Object3D bone;
+#include <stdbool.h>
+
+const int TIMERMSECS = 20;
+
+const int windowWidth = 1024;
+const int windowHeight = 786;
 
 int main(int argc, char** argv) {
     userInput();
@@ -24,9 +33,9 @@ int main(int argc, char** argv) {
 
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB  | GLUT_DEPTH);
 
-    glutInitWindowSize(500,500);
+    glutInitWindowSize(windowWidth, windowHeight);
     glutInitWindowPosition(0,0);
-    glutCreateWindow("Exercise 2.1");
+    glutCreateWindow("ICT289");
 
     glutDisplayFunc(myDisplay);
 
@@ -37,6 +46,7 @@ int main(int argc, char** argv) {
 
     init();
 
+    glutTimerFunc(TIMERMSECS, animate, 0);
     glutMainLoop();
 
     return 0;

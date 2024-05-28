@@ -1,16 +1,19 @@
 /*
- * AUTHOR: Josh S
- * STUDENT NUMBER: 34195182
- * DATE: 24/04/2024
+ * FILE: drawing_utilities.h
+ * PURPOSE: function definitions for any general utilities to be used in drawing functions
+ * DATE: 30/04/2024
  *
- * DESCRIPTION: Declarations for 3D object utility functions
+ * VERSION HISTORY:
+ * - v1.0 (30/04/2024): initial file state
+ *   Contributed by Josh S, 34195182
  *
  */
+
 
 #ifndef drawing_h
 #define drawing_h
 
-#include "../math/geometry.h"
+#include "../data_structures/geometry.h"
 
 void centerOfMass(Point3 c, Object3D* obj);
 

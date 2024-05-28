@@ -1,13 +1,7 @@
 cmake_minimum_required(VERSION 3.29)
 
-set(SOURCES
-    display_functions.c
-)
-
 set(HEADERS
-    display_functions.h
+    camera.h
+    flags.h
 )
-
 target_sources(output PRIVATE ${SOURCES} ${HEADERS})
-
-add_subdirectory(animation)
