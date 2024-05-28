@@ -7,5 +7,6 @@ extern AnimationFlag animation_flag;
 extern GridFlag grid_flag;
 extern AxisFlag axis_flag;
 extern ObjectsFlag objects_flag;
+extern ObjectBallsShape object_balls_shape;
 
 #endif
