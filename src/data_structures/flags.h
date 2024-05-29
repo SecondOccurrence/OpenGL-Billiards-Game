@@ -21,4 +21,12 @@ typedef enum {
     TRIANGLE = 0, RECTANGLE = 1
 } ObjectBallsShape;
 
+typedef enum {
+    SPHERE_DISABLED = 0, SPHERE_ENABLED = 1
+} SphereMovingFlag;
+
+typedef enum {
+    ROTATION_DISABLED = 0, ROTATION_ENABLED = 1
+} RotationFlag;
+
 #endif

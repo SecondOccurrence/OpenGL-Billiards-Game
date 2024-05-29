@@ -11,7 +11,8 @@
  *   Contributed by Josh S, 34195182
  * - v1.1 (10/05/2024): restructured globals
  *   Contributed by Josh S, 34195182
- *
+ * - v1.1 (14/05/2024): Set Camera position to ball position and adding Sphere flag
+ *   Contributed by Abhijeet S, 34777306
  */
 
 #include "../lib/opengl/opengl.h"
@@ -23,6 +24,7 @@
 #include "modeling/drawing.h"
 #include "modeling/object_loading.h"
 #include "input/user_input.h"
+#include "rendering/animation/animation.h"
 
 #include "globals/camera.h"
 #include "globals/objects.h"
@@ -51,6 +53,10 @@ AxisFlag axis_flag = AXIS_ENABLED;
 ObjectsFlag objects_flag = OBJECTS_ENABLED;
 ObjectBallsShape object_balls_shape = TRIANGLE;
 
+SphereMovingFlag Sphere_moving_flag = SPHERE_ENABLED;
+RotationFlag rotation_flag_c = ROTATION_DISABLED;
+RotationFlag rotation_flag_a = ROTATION_DISABLED;
+
 int object_balls_amount = 0;
 
 void init() { 
@@ -66,9 +72,9 @@ void init() {
     camera.position[1] = 1.1f;
     camera.position[2] = 2.f;
 
-    camera.lookat[0] = 0.f;
-    camera.lookat[1] = 0.f;
-    camera.lookat[2] = 0.f;
+    camera.lookat[0] = ballProperties.position[0];
+    camera.lookat[1] = ballProperties.position[1];
+    camera.lookat[2] = ballProperties.position[2];
 
     camera.up[0] = 0.f;
     camera.up[1] = 1.f;
@@ -79,6 +85,9 @@ void init() {
 
     camera.cameraMode= PERSPECTIVE;
     setCamera(camera.cameraMode);
+
+    previousFrameTime = glutGet(GLUT_ELAPSED_TIME);
+    glutIdleFunc(animate);
 }
 
 void setLight(void){

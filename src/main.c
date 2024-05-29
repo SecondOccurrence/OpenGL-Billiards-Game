@@ -16,7 +16,7 @@
 #include "gl_callback.h"
 
 #include "data_structures/geometry.h"
-#include "movement/keyboard_utils.h"
+#include "input/keyboard_utils.h"
 #include "rendering/animation/animation.h"
 #include "input/user_input.h"
 
@@ -25,8 +25,11 @@ const int TIMERMSECS = 20;
 const int windowWidth = 1024;
 const int windowHeight = 786;
 
+int previousFrameTime = 0;
+int currentFrameTime = 0;
+
 int main(int argc, char** argv) {
-    userInput();
+    //userInput();
 
     glutInit(&argc,argv);
 
@@ -41,11 +44,9 @@ int main(int argc, char** argv) {
     glutReshapeFunc(myReshape);
 
     glutKeyboardFunc(keys);
-    //glutSpecialFunc(specialKeys);
 
     init();
 
-    glutTimerFunc(TIMERMSECS, animate, 0);
     glutMainLoop();
 
     return 0;

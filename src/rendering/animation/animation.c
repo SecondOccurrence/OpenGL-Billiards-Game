@@ -12,7 +12,8 @@
  *   Contributed by Josh S, 34195182
  * - v1.3 (08/05/2024): added ability to start/stop animation
  *   Contributed by Josh S, 34195182
- *
+ * - v1.3 (14/05/2024): added the camera rotation code and global variables
+ *   Contributed by Abhijeet S, 34777306
  */
 
 #include "animation.h"
@@ -23,22 +24,35 @@
 
 #include "../../globals/flags.h"
 #include "../../globals/objects.h"
+#include "../../globals/camera.h"
+#include "../../globals/general.h"
+
 
 #include <math.h>
 
 extern const int TIMERMSECS;
 
+#include <stdio.h>
+
 void animate() {
-    if(animation_flag == ANIMATION_ENABLED) {
-        ballMovement(0.02);
+    const int targetFrameRate = 30;
+
+    currentFrameTime = glutGet(GLUT_ELAPSED_TIME);
+    float changeInSeconds = (currentFrameTime - previousFrameTime) / 1000.0f;
+
+    if(animation_flag == ANIMATION_DISABLED || changeInSeconds < targetFrameRate) {
+        rotateCameraContinuous(changeInSeconds);
+
+        ballMovement(changeInSeconds);
     }
 
+    previousFrameTime = currentFrameTime;
+
     glutPostRedisplay();
-    glutTimerFunc(TIMERMSECS, animate, 0);
 }
 
 void ballMovement(float seconds) {
-    const Vector3 gravity = {0.0f, -9.81f, 0.0f};
+    const Vector3 gravity = {0.0f, -7.0f, 0.0f};
 
     GLfloat distance = distanceToPlane(ballProperties.position, planeProperties.points[0], planeProperties.points[1], planeProperties.points[2]);
     if(distance < ballProperties.radius) {
@@ -56,7 +70,7 @@ void ballMovement(float seconds) {
 
     ballProperties.velocity[1] += gravity[1] * seconds;
 
-    const GLfloat threshold = 0.05f;
+    const GLfloat threshold = 0.005f;
     for(int i = 0; i < 3; i++) {
         if(fabsf(ballProperties.velocity[i]) < threshold) {
             ballProperties.velocity[i] = 0.0f;
@@ -64,4 +78,40 @@ void ballMovement(float seconds) {
 
         ballProperties.position[i] += ballProperties.velocity[i] * seconds;
     }
+}
+
+void rotateCameraContinuous(float changeInSeconds) {
+    double rotationSpeed = 60.0;
+    if (rotation_flag_c == ROTATION_ENABLED) {
+        rotateCameraClockwise(&camera, rotationSpeed * changeInSeconds);
+    } 
+    else if (rotation_flag_a == ROTATION_ENABLED) {
+        rotateCameraCounterclockwise(&camera, rotationSpeed * changeInSeconds);
+    }
+}
+
+void rotateCameraClockwise(Camera* camera, float angle) {
+    float radians = angle * (M_PI / 180.0);
+
+    Vector3 direction;
+    subtractVectors(direction, camera->lookat, camera->position);
+
+    float newX = direction[0] * cos(radians) - direction[2] * sin(radians);
+    float newZ = direction[0] * sin(radians) + direction[2] * cos(radians);
+
+    camera->position[0] = camera->lookat[0] - newX;
+    camera->position[2] = camera->lookat[2] - newZ;
+}
+
+void rotateCameraCounterclockwise(Camera* camera, float angle) {
+    float radians = angle * (M_PI / 180.0);
+
+    Vector3 direction;
+    subtractVectors(direction, camera->lookat, camera->position);
+
+    float newX = direction[0] * cos(radians) + direction[2] * sin(radians);
+    float newZ = -direction[0] * sin(radians) + direction[2] * cos(radians);
+
+    camera->position[0] = camera->lookat[0] - newX;
+    camera->position[2] = camera->lookat[2] - newZ;
 }

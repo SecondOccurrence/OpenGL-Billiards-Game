@@ -24,7 +24,7 @@ void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid
 
 BallProperties objectKeys(unsigned char key, BallProperties* objectProperties);
 
-void cameraKeys(unsigned char key, Camera* camera);
+void cameraKeys(unsigned char key, Camera* camera, RotationFlag* rotation_flag_a, RotationFlag* rotation_flag_c);
 
 void strafeLeft(Camera* camera);
 

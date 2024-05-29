@@ -8,14 +8,15 @@
  *   Contributed by Josh S, 34195182
  * - v1.1 (10/05/2024): restructured globals
  *   Contributed by Josh S, 34195182
- *
+ * - v1.1 (14/05/2024): changing gluLookAt
+ *   Contributed by Abhijeet S, 34777306
  */
 
 #include "../lib/opengl/opengl.h"
 
 #include "data_structures/geometry.h"
 #include "rendering/display_functions.h"
-#include "movement/keyboard_utils.h"
+#include "input/keyboard_utils.h"
 
 #include "globals/camera.h"
 #include "globals/flags.h"
@@ -29,8 +30,9 @@ void myDisplay(void) {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
+    /*** */
     gluLookAt(camera.position[0], camera.position[1], camera.position[2],
-              camera.lookat[0], camera.lookat[1], camera.lookat[2],
+              ballProperties.position[0], ballProperties.position[1], ballProperties.position[2],
               camera.up[0], camera.up[1], camera.up[2]);
 
     displayObject(objects_flag);
@@ -105,7 +107,7 @@ void keys(unsigned char key, int x, int y) {
 
     ballProperties = objectKeys(key, &ballProperties);
 
-    cameraKeys(key, &camera);
+    cameraKeys(key, &camera, &rotation_flag_a, &rotation_flag_c);
 
     glutPostRedisplay();
 }

@@ -92,7 +92,7 @@ BallProperties objectKeys(unsigned char key, BallProperties* objectProperties) {
     return *objectProperties;
 }
 
-void cameraKeys(unsigned char key, Camera* camera) {
+void cameraKeys(unsigned char key, Camera* camera, RotationFlag* rotation_flag_c, RotationFlag* rotation_flag_a) {
     switch(key) {
     case 'X':
         strafeLeft(camera);
@@ -131,6 +131,26 @@ void cameraKeys(unsigned char key, Camera* camera) {
         break;
     case 'L':
         viewRight(camera);
+        break;
+    case 'N':
+    case 'n':
+        *rotation_flag_c = ROTATION_DISABLED;
+        if(*rotation_flag_a == ROTATION_DISABLED) {
+            *rotation_flag_a = ROTATION_ENABLED;
+        }
+        else {
+            *rotation_flag_a = ROTATION_DISABLED;
+        }
+        break;
+    case 'M':
+    case 'm':
+        *rotation_flag_a = ROTATION_DISABLED;
+        if(*rotation_flag_c == ROTATION_DISABLED) {
+            *rotation_flag_c = ROTATION_ENABLED;
+        }
+        else {
+            *rotation_flag_c = ROTATION_DISABLED;
+        }
         break;
     default:
         break;
