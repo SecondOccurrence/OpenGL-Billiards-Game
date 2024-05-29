@@ -18,8 +18,16 @@
 
 #include "../../../lib/opengl/opengl.h"
 
+#include "../../data_structures/camera.h"
+
 void animate();
 
 void ballMovement(float time);
+
+void rotateCameraContinuous(float changeInSeconds);
+
+void rotateCameraClockwise(Camera* camera, float angle);
+
+void rotateCameraCounterclockwise(Camera* camera, float angle);
 
 #endif
