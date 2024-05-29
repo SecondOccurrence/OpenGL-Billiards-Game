@@ -107,6 +107,13 @@ void init() {
     camera.up[1] = 1.f;
     camera.up[2] = 0.f;
 
+    // Store initial values
+    for (int i = 0; i < 3; ++i) {
+        camera.initialPosition[i] = camera.position[i];
+        camera.initialLookat[i] = camera.lookat[i];
+        camera.initialUp[i] = camera.up[i];
+    }
+
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 

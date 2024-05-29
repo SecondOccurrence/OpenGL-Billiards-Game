@@ -101,7 +101,7 @@ void rotateCameraContinuous(float changeInSeconds) {
     double rotationSpeed = 60.0;
     if (rotation_flag_c == ROTATION_ENABLED) {
         rotateCameraClockwise(&camera, rotationSpeed * changeInSeconds);
-    } 
+    }
     else if (rotation_flag_a == ROTATION_ENABLED) {
         rotateCameraCounterclockwise(&camera, rotationSpeed * changeInSeconds);
     }
@@ -111,24 +111,38 @@ void rotateCameraClockwise(Camera* camera, float angle) {
     float radians = angle * (M_PI / 180.0);
 
     Vector3 direction;
-    subtractVectors(direction, camera->lookat, camera->position);
+    subtractVectors(direction, ballProperties.ball.position, camera->position);
 
+    // Normalize the direction vector
+    float distance = sqrt(direction[0] * direction[0] + direction[2] * direction[2]);
+    direction[0] /= distance;
+    direction[2] /= distance;
+
+    // Calculate the new position
     float newX = direction[0] * cos(radians) - direction[2] * sin(radians);
     float newZ = direction[0] * sin(radians) + direction[2] * cos(radians);
 
-    camera->position[0] = camera->lookat[0] - newX;
-    camera->position[2] = camera->lookat[2] - newZ;
+    // Scale the new direction to maintain the same distance from the ball
+    camera->position[0] = ballProperties.ball.position[0] - newX * distance;
+    camera->position[2] = ballProperties.ball.position[2] - newZ * distance;
 }
 
 void rotateCameraCounterclockwise(Camera* camera, float angle) {
     float radians = angle * (M_PI / 180.0);
 
     Vector3 direction;
-    subtractVectors(direction, camera->lookat, camera->position);
+    subtractVectors(direction, ballProperties.ball.position, camera->position);
 
+    // Normalize the direction vector
+    float distance = sqrt(direction[0] * direction[0] + direction[2] * direction[2]);
+    direction[0] /= distance;
+    direction[2] /= distance;
+
+    // Calculate the new position
     float newX = direction[0] * cos(radians) + direction[2] * sin(radians);
     float newZ = -direction[0] * sin(radians) + direction[2] * cos(radians);
 
-    camera->position[0] = camera->lookat[0] - newX;
-    camera->position[2] = camera->lookat[2] - newZ;
+    // Scale the new direction to maintain the same distance from the ball
+    camera->position[0] = ballProperties.ball.position[0] - newX * distance;
+    camera->position[2] = ballProperties.ball.position[2] - newZ * distance;
 }
