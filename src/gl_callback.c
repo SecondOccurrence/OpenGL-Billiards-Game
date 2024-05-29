@@ -10,6 +10,8 @@
  *   Contributed by Josh S, 34195182
  * - v1.1 (14/05/2024): changing gluLookAt
  *   Contributed by Abhijeet S, 34777306
+ * - v1.2 (29/05/2024): added close function as callback for glCloseFunc
+ *   Contributed by Kaden R, 34606207
  */
 
 #include "../lib/opengl/opengl.h"
@@ -17,6 +19,7 @@
 #include "data_structures/geometry.h"
 #include "rendering/display_functions.h"
 #include "input/keyboard_utils.h"
+#include "modeling/object_loading.h"
 
 #include "globals/camera.h"
 #include "globals/flags.h"

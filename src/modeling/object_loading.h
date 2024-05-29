@@ -15,11 +15,14 @@
  *   Contributed by Kaden R, 34606207
  * - v1.4 (20/05/2024): Reverted change from Object3D* to Object3D (is now Object3D*)
  *   Contributed by Kaden R, 34606207
+ * - v1.5 (29/05/2024): added function to free a Shape's memory
+ *                      added header guard
+ *   Contributed by Kaden R, 34606207
  *
  */
 
-#ifndef OBJECT_LOADING_C
-#define OBJECT_LOADING_C
+#ifndef OBJECT_LOADING_H
+#define OBJECT_LOADING_H
 
 #include "../data_structures/geometry.h"
 
@@ -28,3 +31,4 @@ Object3D* readOFFFile(const char* file_name);
 void exitApplication(void);
 
 #endif
+

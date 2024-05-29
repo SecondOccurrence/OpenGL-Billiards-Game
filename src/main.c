@@ -6,6 +6,8 @@
  * VERSION HISTORY:
  * - v1.0 (30/04/2024): initial file state
  *   Contributed by Josh S, 34195182
+ * - v1.1 (29/05/2024): added glutCloseFunc to run when closing the game
+ *   Contributed by Kaden R, 34606207
  *
  */
 
@@ -45,6 +47,8 @@ int main(int argc, char** argv) {
     glutReshapeFunc(myReshape);
 
     glutKeyboardFunc(keys);
+
+    glutCloseFunc(close);
 
     init();
 
