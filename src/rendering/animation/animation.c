@@ -27,14 +27,9 @@
 #include "../../globals/camera.h"
 #include "../../globals/general.h"
 
-
 #include <math.h>
 
 extern const int TIMERMSECS;
-
-#include <stdio.h>
-
-float accumulatedTime = 0;
 
 void animate() {
     const int targetFrameRate = 60;
@@ -55,14 +50,19 @@ void animate() {
     glutPostRedisplay();
 }
 
+bool previouslyCollided = false;
+
 void ballMovement(float seconds) {
     const Vector3 gravity = {0.0f, -7.5f, 0.0f};
     const float collisionOffset = 0.2f;
+    const GLfloat velocityThreshold = 0.1f;
 
     GLfloat distance;
     PlaneProperties collider;
+    GLfloat velocity;
     int tableWallSize = sizeof(table.colliders) / sizeof(table.colliders[0]);
     for(int i = 0; i < tableWallSize; i++) {
+
         collider = table.colliders[i];
         distance = distanceToPlane(ballProperties.ball.position, collider.points[0], collider.points[1], collider.points[2]);
 
@@ -73,18 +73,23 @@ void ballMovement(float seconds) {
             GLfloat perpendicular = calcDotProduct(ballProperties.velocity, planeNormal);
 
             for(int j = 0; j < 3; j++) {
-                ballProperties.velocity[j] = (ballProperties.velocity[j] - 2 * perpendicular * planeNormal[j]) * collider.bounciness;
+                velocity = ballProperties.velocity[j] - 2 * perpendicular * planeNormal[j];
+                if(velocity > velocityThreshold) {
+                    velocity *= collider.bounciness;
+                }
+                ballProperties.velocity[j] = velocity;
             }
 
             ballProperties = resolveCollision(&ballProperties, distance, planeNormal, i);
+
+            break;
         }
     }
 
     ballProperties.velocity[1] += gravity[1] * seconds;
 
-    const GLfloat threshold = 0.005f;
     for(int i = 0; i < 3; i++) {
-        if(fabsf(ballProperties.velocity[i]) < threshold) {
+        if(fabsf(ballProperties.velocity[i]) < velocityThreshold) {
             ballProperties.velocity[i] = 0.0f;
         }
 
