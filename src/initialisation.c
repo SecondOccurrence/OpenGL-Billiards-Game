@@ -60,6 +60,8 @@ RotationFlag rotation_flag_a = ROTATION_DISABLED;
 int object_balls_amount = 0;
 
 void init() { 
+    userInput();
+
     table.collision = readOFFFile("../public/3D-data/Table Collision_Simplified.off");
     table.drawing   = readOFFFile("../public/3D-data/Table_Coloured.off");
 
