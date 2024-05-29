@@ -15,6 +15,8 @@
  *   Contributed by Kaden R, 34606207
  * - v1.4 (20/05/2024): Reverted change from Object3D* to Object3D (is now Object3D*)
  *   Contributed by Kaden R, 34606207
+ * - v1.5 (29/05/2024): added function to free a Shape's memory
+ *   Contributed by Kaden R, 34606207
  *
  */
 

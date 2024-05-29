@@ -6,6 +6,8 @@
  * VERSION HISTORY:
  * - v1.0 (30/04/2024): initial file state
  *   Contributed by Josh S, 34195182
+ * - v1.1 (29/05/2024): added glutCloseFunc to run when closing the game
+ *   Contributed by Kaden R, 34606207
  *
  */
 
@@ -18,8 +20,11 @@
 #include "data_structures/geometry.h"
 #include "input/keyboard_utils.h"
 #include "rendering/animation/animation.h"
-#include "input/user_input.h"
 #include "modeling/object_loading.h"
+#include "input/user_input.h"
+
+#include "globals/general.h"
+#include "globals/objects.h"
 
 const int TIMERMSECS = 20;
 

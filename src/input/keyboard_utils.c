@@ -12,7 +12,9 @@
  *   Contributed by Josh S, 34195182
  * - v1.2 (12/05/2024): added keys to alter ball velocity
  *   Contributed by Josh S, 34195182
- * - v1.3 (30/05/2024): remove unused functions
+ * - v1.3 (29/05/2024): escape key (key 27) now leaves main loop instead of exits
+ *   Contributed by Kaden R, 34606207
+ * - v1.4 (30/05/2024): remove unused functions
  *   Contributed by Josh S, 34195182
  *
  */
@@ -65,11 +67,9 @@ void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid
     case ' ':
         if(*spacebarPressFlag == 0) {
             *spacebarPressFlag = 1;
-            printf("pressed");
         }
         else {
             *spacebarPressFlag = 0;
-            printf("unpressed");
         }
         break;
     case 27:

@@ -21,6 +21,8 @@
 #include "../data_structures/flags.h"
 #include "../data_structures/geometry.h"
 
+void initialiseBalls(int N);
+
 void displayTriangle();
 
 void displayRectangle();
