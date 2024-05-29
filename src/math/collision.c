@@ -34,7 +34,7 @@ GLfloat distanceToPlane(Point3 ballCenter, Point3 p1, Point3 p2, Point3 p3) {
 BallProperties resolveCollision(BallProperties* ball, GLfloat distance, Vector3 planeNormal) {
     for(int i = 0; i < 3; i++) {
         // FUTURE ISSUE: collision on top fabsf always positive might need to be negative
-        ball->position[i] += (ball->radius - distance) * fabsf(planeNormal[i]);
+        ball->ball.position[i] += (ball->ball.radius - distance) * fabsf(planeNormal[i]);
     }
     return *ball;
 }

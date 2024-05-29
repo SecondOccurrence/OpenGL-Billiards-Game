@@ -36,9 +36,9 @@ Camera camera;
 Shape table;
 
 BallProperties ballProperties = {
-    {0.5, 1.0, 0.0},
+    {{-2.5, 0.1, 0.0}, 0.1},
     {0.0, 0.0, 0.0},
-    1.0f, 0.1};
+    1.0f};
 PlaneProperties planeProperties = {
     {{-5.0, 0.0, -5.0},
      { 5.0, 0.0, -5.0},
@@ -60,7 +60,6 @@ RotationFlag rotation_flag_a = ROTATION_DISABLED;
 int object_balls_amount = 0;
 
 void init() { 
-    table.collision = readOFFFile("../public/3D-data/Table Collision_Simplified.off");
     table.drawing   = readOFFFile("../public/3D-data/Table_Coloured.off");
 
     setLight();
@@ -68,13 +67,13 @@ void init() {
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glColor3f(1.0, 0.0, 0.0);
 
-    camera.position[0] = 1.f;
-    camera.position[1] = 1.1f;
-    camera.position[2] = 2.f;
+    camera.position[0] = -4.0f;
+    camera.position[1] = 0.5f;
+    camera.position[2] = 0.0f;
 
-    camera.lookat[0] = ballProperties.position[0];
-    camera.lookat[1] = ballProperties.position[1];
-    camera.lookat[2] = ballProperties.position[2];
+    camera.lookat[0] = ballProperties.ball.position[0];
+    camera.lookat[1] = ballProperties.ball.position[1];
+    camera.lookat[2] = ballProperties.ball.position[2];
 
     camera.up[0] = 0.f;
     camera.up[1] = 1.f;

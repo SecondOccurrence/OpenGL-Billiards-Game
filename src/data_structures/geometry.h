@@ -46,9 +46,4 @@ typedef struct {
     Face* faces;
 } Object3D;
 
-typedef struct {
-    Object3D* drawing;
-    Object3D* collision;
-} Shape;
-
 #endif

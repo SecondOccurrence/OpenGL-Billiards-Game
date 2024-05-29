@@ -58,8 +58,8 @@ void animate() {
 void ballMovement(float seconds) {
     const Vector3 gravity = {0.0f, -7.5f, 0.0f};
 
-    GLfloat distance = distanceToPlane(ballProperties.position, planeProperties.points[0], planeProperties.points[1], planeProperties.points[2]);
-    if(distance < ballProperties.radius) {
+    GLfloat distance = distanceToPlane(ballProperties.ball.position, planeProperties.points[0], planeProperties.points[1], planeProperties.points[2]);
+    if(distance < ballProperties.ball.radius) {
         Vector3 planeNormal;
         calcUnitNormal(planeNormal, planeProperties.points[0], planeProperties.points[1], planeProperties.points[2]);
 
@@ -80,7 +80,7 @@ void ballMovement(float seconds) {
             ballProperties.velocity[i] = 0.0f;
         }
 
-        ballProperties.position[i] += ballProperties.velocity[i] * seconds;
+        ballProperties.ball.position[i] += ballProperties.velocity[i] * seconds;
     }
 }
 

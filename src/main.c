@@ -29,7 +29,7 @@ int previousFrameTime = 0;
 int currentFrameTime = 0;
 
 int main(int argc, char** argv) {
-    //userInput();
+    userInput();
 
     glutInit(&argc,argv);
 

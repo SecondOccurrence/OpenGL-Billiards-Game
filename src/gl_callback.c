@@ -30,9 +30,8 @@ void myDisplay(void) {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    /*** */
     gluLookAt(camera.position[0], camera.position[1], camera.position[2],
-              ballProperties.position[0], ballProperties.position[1], ballProperties.position[2],
+              ballProperties.ball.position[0], ballProperties.ball.position[1], ballProperties.ball.position[2],
               camera.up[0], camera.up[1], camera.up[2]);
 
     displayObject(objects_flag);
