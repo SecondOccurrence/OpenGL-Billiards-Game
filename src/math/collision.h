@@ -28,6 +28,8 @@ void ballPlaneCollision(Ball* cueBall, PlaneProperties* collider, int planeIndex
 
 Ball resolveCollision(Ball* ball, GLfloat distance, Vector3 planeNormal, int wallIteration);
 
+int collidesWithPocket(Ball* ball1, Sphere* pocket);
+
 void ballToBallCollision(Ball* cueBall, Ball* otherBall);
 
 Ball resolveBallCollision(Ball* ball1, Vector3* normal);

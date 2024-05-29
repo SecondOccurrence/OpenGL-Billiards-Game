@@ -22,7 +22,6 @@ typedef struct {
 
 typedef struct {
     Object3D* drawing;
-    //Object3D* collision;
     /*
      * 0 - floor
      * 1 - wall found in negative z direction
@@ -31,7 +30,7 @@ typedef struct {
      * 4 - wall found in negative x direction
      */
     PlaneProperties colliders[5];
-    // insert 6 spheres for the pockets
+    Sphere pockets[6];
 } Shape;
 
 #endif

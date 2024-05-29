@@ -36,6 +36,7 @@ Point3 potentialCameraPosition = {0.0f, 0.0f, 0.0f};
 
 Shape table = {
     NULL,
+    // colliders
     {{{{-4.0, 0.0, -2.0},
        { 4.0, 0.0, -2.0},
        {-4.0, 0.0,  2.0},
@@ -59,7 +60,15 @@ Shape table = {
      {{{-4.0, 0.2, -2.0},
        {-4.0, 0.2,  2.0},
        {-4.0, 0.0, -2.0},
-       {-4.0, 0.0,  2.0}}, 0.9, 0.9}} // -x
+       {-4.0, 0.0,  2.0}}, 0.9, 0.9}}, // -x
+
+    // pockets
+    {{{-4.0f, 0.0f, -2.0f}, 0.2},
+     {{ 0.0f, 0.0f, -2.0f}, 0.2},
+     {{ 4.0f, 0.0f, -2.0f}, 0.2},
+     {{-4.0f, 0.0f,  2.0f}, 0.2},
+     {{ 0.0f, 0.0f,  2.0f}, 0.2},
+     {{ 4.0f, 0.0f,  2.0f}, 0.2}}
 };
 
 Ball cueBall = {
@@ -76,7 +85,7 @@ PlaneProperties planeProperties = {
     0.8, 0.9
 };
 
-AnimationFlag animation_flag = ANIMATION_DISABLED;
+AnimationFlag animation_flag = ANIMATION_ENABLED;
 GridFlag grid_flag = GRID_ENABLED;
 AxisFlag axis_flag = AXIS_ENABLED;
 ObjectsFlag objects_flag = OBJECTS_ENABLED;

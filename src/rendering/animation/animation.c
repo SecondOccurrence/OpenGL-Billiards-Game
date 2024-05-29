@@ -45,7 +45,9 @@ void animate() {
     float targetFrameTime = 1.0f / targetFrameRate;
     if(changeInSeconds >= targetFrameTime) {
         if(spacebarPressed == 1) {
-            spacebarHoldTime += 0.2f;
+            if(spacebarHoldTime < 15.0f) {
+                spacebarHoldTime += 0.2f;
+            }
         }
         else {
             Vector3 direction;
@@ -66,6 +68,8 @@ void animate() {
 
 void callAnimations(float deltaTime) {
     if(animation_flag == ANIMATION_ENABLED) {
+        checkPockets();
+
         ballMovement(deltaTime);
 
         rotateCameraContinuous(deltaTime);
@@ -74,13 +78,24 @@ void callAnimations(float deltaTime) {
     }
 }
 
-void resetCamera(Camera* camera, Point3* newLookat, Point3* newPosition) {
-    Point3 newUp = {0.0f, 1.0f, 0.0f};
-    for (int i = 0; i < 3; ++i) {
-        camera->position[i] = (*newPosition)[i];
-        camera->lookat[i] = (*newLookat)[i];
-        camera->up[i] = newUp[i];
+void checkPockets() {
+    Point3 cameraOrigin = {-4.0f, 0.5f, 0.0f};
+    Point3 cueBallSpawn = {-2.5f, 0.1f, 0.0f};
+    const int pockets = 6;
+    // for the cue ball
+    for(int i = 0; i < pockets; i++) {
+        int collision = collidesWithPocket(&cueBall, &table.pockets[i]);
+        if(collision == 1) {
+            for(int j = 0; j < 3; j++) {
+                camera.position[j] = cameraOrigin[j];
+                potentialCameraPosition[j] = cameraOrigin[j];
+                cueBall.ball.position[j] = cueBallSpawn[j];
+                cueBall.velocity[j] = 0.0f;
+            }
+        }
     }
+
+    // for the object balls
 }
 
 void ballMovement(float seconds) {
@@ -202,4 +217,13 @@ void updateCameraPosition(float deltaTime) {
     }
 
     previousMoveCheck = isCurrentlyMoving;
+}
+
+void resetCamera(Camera* camera, Point3* newLookat, Point3* newPosition) {
+    Point3 newUp = {0.0f, 1.0f, 0.0f};
+    for (int i = 0; i < 3; ++i) {
+        camera->position[i] = (*newPosition)[i];
+        camera->lookat[i] = (*newLookat)[i];
+        camera->up[i] = newUp[i];
+    }
 }

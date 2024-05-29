@@ -67,6 +67,23 @@ Ball resolveCollision(Ball* ball, GLfloat distance, Vector3 planeNormal, int wal
     return *ball;
 }
 
+int collidesWithPocket(Ball* ball, Sphere* pocket) {
+    int foundCollision = 0;
+
+    Vector3 collisionNormal;
+    subtractVectors(collisionNormal, ball->ball.position, pocket->position);
+    GLfloat distance = calcDotProduct(collisionNormal, collisionNormal);
+    for(int i = 0; i < 3; i++) {
+        collisionNormal[i] /= distance;
+    }
+
+    if(distance <= (ball->ball.radius + pocket->radius)) {
+        foundCollision = 1;        
+    }
+
+    return foundCollision;
+}
+
 void ballToBallCollision(Ball* cueBall, Ball* otherBall) {
     Vector3 collisionNormal;
     subtractVectors(collisionNormal, cueBall->ball.position, otherBall->ball.position);
