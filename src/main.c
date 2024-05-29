@@ -40,8 +40,6 @@ int main(int argc, char** argv) {
     glutInitWindowPosition(0,0);
     glutCreateWindow("ICT289");
 
-    userInput();
-
     glutDisplayFunc(myDisplay);
 
     glutReshapeFunc(myReshape);
