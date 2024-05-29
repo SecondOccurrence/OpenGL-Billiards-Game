@@ -22,6 +22,12 @@
 
 void animate();
 
+void callAnimations(float deltaTime);
+
+void updateCameraPosition(float deltaTime);
+
+void resetCamera(Camera* camera, Point3* newLookat, Point3* newPosition);
+
 void ballMovement(float time);
 
 void rotateCameraContinuous(float changeInSeconds);

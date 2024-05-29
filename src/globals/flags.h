@@ -12,4 +12,6 @@ extern SphereMovingFlag Sphere_moving_flag;
 extern RotationFlag rotation_flag_c;
 extern RotationFlag rotation_flag_a;
 
+extern int previousMoveCheck;
+
 #endif

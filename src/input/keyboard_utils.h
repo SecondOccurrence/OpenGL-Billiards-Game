@@ -22,7 +22,7 @@
 
 void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid_flag, AxisFlag* axis_flag, ObjectsFlag* objects_flag);
 
-BallProperties objectKeys(unsigned char key, BallProperties* objectProperties);
+CueBall objectKeys(unsigned char key, CueBall* objectProperties);
 
 void cameraKeys(unsigned char key, Camera* camera, RotationFlag* rotation_flag_a, RotationFlag* rotation_flag_c);
 

@@ -81,8 +81,8 @@ void displayObject(ObjectsFlag objects_flag) {
     if(objects_flag == OBJECTS_ENABLED) {
         glPushMatrix();
         glColor3f(1.0, 1.0, 0.0);
-        glTranslatef(ballProperties.ball.position[0], ballProperties.ball.position[1], ballProperties.ball.position[2]);
-        glutSolidSphere(ballProperties.ball.radius, 10, 10);
+        glTranslatef(cueBall.ball.position[0], cueBall.ball.position[1], cueBall.ball.position[2]);
+        glutSolidSphere(cueBall.ball.radius, 10, 10);
         glPopMatrix();
     }
 }

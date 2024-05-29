@@ -31,7 +31,7 @@ void myDisplay(void) {
     glLoadIdentity();
 
     gluLookAt(camera.position[0], camera.position[1], camera.position[2],
-              ballProperties.ball.position[0], ballProperties.ball.position[1], ballProperties.ball.position[2],
+              camera.lookat[0], camera.lookat[1], camera.lookat[2],
               camera.up[0], camera.up[1], camera.up[2]);
 
     displayObject(objects_flag);
@@ -104,7 +104,7 @@ void myReshape(int width, int height) {
 void keys(unsigned char key, int x, int y) {
     toggleKeys(key, &animation_flag, &grid_flag, &axis_flag, &objects_flag);
 
-    ballProperties = objectKeys(key, &ballProperties);
+    cueBall = objectKeys(key, &cueBall);
 
     cameraKeys(key, &camera, &rotation_flag_a, &rotation_flag_c);
 

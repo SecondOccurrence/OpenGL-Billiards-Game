@@ -65,7 +65,7 @@ void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid
     }
 }
 
-BallProperties objectKeys(unsigned char key, BallProperties* objectProperties) {
+CueBall objectKeys(unsigned char key, CueBall* objectProperties) {
     switch(key) {
     case 'd':
         objectProperties->velocity[0] += 0.5f;
@@ -152,10 +152,6 @@ void cameraKeys(unsigned char key, Camera* camera, RotationFlag* rotation_flag_c
             *rotation_flag_c = ROTATION_DISABLED;
         }
         break;
-    case 'V':
-    case 'v':
-        resetCamera(camera);
-        break;
     default:
         break;
     }
@@ -211,14 +207,6 @@ void moveBackward(Camera* camera) {
     addVectors(camera->lookat, camera->lookat, result);
 }
 
-void resetCamera(Camera* camera) {
-    for (int i = 0; i < 3; ++i) {
-        camera->position[i] = camera->initialPosition[i];
-        camera->lookat[i] = camera->initialLookat[i];
-        camera->up[i] = camera->initialUp[i];
-    }
-}
-
 void viewFront(Camera* camera) {
     camera->position[0] = 0.0f;
     camera->position[1] = 0.0f;
@@ -244,14 +232,19 @@ void viewRear(Camera* camera) {
 }
 
 void viewTop(Camera* camera) {
-    camera->position[0] = 0.0f;
-    camera->position[1] = 3.0f;
-    camera->position[2] = 0.0f;
+    Point3 newPosition = {0.0f, 5.0f, 0.0f};
+    Point3 newLookat = {0.0f, 0.0f, 0.0f};
+    Point3 newUp = {0.0f, 0.0f, 1.0f};
+
+    for(int i = 0; i < 3; i++) {
+        camera->position[i] = newPosition[i];
+        camera->lookat[i] = newLookat[i];
+    }
 
     if(camera->up[1] != 0.0f) {
-        camera->up[0] = 0.0f;
-        camera->up[1] = 0.0f;
-        camera->up[2] = 1.0f;
+        camera->up[0] = newUp[0];
+        camera->up[1] = newUp[1];
+        camera->up[2] = newUp[2];
     }
 }
 
