@@ -20,8 +20,11 @@
 #include "data_structures/geometry.h"
 #include "input/keyboard_utils.h"
 #include "rendering/animation/animation.h"
-#include "input/user_input.h"
 #include "modeling/object_loading.h"
+#include "input/user_input.h"
+
+#include "globals/general.h"
+#include "globals/objects.h"
 
 const int TIMERMSECS = 20;
 
@@ -47,8 +50,6 @@ int main(int argc, char** argv) {
     glutReshapeFunc(myReshape);
 
     glutKeyboardFunc(keys);
-
-    glutCloseFunc(close);
 
     init();
 
