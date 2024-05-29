@@ -19,6 +19,7 @@
 #include "input/keyboard_utils.h"
 #include "rendering/animation/animation.h"
 #include "input/user_input.h"
+#include "modeling/object_loading.h"
 
 const int TIMERMSECS = 20;
 
@@ -46,6 +47,8 @@ int main(int argc, char** argv) {
     glutKeyboardFunc(keys);
 
     init();
+
+    glutCloseFunc(exitApplication);
 
     glutMainLoop();
 

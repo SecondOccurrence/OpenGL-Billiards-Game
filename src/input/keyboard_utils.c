@@ -58,7 +58,7 @@ void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid
         }
         break;
     case 27:
-        exit(0);
+        glutLeaveMainLoop();
         break;
     default:
         break;

@@ -18,6 +18,13 @@
  *
  */
 
+#ifndef OBJECT_LOADING_C
+#define OBJECT_LOADING_C
+
 #include "../data_structures/geometry.h"
 
 Object3D* readOFFFile(const char* file_name);
+
+void exitApplication(void);
+
+#endif

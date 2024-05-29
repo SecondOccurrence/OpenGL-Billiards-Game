@@ -21,7 +21,11 @@
 #include "object_loading.h"
 
 #include "../../lib/opengl/opengl.h"
+
+#include "../globals/objects.h"
+
 #include <stdio.h>
+#include <string.h>
 
 Object3D* readOFFFile(const char* file_name) {
     FILE* fp;
@@ -123,4 +127,18 @@ Object3D* readOFFFile(const char* file_name) {
     // add colour detection result
     o->hasColour = hasColour;
     return o;
+}
+
+void exitApplication(void) {
+    if(table.drawing->faces != NULL) {
+        free(table.drawing->faces);
+    }
+
+    if(table.drawing->vertices != NULL) {
+        free(table.drawing->vertices);
+    }
+
+    if(table.drawing != NULL) {
+        free(table.drawing);
+    }
 }
