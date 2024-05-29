@@ -67,6 +67,13 @@ BallProperties ballProperties = {
     1.0f
 };
 
+CueBall cueBall = {
+   {{-2.5, 0.1, 0.0}, 0.1},
+    {0.0, 0.0, 0.0},
+    1.0f,
+    {0.0, 0.0, 0.0}
+};
+
 PlaneProperties planeProperties = {
     {{-5.0, 0.0, -5.0},
      { 5.0, 0.0, -5.0},
@@ -85,33 +92,29 @@ SphereMovingFlag Sphere_moving_flag = SPHERE_ENABLED;
 RotationFlag rotation_flag_c = ROTATION_DISABLED;
 RotationFlag rotation_flag_a = ROTATION_DISABLED;
 
+int spacebarPressed = 0;
+float spacebarHoldTime = 0.0f;
+
+int previousMoveCheck = 0;
+
 int object_balls_amount = 0;
 
 void init() {
-    table.drawing   = readOFFFile("../public/3D-data/Table_Coloured.off");
+    table.drawing = readOFFFile("../public/3D-data/Table_Coloured.off");
 
     setLight();
 
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glColor3f(1.0, 0.0, 0.0);
 
-    camera.position[0] = -4.0f;
-    camera.position[1] = 0.5f;
-    camera.position[2] = 0.0f;
+    Point3 cameraPosition = {-4.0f, 0.5f, 0.0f};
+    Point3 upVec = {0.0f, 1.0f, 0.0f};
+    for(int i = 0; i < 3; i++) {
+        camera.position[i] = cameraPosition[i];
+        camera.lookat[i] = cueBall.ball.position[i];
+        camera.up[i] = upVec[i];
 
-    camera.lookat[0] = ballProperties.ball.position[0];
-    camera.lookat[1] = ballProperties.ball.position[1];
-    camera.lookat[2] = ballProperties.ball.position[2];
-
-    camera.up[0] = 0.f;
-    camera.up[1] = 1.f;
-    camera.up[2] = 0.f;
-
-    // Store initial values
-    for (int i = 0; i < 3; ++i) {
-        camera.initialPosition[i] = camera.position[i];
-        camera.initialLookat[i] = camera.lookat[i];
-        camera.initialUp[i] = camera.up[i];
+        cueBall.cameraPosition[i] = cameraPosition[i];
     }
 
     glMatrixMode(GL_PROJECTION);

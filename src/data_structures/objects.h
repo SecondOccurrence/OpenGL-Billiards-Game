@@ -12,6 +12,13 @@ typedef struct {
     Sphere ball;
     Vector3 velocity;
     GLfloat mass;
+    Point3 cameraPosition;
+} CueBall;
+
+typedef struct {
+    Sphere ball;
+    Vector3 velocity;
+    GLfloat mass;
 } BallProperties;
 
 typedef struct {

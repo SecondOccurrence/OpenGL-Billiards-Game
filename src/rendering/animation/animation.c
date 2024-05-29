@@ -21,6 +21,7 @@
 #include "../../data_structures/flags.h"
 #include "../../math/collision.h"
 #include "../../math/vector_operations.h"
+#include "../../input/keyboard_utils.h"
 
 #include "../../globals/flags.h"
 #include "../../globals/objects.h"
@@ -31,6 +32,8 @@
 
 extern const int TIMERMSECS;
 
+#include <stdio.h>
+
 void animate() {
     const int targetFrameRate = 60;
 
@@ -39,61 +42,106 @@ void animate() {
 
     float targetFrameTime = 1.0f / targetFrameRate;
     if(changeInSeconds >= targetFrameTime) {
-        if(animation_flag == ANIMATION_ENABLED) {
-            ballMovement(changeInSeconds);
-
-            rotateCameraContinuous(changeInSeconds);
+        if(spacebarPressed == 1) {
+            spacebarHoldTime += 0.2f;
         }
+        else {
+            Vector3 direction;
+            calculateVelocityDirection(&direction, &camera, &cueBall);
+            cueBall.velocity[0] += direction[0] * spacebarHoldTime;
+            cueBall.velocity[2] += direction[2] * spacebarHoldTime;
+
+            spacebarHoldTime = 0.0f;
+        }
+
+        callAnimations(changeInSeconds);
+        
         previousFrameTime = currentFrameTime;
     }
 
     glutPostRedisplay();
 }
 
-bool previouslyCollided = false;
+void callAnimations(float deltaTime) {
+    if(animation_flag == ANIMATION_ENABLED) {
+        ballMovement(deltaTime);
+
+        rotateCameraContinuous(deltaTime);
+
+        updateCameraPosition(deltaTime);
+    }
+}
+
+void updateCameraPosition(float deltaTime) {
+    int isCurrentlyMoving = 0;
+
+    Vector3 velocity = {cueBall.velocity[0], cueBall.velocity[1], cueBall.velocity[2]};
+    if(velocity[0] != 0.0f || velocity[2] != 0.0f) {
+        isCurrentlyMoving = 1;
+    }
+
+    cueBall.cameraPosition[0] += cueBall.velocity[0] * deltaTime;
+    cueBall.cameraPosition[2] += cueBall.velocity[2] * deltaTime;
+
+    if(previousMoveCheck == 1 && isCurrentlyMoving == 0) {
+        resetCamera(&camera, &cueBall.ball.position, &cueBall.cameraPosition);
+    }
+    else if(previousMoveCheck == 0 && isCurrentlyMoving == 1) {
+        viewTop(&camera);
+    }
+
+    previousMoveCheck = isCurrentlyMoving;
+}
+
+void resetCamera(Camera* camera, Point3* newLookat, Point3* newPosition) {
+    Point3 newUp = {0.0f, 1.0f, 0.0f};
+    for (int i = 0; i < 3; ++i) {
+        camera->position[i] = (*newPosition)[i];
+        camera->lookat[i] = (*newLookat)[i];
+        camera->up[i] = newUp[i];
+    }
+}
 
 void ballMovement(float seconds) {
     const Vector3 gravity = {0.0f, -7.5f, 0.0f};
     const float collisionOffset = 0.2f;
     const GLfloat velocityThreshold = 0.1f;
 
+
     GLfloat distance;
     PlaneProperties collider;
     GLfloat velocity;
     int tableWallSize = sizeof(table.colliders) / sizeof(table.colliders[0]);
     for(int i = 0; i < tableWallSize; i++) {
-
         collider = table.colliders[i];
-        distance = distanceToPlane(ballProperties.ball.position, collider.points[0], collider.points[1], collider.points[2]);
+        distance = distanceToPlane(cueBall.ball.position, collider.points[0], collider.points[1], collider.points[2]);
 
-        if(distance < (ballProperties.ball.radius)) {
+        if(distance < (cueBall.ball.radius)) {
             Vector3 planeNormal;
             calcUnitNormal(planeNormal, collider.points[0], collider.points[1], collider.points[2]);
 
-            GLfloat perpendicular = calcDotProduct(ballProperties.velocity, planeNormal);
+            GLfloat perpendicular = calcDotProduct(cueBall.velocity, planeNormal);
 
             for(int j = 0; j < 3; j++) {
-                velocity = ballProperties.velocity[j] - 2 * perpendicular * planeNormal[j];
+                velocity = cueBall.velocity[j] - 2 * perpendicular * planeNormal[j];
                 if(velocity > velocityThreshold) {
                     velocity *= collider.bounciness;
                 }
-                ballProperties.velocity[j] = velocity;
+                cueBall.velocity[j] = velocity;
             }
 
-            ballProperties = resolveCollision(&ballProperties, distance, planeNormal, i);
-
-            break;
+            cueBall = resolveCollision(&cueBall, distance, planeNormal, i);
         }
-    }
 
-    ballProperties.velocity[1] += gravity[1] * seconds;
+    }
+    cueBall.velocity[1] += gravity[1] * seconds;
 
     for(int i = 0; i < 3; i++) {
-        if(fabsf(ballProperties.velocity[i]) < velocityThreshold) {
-            ballProperties.velocity[i] = 0.0f;
+        if(fabsf(cueBall.velocity[i]) < velocityThreshold) {
+            cueBall.velocity[i] = 0.0f;
         }
 
-        ballProperties.ball.position[i] += ballProperties.velocity[i] * seconds;
+        cueBall.ball.position[i] += cueBall.velocity[i] * seconds;
     }
 }
 
@@ -111,7 +159,7 @@ void rotateCameraClockwise(Camera* camera, float angle) {
     float radians = angle * (M_PI / 180.0);
 
     Vector3 direction;
-    subtractVectors(direction, ballProperties.ball.position, camera->position);
+    subtractVectors(direction, cueBall.ball.position, camera->position);
 
     // Normalize the direction vector
     float distance = sqrt(direction[0] * direction[0] + direction[2] * direction[2]);
@@ -123,15 +171,15 @@ void rotateCameraClockwise(Camera* camera, float angle) {
     float newZ = direction[0] * sin(radians) + direction[2] * cos(radians);
 
     // Scale the new direction to maintain the same distance from the ball
-    camera->position[0] = ballProperties.ball.position[0] - newX * distance;
-    camera->position[2] = ballProperties.ball.position[2] - newZ * distance;
+    camera->position[0] = cueBall.ball.position[0] - newX * distance;
+    camera->position[2] = cueBall.ball.position[2] - newZ * distance;
 }
 
 void rotateCameraCounterclockwise(Camera* camera, float angle) {
     float radians = angle * (M_PI / 180.0);
 
     Vector3 direction;
-    subtractVectors(direction, ballProperties.ball.position, camera->position);
+    subtractVectors(direction, cueBall.ball.position, camera->position);
 
     // Normalize the direction vector
     float distance = sqrt(direction[0] * direction[0] + direction[2] * direction[2]);
@@ -143,6 +191,6 @@ void rotateCameraCounterclockwise(Camera* camera, float angle) {
     float newZ = -direction[0] * sin(radians) + direction[2] * cos(radians);
 
     // Scale the new direction to maintain the same distance from the ball
-    camera->position[0] = ballProperties.ball.position[0] - newX * distance;
-    camera->position[2] = ballProperties.ball.position[2] - newZ * distance;
+    camera->position[0] = cueBall.ball.position[0] - newX * distance;
+    camera->position[2] = cueBall.ball.position[2] - newZ * distance;
 }

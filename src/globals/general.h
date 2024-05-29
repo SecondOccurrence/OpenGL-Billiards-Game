@@ -6,4 +6,6 @@ extern int object_balls_amount;
 extern int previousFrameTime;
 extern int currentFrameTime;
 
+extern float spacebarHoldTime;
+
 #endif

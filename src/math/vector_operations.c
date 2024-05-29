@@ -66,3 +66,10 @@ void calcUnitNormal(Vector3 result, Vector3 A, Vector3 B, Vector3 C) {
 
     normaliseVector(result);
 }
+
+void calculateVelocityDirection(Vector3* endDirection, Camera* cam, CueBall* cueBall) {
+    Vector3 cameraForward;
+    subtractVectors(cameraForward, cam->lookat, cam->position);
+
+    subtractVectors(*endDirection, cueBall->ball.position, cam->position);
+}
