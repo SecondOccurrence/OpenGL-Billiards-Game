@@ -34,25 +34,29 @@ extern const int TIMERMSECS;
 
 #include <stdio.h>
 
+float accumulatedTime = 0;
+
 void animate() {
-    const int targetFrameRate = 30;
+    const int targetFrameRate = 60;
 
     currentFrameTime = glutGet(GLUT_ELAPSED_TIME);
     float changeInSeconds = (currentFrameTime - previousFrameTime) / 1000.0f;
 
-    if(animation_flag == ANIMATION_DISABLED || changeInSeconds < targetFrameRate) {
-        rotateCameraContinuous(changeInSeconds);
+    float targetFrameTime = 1.0f / targetFrameRate;
+    if(changeInSeconds >= targetFrameTime) {
+        if(animation_flag == ANIMATION_ENABLED) {
+            ballMovement(changeInSeconds);
 
-        ballMovement(changeInSeconds);
+            rotateCameraContinuous(changeInSeconds);
+        }
+        previousFrameTime = currentFrameTime;
     }
-
-    previousFrameTime = currentFrameTime;
 
     glutPostRedisplay();
 }
 
 void ballMovement(float seconds) {
-    const Vector3 gravity = {0.0f, -7.0f, 0.0f};
+    const Vector3 gravity = {0.0f, -7.5f, 0.0f};
 
     GLfloat distance = distanceToPlane(ballProperties.position, planeProperties.points[0], planeProperties.points[1], planeProperties.points[2]);
     if(distance < ballProperties.radius) {
