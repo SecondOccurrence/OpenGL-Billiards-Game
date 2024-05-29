@@ -12,14 +12,19 @@
  *   Contributed by Josh S, 34195182
  * - v1.2 (12/05/2024): added keys to alter ball velocity
  *   Contributed by Josh S, 34195182
+ * - v1.3 (30/05/2024): remove unused functions
+ *   Contributed by Josh S, 34195182
  *
  */
 
 #include "keyboard_utils.h"
 
 #include "../math/vector_operations.h"
+#include "../globals/general.h"
 
-void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid_flag, AxisFlag* axis_flag, ObjectsFlag* objects_flag) {
+#include <stdio.h>
+
+void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid_flag, AxisFlag* axis_flag, ObjectsFlag* objects_flag, int* spacebarPressFlag) {
     switch(key) {
     case 'P':
     case 'p':
@@ -57,6 +62,16 @@ void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid
             *objects_flag = OBJECTS_ENABLED;
         }
         break;
+    case ' ':
+        if(*spacebarPressFlag == 0) {
+            *spacebarPressFlag = 1;
+            printf("pressed");
+        }
+        else {
+            *spacebarPressFlag = 0;
+            printf("unpressed");
+        }
+        break;
     case 27:
         glutLeaveMainLoop();
         break;
@@ -65,75 +80,13 @@ void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid
     }
 }
 
-CueBall objectKeys(unsigned char key, CueBall* objectProperties) {
-    switch(key) {
-    case 'd':
-        objectProperties->velocity[0] += 0.5f;
-        break;
-    case 'a':
-        objectProperties->velocity[0] -= 0.5f;
-        break;
-    case 'w':
-        objectProperties->velocity[1] += 1.0f;
-        break;
-    case 's':
-        objectProperties->velocity[1] -= 1.0f;
-        break;
-    case 'q':
-        objectProperties->velocity[2] += 0.5f;
-        break;
-    case 'e':
-        objectProperties->velocity[2] -= 0.5f;
-        break;
-    default:
-        break;
-    }
-
-    return *objectProperties;
-}
-
 void cameraKeys(unsigned char key, Camera* camera, RotationFlag* rotation_flag_c, RotationFlag* rotation_flag_a) {
     switch(key) {
-    case 'X':
-        strafeLeft(camera);
-        break;
-    case 'x':
-        strafeRight(camera);
-        break;
-    case 'Y':
-        camera->position[1] -= 0.1;
-        camera->lookat[1] -= 0.1;
-        break;
-    case 'y':
-        camera->position[1] += 0.1;
-        camera->lookat[1] += 0.1;
-        break;
-    case 'Z':
-        moveForward(camera);
-        break;
-    case 'z':
-        moveBackward(camera);
-        break;
-    case 'F':
-        viewFront(camera);
-        break;
-    case 'R':
-        viewRear(camera);
-        break;
     case 'T':
         viewTop(camera);
         break;
-    case 'B':
-        viewBottom(camera);
-        break;
-    case 'I':
-        viewLeft(camera);
-        break;
-    case 'L':
-        viewRight(camera);
-        break;
-    case 'N':
-    case 'n':
+    case 'A':
+    case 'a':
         *rotation_flag_c = ROTATION_DISABLED;
         if(*rotation_flag_a == ROTATION_DISABLED) {
             *rotation_flag_a = ROTATION_ENABLED;
@@ -142,8 +95,8 @@ void cameraKeys(unsigned char key, Camera* camera, RotationFlag* rotation_flag_c
             *rotation_flag_a = ROTATION_DISABLED;
         }
         break;
-    case 'M':
-    case 'm':
+    case 'D':
+    case 'd':
         *rotation_flag_a = ROTATION_DISABLED;
         if(*rotation_flag_c == ROTATION_DISABLED) {
             *rotation_flag_c = ROTATION_ENABLED;
@@ -154,80 +107,6 @@ void cameraKeys(unsigned char key, Camera* camera, RotationFlag* rotation_flag_c
         break;
     default:
         break;
-    }
-}
-
-void strafeLeft(Camera* camera) {
-    Vector3 direction, result;
-
-    subtractVectors(direction, camera->lookat, camera->position);
-    calcCrossProduct(result, direction, camera->up);
-
-    normaliseVector(result);
-    multiplyByScalar(result, 0.5);
-
-    subtractVectors(camera->position, camera->position, result);
-    subtractVectors(camera->lookat, camera->lookat, result);
-}
-
-void strafeRight(Camera* camera) {
-    Vector3 direction, result;
-
-    subtractVectors(direction, camera->lookat, camera->position);
-    calcCrossProduct(result, direction, camera->up);
-
-    normaliseVector(result);
-    multiplyByScalar(result, 0.5);
-
-    addVectors(camera->position, camera->position, result);
-    addVectors(camera->lookat, camera->lookat, result);
-}
-
-void moveForward(Camera* camera) {
-    Vector3 result;
-
-    subtractVectors(result, camera->lookat, camera->position);
-
-    normaliseVector(result);
-    multiplyByScalar(result, 0.5);
-
-    subtractVectors(camera->position, camera->position, result);
-    subtractVectors(camera->lookat, camera->lookat, result);
-}
-
-void moveBackward(Camera* camera) {
-    Vector3 result;
-
-    subtractVectors(result, camera->lookat, camera->position);
-
-    normaliseVector(result);
-    multiplyByScalar(result, 0.5);
-
-    addVectors(camera->position, camera->position, result);
-    addVectors(camera->lookat, camera->lookat, result);
-}
-
-void viewFront(Camera* camera) {
-    camera->position[0] = 0.0f;
-    camera->position[1] = 0.0f;
-    camera->position[2] = 3.0f;
-
-    if(camera->up[2] != 0.0f) {
-        camera->up[0] = 0.0f;
-        camera->up[1] = 1.0f;
-        camera->up[2] = 0.0f;
-    }
-}
-
-void viewRear(Camera* camera) {
-    camera->position[0] = 0.0f;
-    camera->position[1] = 0.0f;
-    camera->position[2] = -3.0f;
-
-    if(camera->up[2] != 0.0f) {
-        camera->up[0] = 0.0f;
-        camera->up[1] = 1.0f;
-        camera->up[2] = 0.0f;
     }
 }
 
@@ -245,41 +124,5 @@ void viewTop(Camera* camera) {
         camera->up[0] = newUp[0];
         camera->up[1] = newUp[1];
         camera->up[2] = newUp[2];
-    }
-}
-
-void viewBottom(Camera* camera) {
-    camera->position[0] = 0.0f;
-    camera->position[1] = -3.0f;
-    camera->position[2] = 0.0f;
-
-    if(camera->up[1] != 0.0f) {
-        camera->up[0] = 0.0f;
-        camera->up[1] = 0.0f;
-        camera->up[2] = 1.0f;
-    }
-}
-
-void viewRight(Camera* camera) {
-    camera->position[0] = 3.0f;
-    camera->position[1] = 0.0f;
-    camera->position[2] = 0.0f;
-
-    if(camera->up[2] != 0.0f) {
-        camera->up[0] = 0.0f;
-        camera->up[1] = 1.0f;
-        camera->up[2] = 0.0f;
-    }
-}
-
-void viewLeft(Camera* camera) {
-    camera->position[0] = -3.0f;
-    camera->position[1] = 0.0f;
-    camera->position[2] = 0.0f;
-
-    if(camera->up[2] != 0.0f) {
-        camera->up[0] = 0.0f;
-        camera->up[1] = 1.0f;
-        camera->up[2] = 0.0f;
     }
 }

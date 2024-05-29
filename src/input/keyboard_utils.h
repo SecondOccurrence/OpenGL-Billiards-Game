@@ -9,6 +9,8 @@
  *   Contributed by Josh S, 34195182
  * - v1.1 (05/05/2024): introduced mainKeys, for inputs that manipulate the core scene
  *   Contributed by Josh S, 34195182
+ * - v1.2 (30/05/2024): remove unused functions
+ *   Contributed by Josh S, 34195182
  *
  */
 
@@ -20,30 +22,10 @@
 #include "../data_structures/geometry.h"
 #include "../data_structures/objects.h"
 
-void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid_flag, AxisFlag* axis_flag, ObjectsFlag* objects_flag);
-
-CueBall objectKeys(unsigned char key, CueBall* objectProperties);
+void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid_flag, AxisFlag* axis_flag, ObjectsFlag* objects_flag, int* spacebarPressed);
 
 void cameraKeys(unsigned char key, Camera* camera, RotationFlag* rotation_flag_a, RotationFlag* rotation_flag_c);
 
-void strafeLeft(Camera* camera);
-
-void strafeRight(Camera* camera);
-
-void moveForward(Camera* camera);
-
-void moveBackward(Camera* camera);
-
-void viewFront(Camera* camera);
-
-void viewRear(Camera* camera);
-
 void viewTop(Camera* camera);
-
-void viewBottom(Camera* camera);
-
-void viewRight(Camera* camera);
-
-void viewLeft(Camera* camera);
 
 #endif

@@ -102,9 +102,7 @@ void myReshape(int width, int height) {
 }
 
 void keys(unsigned char key, int x, int y) {
-    toggleKeys(key, &animation_flag, &grid_flag, &axis_flag, &objects_flag);
-
-    cueBall = objectKeys(key, &cueBall);
+    toggleKeys(key, &animation_flag, &grid_flag, &axis_flag, &objects_flag, &spacebarPressed);
 
     cameraKeys(key, &camera, &rotation_flag_a, &rotation_flag_c);
 

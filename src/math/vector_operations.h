@@ -15,6 +15,8 @@
 
 #include "../../lib/opengl/opengl.h"
 
+#include "../data_structures/objects.h"
+#include "../data_structures/camera.h"
 #include "../data_structures/geometry.h"
 
 void multiplyByScalar(Vector3 v, GLfloat scalar);
@@ -32,5 +34,7 @@ float calcVecMagnitude(Vector3 v);
 void normaliseVector(Vector3 v);
 
 void calcUnitNormal(Vector3 result, Vector3 A, Vector3 B, Vector3 C);
+
+void calculateVelocityDirection(Vector3* endDirection, Camera* cam, CueBall* cueBall);
 
 #endif

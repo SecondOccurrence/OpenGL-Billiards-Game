@@ -11,6 +11,7 @@ extern ObjectBallsShape object_balls_shape;
 extern SphereMovingFlag Sphere_moving_flag;
 extern RotationFlag rotation_flag_c;
 extern RotationFlag rotation_flag_a;
+extern int spacebarPressed;
 
 extern int previousMoveCheck;
 

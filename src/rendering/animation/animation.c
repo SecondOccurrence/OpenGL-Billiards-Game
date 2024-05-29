@@ -32,6 +32,8 @@
 
 extern const int TIMERMSECS;
 
+#include <stdio.h>
+
 void animate() {
     const int targetFrameRate = 60;
 
@@ -40,6 +42,18 @@ void animate() {
 
     float targetFrameTime = 1.0f / targetFrameRate;
     if(changeInSeconds >= targetFrameTime) {
+        if(spacebarPressed == 1) {
+            spacebarHoldTime += 0.2f;
+        }
+        else {
+            Vector3 direction;
+            calculateVelocityDirection(&direction, &camera, &cueBall);
+            cueBall.velocity[0] += direction[0] * spacebarHoldTime;
+            cueBall.velocity[2] += direction[2] * spacebarHoldTime;
+
+            spacebarHoldTime = 0.0f;
+        }
+
         callAnimations(changeInSeconds);
         
         previousFrameTime = currentFrameTime;
@@ -57,9 +71,6 @@ void callAnimations(float deltaTime) {
         updateCameraPosition(deltaTime);
     }
 }
-
-float posX = 0;
-float posZ = 0;
 
 void updateCameraPosition(float deltaTime) {
     int isCurrentlyMoving = 0;
@@ -124,7 +135,6 @@ void ballMovement(float seconds) {
 
     }
     cueBall.velocity[1] += gravity[1] * seconds;
-
 
     for(int i = 0; i < 3; i++) {
         if(fabsf(cueBall.velocity[i]) < velocityThreshold) {

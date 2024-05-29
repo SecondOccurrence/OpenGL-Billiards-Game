@@ -31,3 +31,21 @@ void userInput() {
     printf("Enter the number of spheres to display: ");
     scanf("%d", &object_balls_amount);
 }
+
+/*
+ * all in keyboard function
+ * might as well clean it up
+ *
+ * get space down time, send the ball in a direction
+ *  keyboard utils
+ *
+ * camera forward = lookat.x - position.x
+ * .. y - y
+ * .. z - z
+ *   subtraction math function
+ *
+ * direcction.x = objectposition.x - cameraposition.x
+ *   subtraction math function
+ *
+ * velocity += direction.x * speed;
+ */
