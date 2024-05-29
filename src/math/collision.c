@@ -31,10 +31,13 @@ GLfloat distanceToPlane(Point3 ballCenter, Point3 p1, Point3 p2, Point3 p3) {
     return distance;
 }
 
-BallProperties resolveCollision(BallProperties* ball, GLfloat distance, Vector3 planeNormal) {
+BallProperties resolveCollision(BallProperties* ball, GLfloat distance, Vector3 planeNormal, int wallIteration) {
+    if(wallIteration == 0 || wallIteration == 1 || wallIteration == 2) {
+        multiplyByScalar(planeNormal, -1);
+    }
+
     for(int i = 0; i < 3; i++) {
-        // FUTURE ISSUE: collision on top fabsf always positive might need to be negative
-        ball->ball.position[i] += (ball->ball.radius - distance) * fabsf(planeNormal[i]);
+        ball->ball.position[i] += (ball->ball.radius - distance) * planeNormal[i];
     }
     return *ball;
 }
