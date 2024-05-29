@@ -31,6 +31,30 @@ GLfloat distanceToPlane(Point3 ballCenter, Point3 p1, Point3 p2, Point3 p3) {
     return distance;
 }
 
+void cueBallPlaneCollision(CueBall* cueBall, PlaneProperties* collider, int planeIndex) {
+    GLfloat velocity;
+    GLfloat velocityThreshold = 0.1f;
+
+    GLfloat distance = distanceToPlane(cueBall->ball.position, collider->points[0], collider->points[1], collider->points[2]);
+
+    if(distance < (cueBall->ball.radius)) {
+        Vector3 planeNormal;
+        calcUnitNormal(planeNormal, collider->points[0], collider->points[1], collider->points[2]);
+
+        GLfloat perpendicular = calcDotProduct(cueBall->velocity, planeNormal);
+
+        for(int j = 0; j < 3; j++) {
+            velocity = cueBall->velocity[j] - 2 * perpendicular * planeNormal[j];
+            if(velocity > velocityThreshold) {
+                velocity *= collider->bounciness;
+            }
+            cueBall->velocity[j] = velocity;
+        }
+
+        *cueBall = resolveCollision(cueBall, distance, planeNormal, planeIndex);
+    }
+}
+
 CueBall resolveCollision(CueBall* ball, GLfloat distance, Vector3 planeNormal, int wallIteration) {
     if(wallIteration == 0 || wallIteration == 1 || wallIteration == 2) {
         multiplyByScalar(planeNormal, -1);
