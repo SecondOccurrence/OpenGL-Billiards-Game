@@ -28,22 +28,23 @@
 
 void displayTriangle() {
     float sphereSpacing = 0.15; // Spacing between spheres
+    float initialX = 2.0;       // Initial x position for the first sphere
 
     int spheresDrawn = 0;
     int row = 1;
 
     while (spheresDrawn < object_balls_amount) {
-        // Calculate the starting X position for the current row
-        float initialX = -0.15 * (row - 1) / 2.0;
+        // Calculate the starting Z position for the current row
+        float initialZ = -0.15 * (row - 1) / 2.0;
 
         for (int i = 0; i < row && spheresDrawn < object_balls_amount; i++) {
-            float x = initialX + i * sphereSpacing;
-            float z = row * sphereSpacing;
+            float z = initialZ + i * sphereSpacing;
+            float x = initialX + (row - 1) * sphereSpacing; // Adjusted x position
 
             glPushMatrix();
-            glTranslatef(x, 0.0, z); // Translate each sphere
-            glColor3f(1.0, 0.0, 0.0); // red color
-            glutSolidSphere(0.1, 20, 20); // draw a solid sphere
+            glTranslatef(x, 0.15, z); // Translate each sphere
+            glColor3f(1.0, 0.0, 0.0); // Red color
+            glutSolidSphere(0.1, 20, 20); // Draw a solid sphere
             glPopMatrix();
 
             spheresDrawn++;
@@ -55,8 +56,8 @@ void displayTriangle() {
 
 void displayRectangle() {
     // Initial positions for the first sphere
-    float initialX = 0.0;
-    float initialZ = 0.0;
+    float initialX = 2.0;
+    float initialZ = 0.30;
     // Draw multiple solid spheres
 
     float sphereSpacing = 0.15; // Spacing between spheres
@@ -64,11 +65,11 @@ void displayRectangle() {
     for (int i = 0; i < object_balls_amount; i++) {
         if (i % 5 == 0 && i != 0) {
             // New row, increment Z offset
-            initialZ += 0.15;
+            initialX += 0.15;
         }
 
         glPushMatrix();
-        glTranslatef(initialX + (i % 5) * sphereSpacing, 0.0, initialZ); // Translate each sphere
+        glTranslatef(initialX, 0.15, initialZ - (i % 5) * sphereSpacing); // Translate each sphere
         glColor3f(1.0, 0.0, 0.0); // red color
         glutSolidSphere(0.1, 20, 20); // draw a solid sphere
         glPopMatrix();

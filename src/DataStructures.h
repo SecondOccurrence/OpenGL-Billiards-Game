@@ -28,4 +28,11 @@ typedef struct OFF_FILE {
     FacePoint* faceData;
 } OFF_FILE;
 
+typedef struct BallProperties {
+    Vector3 position;
+    Vector3 velocity;
+    GLfloat mass;
+    GLfloat radius;
+} BallProperties;
+
 #endif

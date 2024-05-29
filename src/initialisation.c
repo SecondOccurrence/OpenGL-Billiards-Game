@@ -87,7 +87,7 @@ RotationFlag rotation_flag_a = ROTATION_DISABLED;
 
 int object_balls_amount = 0;
 
-void init() { 
+void init() {
     table.drawing   = readOFFFile("../public/3D-data/Table_Coloured.off");
 
     setLight();
