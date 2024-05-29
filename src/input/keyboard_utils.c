@@ -62,7 +62,7 @@ void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid
         break;
     default:
         break;
-    }   
+    }
 }
 
 BallProperties objectKeys(unsigned char key, BallProperties* objectProperties) {
@@ -152,6 +152,10 @@ void cameraKeys(unsigned char key, Camera* camera, RotationFlag* rotation_flag_c
             *rotation_flag_c = ROTATION_DISABLED;
         }
         break;
+    case 'V':
+    case 'v':
+        resetCamera(camera);
+        break;
     default:
         break;
     }
@@ -205,6 +209,14 @@ void moveBackward(Camera* camera) {
 
     addVectors(camera->position, camera->position, result);
     addVectors(camera->lookat, camera->lookat, result);
+}
+
+void resetCamera(Camera* camera) {
+    for (int i = 0; i < 3; ++i) {
+        camera->position[i] = camera->initialPosition[i];
+        camera->lookat[i] = camera->initialLookat[i];
+        camera->up[i] = camera->initialUp[i];
+    }
 }
 
 void viewFront(Camera* camera) {
