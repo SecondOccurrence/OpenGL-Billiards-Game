@@ -6,7 +6,6 @@ target_sources(output PRIVATE
     initialisation.h 
     gl_callback.c
     gl_callback.h
-    DataStructures.h
 )
 
 add_subdirectory(data_structures)
