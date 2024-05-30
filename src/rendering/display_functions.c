@@ -30,8 +30,13 @@
 
 BallProperties* balls = NULL;
 
+float sphereSpacing = 0.15;
+float initialX = 2.0;
+float initialZ = 0.30;
+
 void initialiseBalls(int N) {
     balls = (BallProperties *)malloc(N * sizeof(BallProperties));
+    object_balls_amount = N;
     srand(time(NULL));
 
     for (int i = 0; i < N; i++) {
@@ -43,10 +48,7 @@ void initialiseBalls(int N) {
     }
 }
 
-void displayTriangle() {
-    float sphereSpacing = 0.15;
-    float initialX = 2.0;
-
+void initialiseTriangle() {
     int spheresDrawn = 0;
     int row = 1;
 
@@ -62,23 +64,6 @@ void displayTriangle() {
             balls[spheresDrawn].ball.position[1] = 0.15;
             balls[spheresDrawn].ball.position[2] = z;
 
-            glPushMatrix();
-            glTranslatef(balls[spheresDrawn].ball.position[0], balls[spheresDrawn].ball.position[1], balls[spheresDrawn].ball.position[2]);
-            if(balls[spheresDrawn].mass < 1.0) {
-                glColor3f(0.0, 1.0, 0.0);
-                glutSolidSphere(balls[spheresDrawn].ball.radius, 20, 20);
-            }
-            else if((balls[spheresDrawn].mass >= 1.0) && (balls[spheresDrawn].mass <= 1.5)) {
-                glColor3f(1.0, 0.0, 0.0);
-                glutSolidSphere(balls[spheresDrawn].ball.radius, 20, 20);
-            }
-            else {
-                glColor3f(0.0, 0.0, 1.0);
-                glutSolidSphere(balls[spheresDrawn].ball.radius, 20, 20);
-            }
-
-            glPopMatrix();
-
             spheresDrawn++;
         }
         row++;
@@ -86,10 +71,7 @@ void displayTriangle() {
     glFlush();
 }
 
-void displayRectangle() {
-    float initialX = 2.0;
-    float initialZ = 0.30;
-
+void initialiseRectangle() {
     float sphereSpacing = 0.15;
 
     for (int i = 0; i < object_balls_amount; i++) {
@@ -100,12 +82,15 @@ void displayRectangle() {
         balls[i].ball.position[0] = initialX;
         balls[i].ball.position[1] = 0.15;
         balls[i].ball.position[2] = initialZ - (i % 5) * sphereSpacing;
+    }
+}
 
+void displayBalls() {
+    for (int i = 0; i < object_balls_amount; i++) {
         glPushMatrix();
-        glTranslatef(initialX, 0.15, initialZ - (i % 5) * sphereSpacing); // Translate each sphere
-        glColor3f(1.0, 0.0, 0.0); // red color
-        glutSolidSphere(0.1, 20, 20); // draw a solid sphere
+        //glTranslatef(initialX, 0.15, initialZ - (i % 5) * sphereSpacing); // Translate each sphere
         glTranslatef(balls[i].ball.position[0], balls[i].ball.position[1], balls[i].ball.position[2]);
+        glColor3f(1.0, 0.0, 0.0); // red color
         if(balls[i].mass < 1.0) {
             glColor3f(0.0, 1.0, 0.0);
             glutSolidSphere(balls[i].ball.radius, 20, 20);
@@ -117,10 +102,9 @@ void displayRectangle() {
         else {
             glColor3f(0.0, 0.0, 1.0);
             glutSolidSphere(balls[i].ball.radius, 20, 20);
-            }
+        }
         glPopMatrix();
     }
-    glFlush();
 }
 
 void displayObject(ObjectsFlag objects_flag) {

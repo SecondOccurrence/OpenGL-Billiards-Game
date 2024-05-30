@@ -100,8 +100,6 @@ int previousMoveCheck = 0;
 int object_balls_amount = 0;
 
 void init() {
-    initialiseBalls(object_balls_amount);
-
     table.drawing = readOFFFile("../public/3D-data/Table_Coloured.off");
 
     setLight();

@@ -34,8 +34,19 @@ const int windowHeight = 786;
 int previousFrameTime = 0;
 int currentFrameTime = 0;
 
+extern ObjectBallsShape object_balls_shape;
+
 int main(int argc, char** argv) {
     userInput();
+
+    initialiseBalls(object_balls_amount);
+
+    if(object_balls_shape == TRIANGLE) {
+        initialiseTriangle();
+    }
+    else {
+        initialiseRectangle();
+    }
 
     glutInit(&argc,argv);
 

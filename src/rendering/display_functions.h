@@ -23,9 +23,11 @@
 
 void initialiseBalls(int N);
 
-void displayTriangle();
+void initialiseTriangle();
 
-void displayRectangle();
+void initialiseRectangle();
+
+void displayBalls();
 
 void displayObject(ObjectsFlag objects_flag);
 
