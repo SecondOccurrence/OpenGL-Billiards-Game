@@ -35,6 +35,6 @@ void normaliseVector(Vector3 v);
 
 void calcUnitNormal(Vector3 result, Vector3 A, Vector3 B, Vector3 C);
 
-void calculateVelocityDirection(Vector3* endDirection, Camera* cam, CueBall* cueBall);
+void calculateVelocityDirection(Vector3* endDirection, Camera* cam, Ball* cueBall);
 
 #endif

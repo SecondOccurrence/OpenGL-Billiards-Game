@@ -28,15 +28,16 @@
 #include <time.h>
 #include <stdio.h>
 
-BallProperties* balls = NULL;
+Ball* balls = NULL;
 
 float sphereSpacing = 0.15;
 float initialX = 2.0;
 float initialZ = 0.30;
 
 void initialiseBalls(int N) {
-    balls = (BallProperties *)malloc(N * sizeof(BallProperties));
+    balls = (Ball*)malloc(N * sizeof(Ball));
     object_balls_amount = N;
+    balls = (Ball*)malloc(N * sizeof(Ball));
     srand(time(NULL));
 
     for (int i = 0; i < N; i++) {

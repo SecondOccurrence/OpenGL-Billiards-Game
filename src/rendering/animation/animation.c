@@ -83,26 +83,48 @@ void resetCamera(Camera* camera, Point3* newLookat, Point3* newPosition) {
 
 void ballMovement(float seconds) {
     const Vector3 gravity = {0.0f, -7.5f, 0.0f};
-    const float collisionOffset = 0.2f;
     const GLfloat velocityThreshold = 0.1f;
 
-    GLfloat distance;
     PlaneProperties collider;
-    GLfloat velocity;
     int tableWallSize = sizeof(table.colliders) / sizeof(table.colliders[0]);
     for(int i = 0; i < tableWallSize; i++) {
         collider = table.colliders[i];
-
-        cueBallPlaneCollision(&cueBall, &collider, i);
+        ballPlaneCollision(&cueBall, &collider, i);
+        for(int j = 0; j < object_balls_amount; j++) {
+            ballPlaneCollision(&balls[j], &collider, i);
+        }
     }
-    cueBall.velocity[1] += gravity[1] * seconds;
 
+    for(int i = 0; i < object_balls_amount; i++) {
+        ballToBallCollision(&cueBall, &balls[i]);
+
+        for(int j = i; j < object_balls_amount; j++) {
+            // check every other ball if the two are colliding
+        }
+    }
+
+    // TODO: function to impose gravity
+    cueBall.velocity[1] += gravity[1] * seconds;
+    for(int i = 0; i < object_balls_amount; i++) {
+        balls[i].velocity[1] += gravity[1] * seconds;
+    }
+
+    // TODO: refactor this
     for(int i = 0; i < 3; i++) {
         if(fabsf(cueBall.velocity[i]) < velocityThreshold) {
             cueBall.velocity[i] = 0.0f;
         }
+        for(int j = 0; j < object_balls_amount; j++) {
+            if(fabsf(balls[j].velocity[i]) < velocityThreshold) {
+                balls[j].velocity[i] = 0.0f;
+            }
+        }
 
         cueBall.ball.position[i] += cueBall.velocity[i] * seconds;
+
+        for(int j = 0; j < object_balls_amount; j++) {
+            balls[j].ball.position[i] += balls[j].velocity[i] * seconds;
+        }
     }
 }
 
@@ -164,11 +186,11 @@ void updateCameraPosition(float deltaTime) {
         isCurrentlyMoving = 1;
     }
 
-    cueBall.cameraPosition[0] += cueBall.velocity[0] * deltaTime;
-    cueBall.cameraPosition[2] += cueBall.velocity[2] * deltaTime;
+    potentialCameraPosition[0] += cueBall.velocity[0] * deltaTime;
+    potentialCameraPosition[2] += cueBall.velocity[2] * deltaTime;
 
     if(previousMoveCheck == 1 && isCurrentlyMoving == 0) {
-        resetCamera(&camera, &cueBall.ball.position, &cueBall.cameraPosition);
+        resetCamera(&camera, &cueBall.ball.position, &potentialCameraPosition);
     }
     else if(previousMoveCheck == 0 && isCurrentlyMoving == 1) {
         viewTop(&camera);

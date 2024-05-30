@@ -32,6 +32,7 @@
 #include "globals/general.h"
 
 Camera camera;
+Point3 potentialCameraPosition = {0.0f, 0.0f, 0.0f};
 
 Shape table = {
     NULL,
@@ -61,17 +62,10 @@ Shape table = {
        {-4.0, 0.0,  2.0}}, 0.9, 0.9}} // -x
 };
 
-BallProperties ballProperties = {
-    {{-2.5, 0.1, 0.0}, 0.1},
-    {0.0, 0.0, 0.0},
-    1.0f
-};
-
-CueBall cueBall = {
+Ball cueBall = {
    {{-2.5, 0.1, 0.0}, 0.1},
     {0.0, 0.0, 0.0},
-    1.0f,
-    {0.0, 0.0, 0.0}
+    1.0f
 };
 
 PlaneProperties planeProperties = {
@@ -114,7 +108,7 @@ void init() {
         camera.lookat[i] = cueBall.ball.position[i];
         camera.up[i] = upVec[i];
 
-        cueBall.cameraPosition[i] = cameraPosition[i];
+        potentialCameraPosition[i] = cameraPosition[i];
     }
 
     glMatrixMode(GL_PROJECTION);
