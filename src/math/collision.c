@@ -18,6 +18,7 @@
 #include "vector_operations.h"
 
 #include <math.h>
+#include <stdio.h>
 
 GLfloat distanceToPlane(Point3 ballCenter, Point3 p1, Point3 p2, Point3 p3) {
     Vector3 normal = {0.0, 0.0, 0.0};
@@ -31,7 +32,31 @@ GLfloat distanceToPlane(Point3 ballCenter, Point3 p1, Point3 p2, Point3 p3) {
     return distance;
 }
 
-CueBall resolveCollision(CueBall* ball, GLfloat distance, Vector3 planeNormal, int wallIteration) {
+void ballPlaneCollision(Ball* cueBall, PlaneProperties* collider, int planeIndex) {
+    GLfloat velocity;
+    GLfloat velocityThreshold = 0.1f;
+
+    GLfloat distance = distanceToPlane(cueBall->ball.position, collider->points[0], collider->points[1], collider->points[2]);
+
+    if(distance < (cueBall->ball.radius)) {
+        Vector3 planeNormal;
+        calcUnitNormal(planeNormal, collider->points[0], collider->points[1], collider->points[2]);
+
+        GLfloat perpendicular = calcDotProduct(cueBall->velocity, planeNormal);
+
+        for(int j = 0; j < 3; j++) {
+            velocity = cueBall->velocity[j] - 2 * perpendicular * planeNormal[j];
+            if(velocity > velocityThreshold) {
+                velocity *= collider->bounciness;
+            }
+            cueBall->velocity[j] = velocity;
+        }
+
+        *cueBall = resolveCollision(cueBall, distance, planeNormal, planeIndex);
+    }
+}
+
+Ball resolveCollision(Ball* ball, GLfloat distance, Vector3 planeNormal, int wallIteration) {
     if(wallIteration == 0 || wallIteration == 1 || wallIteration == 2) {
         multiplyByScalar(planeNormal, -1);
     }
@@ -40,4 +65,37 @@ CueBall resolveCollision(CueBall* ball, GLfloat distance, Vector3 planeNormal, i
         ball->ball.position[i] += (ball->ball.radius - distance) * planeNormal[i];
     }
     return *ball;
+}
+
+int collidesWithPocket(Ball* ball, Sphere* pocket) {
+    int foundCollision = 0;
+
+    Vector3 collisionNormal;
+    subtractVectors(collisionNormal, ball->ball.position, pocket->position);
+    GLfloat distance = calcDotProduct(collisionNormal, collisionNormal);
+    for(int i = 0; i < 3; i++) {
+        collisionNormal[i] /= distance;
+    }
+
+    if(distance <= (ball->ball.radius + pocket->radius)) {
+        foundCollision = 1;        
+    }
+
+    return foundCollision;
+}
+
+void ballToBallCollision(Ball* cueBall, Ball* otherBall) {
+    Vector3 collisionNormal;
+    subtractVectors(collisionNormal, cueBall->ball.position, otherBall->ball.position);
+    GLfloat distance = calcDotProduct(collisionNormal, collisionNormal);
+    for(int i = 0; i < 3; i++) {
+        collisionNormal[i] /= distance;
+    }
+
+    if(distance <= (cueBall->ball.radius)) {
+        for(int i = 0; i < 3; i++) {
+            cueBall->velocity[i] += cueBall->mass * collisionNormal[i] / 2.0f;
+            otherBall->velocity[i] += otherBall->mass * -collisionNormal[i] / 2.0f;
+        }
+    }
 }

@@ -24,6 +24,12 @@
 
 GLfloat distanceToPlane(Point3 ballCenter, Point3 p1, Point3 p2, Point3 p3);
 
-CueBall resolveCollision(CueBall* ball, GLfloat distance, Vector3 planeNormal, int wallIteration);
+void ballPlaneCollision(Ball* cueBall, PlaneProperties* collider, int planeIndex);
+
+Ball resolveCollision(Ball* ball, GLfloat distance, Vector3 planeNormal, int wallIteration);
+
+void ballToBallCollision(Ball* cueBall, Ball* otherBall);
+
+Ball resolveBallCollision(Ball* ball1, Vector3* normal);
 
 #endif

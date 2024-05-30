@@ -24,6 +24,8 @@ void animate();
 
 void callAnimations(float deltaTime);
 
+void checkPockets();
+
 void updateCameraPosition(float deltaTime);
 
 void resetCamera(Camera* camera, Point3* newLookat, Point3* newPosition);

@@ -32,9 +32,11 @@
 #include "globals/general.h"
 
 Camera camera;
+Point3 potentialCameraPosition = {0.0f, 0.0f, 0.0f};
 
 Shape table = {
     NULL,
+    // colliders
     {{{{-4.0, 0.0, -2.0},
        { 4.0, 0.0, -2.0},
        {-4.0, 0.0,  2.0},
@@ -58,20 +60,21 @@ Shape table = {
      {{{-4.0, 0.2, -2.0},
        {-4.0, 0.2,  2.0},
        {-4.0, 0.0, -2.0},
-       {-4.0, 0.0,  2.0}}, 0.9, 0.9}} // -x
+       {-4.0, 0.0,  2.0}}, 0.9, 0.9}}, // -x
+
+    // pockets
+    {{{-4.0f, 0.0f, -2.0f}, 0.2},
+     {{ 0.0f, 0.0f, -2.0f}, 0.2},
+     {{ 4.0f, 0.0f, -2.0f}, 0.2},
+     {{-4.0f, 0.0f,  2.0f}, 0.2},
+     {{ 0.0f, 0.0f,  2.0f}, 0.2},
+     {{ 4.0f, 0.0f,  2.0f}, 0.2}}
 };
 
-BallProperties ballProperties = {
-    {{-2.5, 0.1, 0.0}, 0.1},
-    {0.0, 0.0, 0.0},
-    1.0f
-};
-
-CueBall cueBall = {
+Ball cueBall = {
    {{-2.5, 0.1, 0.0}, 0.1},
     {0.0, 0.0, 0.0},
-    1.0f,
-    {0.0, 0.0, 0.0}
+    1.0f
 };
 
 PlaneProperties planeProperties = {
@@ -88,13 +91,11 @@ AxisFlag axis_flag = AXIS_ENABLED;
 ObjectsFlag objects_flag = OBJECTS_ENABLED;
 ObjectBallsShape object_balls_shape = TRIANGLE;
 
-SphereMovingFlag Sphere_moving_flag = SPHERE_ENABLED;
 RotationFlag rotation_flag_c = ROTATION_DISABLED;
 RotationFlag rotation_flag_a = ROTATION_DISABLED;
 
 int spacebarPressed = 0;
 float spacebarHoldTime = 0.0f;
-
 int previousMoveCheck = 0;
 
 int object_balls_amount = 0;
@@ -114,7 +115,7 @@ void init() {
         camera.lookat[i] = cueBall.ball.position[i];
         camera.up[i] = upVec[i];
 
-        cueBall.cameraPosition[i] = cameraPosition[i];
+        potentialCameraPosition[i] = cameraPosition[i];
     }
 
     glMatrixMode(GL_PROJECTION);

@@ -12,14 +12,7 @@ typedef struct {
     Sphere ball;
     Vector3 velocity;
     GLfloat mass;
-    Point3 cameraPosition;
-} CueBall;
-
-typedef struct {
-    Sphere ball;
-    Vector3 velocity;
-    GLfloat mass;
-} BallProperties;
+} Ball;
 
 typedef struct {
     Point3 points[4];
@@ -29,7 +22,6 @@ typedef struct {
 
 typedef struct {
     Object3D* drawing;
-    //Object3D* collision;
     /*
      * 0 - floor
      * 1 - wall found in negative z direction
@@ -38,7 +30,7 @@ typedef struct {
      * 4 - wall found in negative x direction
      */
     PlaneProperties colliders[5];
-    // insert 6 spheres for the pockets
+    Sphere pockets[6];
 } Shape;
 
 #endif
