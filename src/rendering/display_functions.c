@@ -30,7 +30,7 @@
 
 Ball* balls = NULL;
 
-float sphereSpacing = 0.32;
+float sphereSpacing = 0.25;
 float initialX = 2.0;
 float initialZ = 0.30;
 

@@ -85,7 +85,7 @@ PlaneProperties planeProperties = {
     0.8, 0.9
 };
 
-AnimationFlag animation_flag = ANIMATION_ENABLED;
+AnimationFlag animation_flag = ANIMATION_DISABLED;
 GridFlag grid_flag = GRID_ENABLED;
 AxisFlag axis_flag = AXIS_ENABLED;
 ObjectsFlag objects_flag = OBJECTS_ENABLED;

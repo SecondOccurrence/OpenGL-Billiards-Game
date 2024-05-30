@@ -96,6 +96,17 @@ void checkPockets() {
     }
 
     // for the object balls
+    for(int i = 0; i < pockets; i++) {
+        for(int j = 0; j < object_balls_amount; j++) {
+            int collision = collidesWithPocket(&balls[j], &table.pockets[i]);
+            if(collision == 1) {
+                Point3 pocketPoint = {0.0f, -2.0f, 0.0f};
+                for(int k = 0; k < 3; k++) {
+                    balls[j].ball.position[k] = pocketPoint[k];
+                }
+            }
+        }
+    }
 }
 
 void ballMovement(float seconds) {
