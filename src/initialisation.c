@@ -91,13 +91,11 @@ AxisFlag axis_flag = AXIS_ENABLED;
 ObjectsFlag objects_flag = OBJECTS_ENABLED;
 ObjectBallsShape object_balls_shape = TRIANGLE;
 
-SphereMovingFlag Sphere_moving_flag = SPHERE_ENABLED;
 RotationFlag rotation_flag_c = ROTATION_DISABLED;
 RotationFlag rotation_flag_a = ROTATION_DISABLED;
 
 int spacebarPressed = 0;
 float spacebarHoldTime = 0.0f;
-
 int previousMoveCheck = 0;
 
 int object_balls_amount = 0;
