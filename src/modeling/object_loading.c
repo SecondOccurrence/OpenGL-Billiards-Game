@@ -17,6 +17,8 @@
  *   Contributed by Kaden R, 34606207
  * - v1.5 (29/05/2024): added function to free a Shape's memory
  *   Contributed by Kaden R, 34606207
+ * - v1.6 (30/05/2024): now frees the balls
+ *   Contributed by Kaden R, 34606207
  *
  */
 
@@ -142,5 +144,9 @@ void exitApplication(void) {
 
     if(table.drawing != NULL) {
         free(table.drawing);
+    }
+
+    if(balls != NULL) {
+        free(balls);
     }
 }
