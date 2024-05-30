@@ -75,7 +75,7 @@ void ballToBallCollision(Ball* cueBall, Ball* otherBall) {
         collisionNormal[i] /= distance;
     }
 
-    if(distance <= (cueBall->ball.radius + otherBall->ball.radius)) {
+    if(distance <= (cueBall->ball.radius)) {
         for(int i = 0; i < 3; i++) {
             cueBall->velocity[i] += cueBall->mass * collisionNormal[i];
             otherBall->velocity[i] += otherBall->mass * -collisionNormal[i];

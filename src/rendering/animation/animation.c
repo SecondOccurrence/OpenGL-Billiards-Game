@@ -34,6 +34,8 @@ extern const int TIMERMSECS;
 
 #include <stdio.h>
 
+// TODO: massive refactor this is all spaghetti
+
 void animate() {
     const int targetFrameRate = 60;
 
@@ -99,6 +101,9 @@ void ballMovement(float seconds) {
         ballToBallCollision(&cueBall, &balls[i]);
 
         for(int j = i; j < object_balls_amount; j++) {
+            if(i != j) {
+                ballToBallCollision(&balls[i], &balls[j]);
+            }
             // check every other ball if the two are colliding
         }
     }
