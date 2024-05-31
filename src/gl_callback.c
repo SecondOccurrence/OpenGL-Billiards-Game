@@ -134,11 +134,10 @@ void animate() {
 
         if(animation_flag == ANIMATION_ENABLED) {
             checkPockets(object_balls_amount);
-
+            checkForCollisions(object_balls_amount);
             ballMovement(object_balls_amount, changeInSeconds);
 
             rotateCameraContinuous(&rotationFlag, changeInSeconds);
-
             updateCameraPosition(&previousMoveCheck, changeInSeconds);
         }
         

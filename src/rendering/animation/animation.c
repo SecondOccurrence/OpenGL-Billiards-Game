@@ -28,19 +28,16 @@
 
 #include <math.h>
 
-#include <stdio.h>
-
-// TODO: massive refactor this is all spaghetti
-
 void checkPockets(int objectBallsSize) {
     const int pockets = 6;
 
-    Point3 cameraOrigin = {-4.0f, 0.5f, 0.0f};
-    Point3 cueBallSpawn = {-2.5f, 0.1f, 0.0f};
-    // for the cue ball
+    const Point3 cameraOrigin = {-4.0f, 0.5f, 0.0f};
+    const Point3 cueBallSpawn = {-2.5f, 0.1f, 0.0f};
+
+    int collisionFound;
     for(int i = 0; i < pockets; i++) {
-        int collision = collidesWithPocket(&cueBall, &table.pockets[i]);
-        if(collision == 1) {
+        collisionFound = collidesWithPocket(&cueBall, &table.pockets[i]);
+        if(collisionFound == 1) {
             for(int j = 0; j < 3; j++) {
                 camera.position[j] = cameraOrigin[j];
                 potentialCameraPosition[j] = cameraOrigin[j];
@@ -48,13 +45,10 @@ void checkPockets(int objectBallsSize) {
                 cueBall.velocity[j] = 0.0f;
             }
         }
-    }
 
-    // for the object balls
-    for(int i = 0; i < pockets; i++) {
         for(int j = 0; j < objectBallsSize; j++) {
-            int collision = collidesWithPocket(&balls[j], &table.pockets[i]);
-            if(collision == 1) {
+            collisionFound = collidesWithPocket(&balls[j], &table.pockets[i]);
+            if(collisionFound == 1) {
                 Point3 pocketPoint = {0.0f, -2.0f, 0.0f};
                 for(int k = 0; k < 3; k++) {
                     balls[j].ball.position[k] = pocketPoint[k];
@@ -64,10 +58,7 @@ void checkPockets(int objectBallsSize) {
     }
 }
 
-void ballMovement(int objectBallsSize, float seconds) {
-    const Vector3 gravity = {0.0f, -7.5f, 0.0f};
-    const GLfloat velocityThreshold = 0.1f;
-
+void checkForCollisions(int objectBallsSize) {
     PlaneProperties collider;
     int tableWallSize = sizeof(table.colliders) / sizeof(table.colliders[0]);
     for(int i = 0; i < tableWallSize; i++) {
@@ -81,36 +72,32 @@ void ballMovement(int objectBallsSize, float seconds) {
     for(int i = 0; i < objectBallsSize; i++) {
         ballToBallCollision(&cueBall, &balls[i]);
 
-        for(int j = i; j < objectBallsSize; j++) {
-            if(i != j) {
-                ballToBallCollision(&balls[i], &balls[j]);
-            }
-            // check every other ball if the two are colliding
+        for(int j = i + 1; j < objectBallsSize; j++) {
+            ballToBallCollision(&balls[i], &balls[j]);
         }
     }
+}
 
-    // TODO: function to impose gravity
-    cueBall.velocity[1] += gravity[1] * seconds;
+void ballMovement(int objectBallsSize, float seconds) {
+    const GLfloat gravity = -7.5f;
+
+    updateVelocity(&cueBall, gravity, seconds);
+
     for(int i = 0; i < objectBallsSize; i++) {
-        balls[i].velocity[1] += gravity[1] * seconds;
+        updateVelocity(&balls[i], gravity, seconds);
     }
+}
 
-    // TODO: refactor this
+void updateVelocity(Ball* ball, GLfloat gravity, float seconds) {
+    const GLfloat velocityThreshold = 0.1f;
+
+    ball->velocity[1] += gravity * seconds;
     for(int i = 0; i < 3; i++) {
-        if(fabsf(cueBall.velocity[i]) < velocityThreshold) {
-            cueBall.velocity[i] = 0.0f;
-        }
-        for(int j = 0; j < objectBallsSize; j++) {
-            if(fabsf(balls[j].velocity[i]) < velocityThreshold) {
-                balls[j].velocity[i] = 0.0f;
-            }
+        if(fabsf(ball->velocity[i]) < velocityThreshold) {
+            ball->velocity[i] = 0.0f;
         }
 
-        cueBall.ball.position[i] += cueBall.velocity[i] * seconds;
-
-        for(int j = 0; j < objectBallsSize; j++) {
-            balls[j].ball.position[i] += balls[j].velocity[i] * seconds;
-        }
+        ball->ball.position[i] += ball->velocity[i] * seconds;
     }
 }
 

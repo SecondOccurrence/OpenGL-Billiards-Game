@@ -20,6 +20,7 @@
 
 #include "../../data_structures/camera.h"
 #include "../../data_structures/flags.h"
+#include "../../data_structures/objects.h"
 
 void animate();
 
@@ -27,7 +28,11 @@ void checkPockets(int objectBallsSize);
 
 void resetCamera(Camera* camera, Point3* newLookat, Point3* newPosition);
 
+void checkForCollisions(int objectBallsSize);
+
 void ballMovement(int objectBallsSize, float time);
+
+void updateVelocity(Ball* ball, GLfloat gravity, float seconds);
 
 void rotateCameraContinuous(RotationFlag* rotationFlag, float changeInSeconds);
 
