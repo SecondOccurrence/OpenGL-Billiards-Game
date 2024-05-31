@@ -80,29 +80,26 @@ void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid
     }
 }
 
-void cameraKeys(unsigned char key, Camera* camera, RotationFlag* rotation_flag_c, RotationFlag* rotation_flag_a) {
+void cameraKeys(unsigned char key, Camera* camera, RotationFlag* rotationFlag) {
     switch(key) {
     case 'T':
         viewTop(camera);
         break;
     case 'A':
     case 'a':
-        *rotation_flag_c = ROTATION_DISABLED;
-        if(*rotation_flag_a == ROTATION_DISABLED) {
-            *rotation_flag_a = ROTATION_ENABLED;
+        if(*rotationFlag == ROTATION_DISABLED) {
+            *rotationFlag = ROTATION_ANTICLOCKWISE;
         }
         else {
-            *rotation_flag_a = ROTATION_DISABLED;
+            *rotationFlag = ROTATION_DISABLED;
         }
         break;
-    case 'D':
     case 'd':
-        *rotation_flag_a = ROTATION_DISABLED;
-        if(*rotation_flag_c == ROTATION_DISABLED) {
-            *rotation_flag_c = ROTATION_ENABLED;
+        if(*rotationFlag == ROTATION_DISABLED) {
+            *rotationFlag = ROTATION_CLOCKWISE;
         }
         else {
-            *rotation_flag_c = ROTATION_DISABLED;
+            *rotationFlag = ROTATION_DISABLED;
         }
         break;
     default:

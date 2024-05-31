@@ -19,23 +19,22 @@
 #include "../../../lib/opengl/opengl.h"
 
 #include "../../data_structures/camera.h"
+#include "../../data_structures/flags.h"
 
 void animate();
 
-void callAnimations(float deltaTime);
-
-void checkPockets();
-
-void updateCameraPosition(float deltaTime);
+void checkPockets(int objectBallsSize);
 
 void resetCamera(Camera* camera, Point3* newLookat, Point3* newPosition);
 
-void ballMovement(float time);
+void ballMovement(int objectBallsSize, float time);
 
-void rotateCameraContinuous(float changeInSeconds);
+void rotateCameraContinuous(RotationFlag* rotationFlag, float changeInSeconds);
 
 void rotateCameraClockwise(Camera* camera, float angle);
 
 void rotateCameraCounterclockwise(Camera* camera, float angle);
+
+void updateCameraPosition(int* previousMoveCheck, float deltaTime);
 
 #endif

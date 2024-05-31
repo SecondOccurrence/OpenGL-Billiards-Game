@@ -24,7 +24,7 @@
 
 void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid_flag, AxisFlag* axis_flag, ObjectsFlag* objects_flag, int* spacebarPressed);
 
-void cameraKeys(unsigned char key, Camera* camera, RotationFlag* rotation_flag_a, RotationFlag* rotation_flag_c);
+void cameraKeys(unsigned char key, Camera* camera, RotationFlag* rotationFlag);
 
 void viewTop(Camera* camera);
 

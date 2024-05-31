@@ -23,65 +23,20 @@
 #include "../../math/vector_operations.h"
 #include "../../input/keyboard_utils.h"
 
-#include "../../globals/flags.h"
 #include "../../globals/objects.h"
 #include "../../globals/camera.h"
-#include "../../globals/general.h"
 
 #include <math.h>
-
-extern const int TIMERMSECS;
 
 #include <stdio.h>
 
 // TODO: massive refactor this is all spaghetti
 
-void animate() {
-    const int targetFrameRate = 60;
+void checkPockets(int objectBallsSize) {
+    const int pockets = 6;
 
-    currentFrameTime = glutGet(GLUT_ELAPSED_TIME);
-    float changeInSeconds = (currentFrameTime - previousFrameTime) / 1000.0f;
-
-    float targetFrameTime = 1.0f / targetFrameRate;
-    if(changeInSeconds >= targetFrameTime) {
-        if(spacebarPressed == 1) {
-            if(spacebarHoldTime < 15.0f) {
-                spacebarHoldTime += 0.2f;
-            }
-        }
-        else {
-            Vector3 direction;
-            calculateVelocityDirection(&direction, &camera, &cueBall);
-            cueBall.velocity[0] += direction[0] * spacebarHoldTime;
-            cueBall.velocity[2] += direction[2] * spacebarHoldTime;
-
-            spacebarHoldTime = 0.0f;
-        }
-
-        callAnimations(changeInSeconds);
-        
-        previousFrameTime = currentFrameTime;
-    }
-
-    glutPostRedisplay();
-}
-
-void callAnimations(float deltaTime) {
-    if(animation_flag == ANIMATION_ENABLED) {
-        checkPockets();
-
-        ballMovement(deltaTime);
-
-        rotateCameraContinuous(deltaTime);
-
-        updateCameraPosition(deltaTime);
-    }
-}
-
-void checkPockets() {
     Point3 cameraOrigin = {-4.0f, 0.5f, 0.0f};
     Point3 cueBallSpawn = {-2.5f, 0.1f, 0.0f};
-    const int pockets = 6;
     // for the cue ball
     for(int i = 0; i < pockets; i++) {
         int collision = collidesWithPocket(&cueBall, &table.pockets[i]);
@@ -97,7 +52,7 @@ void checkPockets() {
 
     // for the object balls
     for(int i = 0; i < pockets; i++) {
-        for(int j = 0; j < object_balls_amount; j++) {
+        for(int j = 0; j < objectBallsSize; j++) {
             int collision = collidesWithPocket(&balls[j], &table.pockets[i]);
             if(collision == 1) {
                 Point3 pocketPoint = {0.0f, -2.0f, 0.0f};
@@ -109,7 +64,7 @@ void checkPockets() {
     }
 }
 
-void ballMovement(float seconds) {
+void ballMovement(int objectBallsSize, float seconds) {
     const Vector3 gravity = {0.0f, -7.5f, 0.0f};
     const GLfloat velocityThreshold = 0.1f;
 
@@ -118,15 +73,15 @@ void ballMovement(float seconds) {
     for(int i = 0; i < tableWallSize; i++) {
         collider = table.colliders[i];
         ballPlaneCollision(&cueBall, &collider, i);
-        for(int j = 0; j < object_balls_amount; j++) {
+        for(int j = 0; j < objectBallsSize; j++) {
             ballPlaneCollision(&balls[j], &collider, i);
         }
     }
 
-    for(int i = 0; i < object_balls_amount; i++) {
+    for(int i = 0; i < objectBallsSize; i++) {
         ballToBallCollision(&cueBall, &balls[i]);
 
-        for(int j = i; j < object_balls_amount; j++) {
+        for(int j = i; j < objectBallsSize; j++) {
             if(i != j) {
                 ballToBallCollision(&balls[i], &balls[j]);
             }
@@ -136,7 +91,7 @@ void ballMovement(float seconds) {
 
     // TODO: function to impose gravity
     cueBall.velocity[1] += gravity[1] * seconds;
-    for(int i = 0; i < object_balls_amount; i++) {
+    for(int i = 0; i < objectBallsSize; i++) {
         balls[i].velocity[1] += gravity[1] * seconds;
     }
 
@@ -145,7 +100,7 @@ void ballMovement(float seconds) {
         if(fabsf(cueBall.velocity[i]) < velocityThreshold) {
             cueBall.velocity[i] = 0.0f;
         }
-        for(int j = 0; j < object_balls_amount; j++) {
+        for(int j = 0; j < objectBallsSize; j++) {
             if(fabsf(balls[j].velocity[i]) < velocityThreshold) {
                 balls[j].velocity[i] = 0.0f;
             }
@@ -153,18 +108,18 @@ void ballMovement(float seconds) {
 
         cueBall.ball.position[i] += cueBall.velocity[i] * seconds;
 
-        for(int j = 0; j < object_balls_amount; j++) {
+        for(int j = 0; j < objectBallsSize; j++) {
             balls[j].ball.position[i] += balls[j].velocity[i] * seconds;
         }
     }
 }
 
-void rotateCameraContinuous(float changeInSeconds) {
+void rotateCameraContinuous(RotationFlag* rotationFlag, float changeInSeconds) {
     double rotationSpeed = 60.0;
-    if (rotation_flag_c == ROTATION_ENABLED) {
+    if(*rotationFlag == ROTATION_CLOCKWISE) {
         rotateCameraClockwise(&camera, rotationSpeed * changeInSeconds);
     }
-    else if (rotation_flag_a == ROTATION_ENABLED) {
+    else if(*rotationFlag == ROTATION_ANTICLOCKWISE) {
         rotateCameraCounterclockwise(&camera, rotationSpeed * changeInSeconds);
     }
 }
@@ -209,7 +164,7 @@ void rotateCameraCounterclockwise(Camera* camera, float angle) {
     camera->position[2] = cueBall.ball.position[2] - newZ * distance;
 }
 
-void updateCameraPosition(float deltaTime) {
+void updateCameraPosition(int* previousMoveCheck, float deltaTime) {
     int isCurrentlyMoving = 0;
 
     Vector3 velocity = {cueBall.velocity[0], cueBall.velocity[1], cueBall.velocity[2]};
@@ -220,14 +175,14 @@ void updateCameraPosition(float deltaTime) {
     potentialCameraPosition[0] += cueBall.velocity[0] * deltaTime;
     potentialCameraPosition[2] += cueBall.velocity[2] * deltaTime;
 
-    if(previousMoveCheck == 1 && isCurrentlyMoving == 0) {
+    if(*previousMoveCheck == 1 && isCurrentlyMoving == 0) {
         resetCamera(&camera, &cueBall.ball.position, &potentialCameraPosition);
     }
-    else if(previousMoveCheck == 0 && isCurrentlyMoving == 1) {
+    else if(*previousMoveCheck == 0 && isCurrentlyMoving == 1) {
         viewTop(&camera);
     }
 
-    previousMoveCheck = isCurrentlyMoving;
+    *previousMoveCheck = isCurrentlyMoving;
 }
 
 void resetCamera(Camera* camera, Point3* newLookat, Point3* newPosition) {

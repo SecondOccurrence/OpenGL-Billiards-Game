@@ -30,7 +30,6 @@
 
 Ball* balls = NULL;
 
-float sphereSpacing = 0.25;
 float initialX = 2.0;
 float initialZ = 0.30;
 
@@ -50,6 +49,8 @@ void initialiseBalls(int N) {
 }
 
 void initialiseTriangle() {
+    float sphereSpacing = 0.35;
+
     int spheresDrawn = 0;
     int row = 1;
 

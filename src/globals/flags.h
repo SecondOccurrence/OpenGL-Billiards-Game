@@ -8,8 +8,7 @@ extern GridFlag grid_flag;
 extern AxisFlag axis_flag;
 extern ObjectsFlag objects_flag;
 extern ObjectBallsShape object_balls_shape;
-extern RotationFlag rotation_flag_c;
-extern RotationFlag rotation_flag_a;
+extern RotationFlag rotationFlag;
 extern int spacebarPressed;
 
 extern int previousMoveCheck;

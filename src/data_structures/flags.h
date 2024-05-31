@@ -22,7 +22,7 @@ typedef enum {
 } ObjectBallsShape;
 
 typedef enum {
-    ROTATION_DISABLED = 0, ROTATION_ENABLED = 1
+    ROTATION_DISABLED = 0, ROTATION_CLOCKWISE = 1, ROTATION_ANTICLOCKWISE = 2
 } RotationFlag;
 
 #endif

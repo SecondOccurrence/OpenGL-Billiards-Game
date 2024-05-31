@@ -32,4 +32,6 @@ void ballToBallCollision(Ball* cueBall, Ball* otherBall);
 
 Ball resolveBallCollision(Ball* ball1, Vector3* normal);
 
+int collidesWithPocket(Ball* ball, Sphere* pocket);
+
 #endif

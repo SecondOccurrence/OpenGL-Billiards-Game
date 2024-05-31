@@ -20,10 +20,13 @@
 #include "rendering/display_functions.h"
 #include "input/keyboard_utils.h"
 #include "modeling/object_loading.h"
+#include "rendering/animation/animation.h"
+#include "math/vector_operations.h"
 
 #include "globals/camera.h"
 #include "globals/flags.h"
 #include "globals/objects.h"
+#include "globals/general.h"
 
 extern Shape table;
 
@@ -102,7 +105,45 @@ void myReshape(int width, int height) {
 void keys(unsigned char key, int x, int y) {
     toggleKeys(key, &animation_flag, &grid_flag, &axis_flag, &objects_flag, &spacebarPressed);
 
-    cameraKeys(key, &camera, &rotation_flag_a, &rotation_flag_c);
+    cameraKeys(key, &camera, &rotationFlag);
+
+    glutPostRedisplay();
+}
+
+void animate() {
+    const int targetFrameRate = 60;
+
+    currentFrameTime = glutGet(GLUT_ELAPSED_TIME);
+    float changeInSeconds = (currentFrameTime - previousFrameTime) / 1000.0f;
+
+    float targetFrameTime = 1.0f / targetFrameRate;
+    if(changeInSeconds >= targetFrameTime) {
+        if(spacebarPressed == 1) {
+            if(spacebarHoldTime < 15.0f) {
+                spacebarHoldTime += 0.2f;
+            }
+        }
+        else {
+            Vector3 direction;
+            calculateVelocityDirection(&direction, &camera, &cueBall);
+            cueBall.velocity[0] += direction[0] * spacebarHoldTime;
+            cueBall.velocity[2] += direction[2] * spacebarHoldTime;
+
+            spacebarHoldTime = 0.0f;
+        }
+
+        if(animation_flag == ANIMATION_ENABLED) {
+            checkPockets(object_balls_amount);
+
+            ballMovement(object_balls_amount, changeInSeconds);
+
+            rotateCameraContinuous(&rotationFlag, changeInSeconds);
+
+            updateCameraPosition(&previousMoveCheck, changeInSeconds);
+        }
+        
+        previousFrameTime = currentFrameTime;
+    }
 
     glutPostRedisplay();
 }

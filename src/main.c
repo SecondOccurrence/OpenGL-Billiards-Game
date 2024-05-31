@@ -64,6 +64,8 @@ int main(int argc, char** argv) {
 
     init();
 
+    glutIdleFunc(animate);
+
     glutCloseFunc(exitApplication);
 
     glutMainLoop();

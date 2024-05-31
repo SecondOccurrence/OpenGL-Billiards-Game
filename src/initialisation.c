@@ -91,8 +91,7 @@ AxisFlag axis_flag = AXIS_ENABLED;
 ObjectsFlag objects_flag = OBJECTS_ENABLED;
 ObjectBallsShape object_balls_shape = TRIANGLE;
 
-RotationFlag rotation_flag_c = ROTATION_DISABLED;
-RotationFlag rotation_flag_a = ROTATION_DISABLED;
+RotationFlag rotationFlag = ROTATION_DISABLED;
 
 int spacebarPressed = 0;
 float spacebarHoldTime = 0.0f;
@@ -125,7 +124,6 @@ void init() {
     setCamera(camera.cameraMode);
 
     previousFrameTime = glutGet(GLUT_ELAPSED_TIME);
-    glutIdleFunc(animate);
 }
 
 void setLight(void){
