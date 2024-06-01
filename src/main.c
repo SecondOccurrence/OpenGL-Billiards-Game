@@ -65,7 +65,7 @@ int main(int argc, char** argv) {
     glutKeyboardFunc(keys);
     glutKeyboardUpFunc(upKeys);
     glutMouseFunc(mouse);
-    //glutMouseWheelFunc(mouseWheel);
+    glutMouseWheelFunc(mouseWheel);
 
     init();
 

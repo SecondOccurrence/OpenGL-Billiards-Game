@@ -31,7 +31,10 @@ void viewTop(Camera* camera);
 void toggleUpKeys(unsigned char key, int* spacebarPressFlag);
 
 // mouse
+    // clicks
 void toggleMouse(int button, int* spacebarPressFlag);
 void toggleUpMouse(int button, int* spacebarPressFlag);
+    // scroll wheel
+void toggleWheel(int direction);
 
 #endif

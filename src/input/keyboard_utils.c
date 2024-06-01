@@ -99,7 +99,6 @@ void cameraUpKeys(unsigned char key, Camera* camera, RotationFlag* rotationFlag)
     case 'a':
     case 'D':
     case 'd':
-        *rotationFlag == ROTATION_DISABLED;
         *rotationFlag = ROTATION_DISABLED;
         break;
     default:
@@ -144,7 +143,6 @@ void toggleMouse(int button, int* spacebarPressFlag) {
     case 2: // middle (wheel) click
         break;
     default:
-        printf("invalid button: [%i] ", button);
         break;
     }
 }
@@ -158,7 +156,11 @@ void toggleUpMouse(int button, int* spacebarPressFlag) {
     case 2: // middle (wheel) click release
         break;
     default:
-        printf("invalid button: [%i] ", button);
         break;
     }
 }
+
+void toggleWheel(int direction) {
+    ;
+}
+
