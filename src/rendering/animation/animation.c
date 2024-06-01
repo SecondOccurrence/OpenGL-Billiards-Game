@@ -23,18 +23,29 @@
 #include "../../math/vector_operations.h"
 #include "../../input/keyboard_utils.h"
 
-#include "../../globals/objects.h"
-#include "../../globals/camera.h"
-
 #include <math.h>
 
+void prepareForHit(CueHitFlag* cueHitFlag, float* spacebarHoldTime, const float* maxPower, Ball* cueBall, Camera* camera) {
+    const float powerIncrement = 1.0f;
 
-// TODO: remove global for objects and camera
-//  maybe replace with data structures
-//  introduce ball-ball collision hit absorption
-//    fix velocity odd movement. perhaps to do with camera orientation velocity addition code
+    if(*cueHitFlag == CHARGING_SHOT) {
+        if(*spacebarHoldTime < *maxPower - 0.01f) {
+            *spacebarHoldTime += powerIncrement;
+        }
+    }
+    else if(*cueHitFlag == HIT) {
+        Vector3 direction;
+        calculateVelocityDirection(&direction, camera, cueBall);
+        cueBall->velocity[0] += direction[0] * *spacebarHoldTime;
+        cueBall->velocity[2] += direction[2] * *spacebarHoldTime;
 
-void checkPockets(int objectBallsSize) {
+        *spacebarHoldTime = 0.0f;
+
+        *cueHitFlag = IDLE;
+    }
+}
+
+void checkPockets(Shape* table, Ball* cueBall, Ball* objectBalls, int objectBallsSize, Camera* camera) {
     const int pockets = 6;
 
     const Point3 cameraOrigin = {-4.0f, 0.5f, 0.0f};
@@ -42,56 +53,56 @@ void checkPockets(int objectBallsSize) {
 
     int collisionFound;
     for(int i = 0; i < pockets; i++) {
-        collisionFound = collidesWithPocket(&cueBall, &table.pockets[i]);
+        collisionFound = collidesWithPocket(cueBall, &table->pockets[i]);
         if(collisionFound == 1) {
             for(int j = 0; j < 3; j++) {
-                camera.position[j] = cameraOrigin[j];
-                potentialCameraPosition[j] = cameraOrigin[j];
-                cueBall.ball.position[j] = cueBallSpawn[j];
-                cueBall.velocity[j] = 0.0f;
+                camera->position[j] = cameraOrigin[j];
+                camera->potentialCameraPosition[j] = cameraOrigin[j];
+                cueBall->ball.position[j] = cueBallSpawn[j];
+                cueBall->velocity[j] = 0.0f;
             }
         }
 
         for(int j = 0; j < objectBallsSize; j++) {
-            collisionFound = collidesWithPocket(&balls[j], &table.pockets[i]);
+            collisionFound = collidesWithPocket(&objectBalls[j], &table->pockets[i]);
             if(collisionFound == 1) {
                 Point3 pocketPoint = {0.0f, -2.0f, 0.0f};
                 for(int k = 0; k < 3; k++) {
-                    balls[j].ball.position[k] = pocketPoint[k];
+                    objectBalls[j].ball.position[k] = pocketPoint[k];
                 }
-                balls[j].pocketed = 1;
+                objectBalls[j].pocketed = 1;
             }
         }
     }
 }
 
-void checkForCollisions(int objectBallsSize) {
+void checkForCollisions(Shape* table, Ball* cueBall, Ball* objectBalls, int objectBallsSize) {
     PlaneProperties collider;
-    int tableWallSize = sizeof(table.colliders) / sizeof(table.colliders[0]);
+    int tableWallSize = sizeof(table->colliders) / sizeof(table->colliders[0]);
     for(int i = 0; i < tableWallSize; i++) {
-        collider = table.colliders[i];
-        ballPlaneCollision(&cueBall, &collider, i);
+        collider = table->colliders[i];
+        ballPlaneCollision(cueBall, &collider, i);
         for(int j = 0; j < objectBallsSize; j++) {
-            ballPlaneCollision(&balls[j], &collider, i);
+            ballPlaneCollision(&objectBalls[j], &collider, i);
         }
     }
 
     for(int i = 0; i < objectBallsSize; i++) {
-        ballToBallCollision(&cueBall, &balls[i]);
+        ballToBallCollision(cueBall, &objectBalls[i]);
 
         for(int j = i + 1; j < objectBallsSize; j++) {
-            ballToBallCollision(&balls[i], &balls[j]);
+            ballToBallCollision(&objectBalls[i], &objectBalls[j]);
         }
     }
 }
 
-void ballMovement(int objectBallsSize, float seconds) {
+void ballMovement(Ball* cueBall, Ball* objectBalls, int objectBallsSize, float seconds) {
     const GLfloat gravity = -7.5f;
 
-    updateVelocity(&cueBall, gravity, seconds);
+    updateVelocity(cueBall, gravity, seconds);
 
     for(int i = 0; i < objectBallsSize; i++) {
-        updateVelocity(&balls[i], gravity, seconds);
+        updateVelocity(&objectBalls[i], gravity, seconds);
     }
 }
 
@@ -108,21 +119,21 @@ void updateVelocity(Ball* ball, GLfloat gravity, float seconds) {
     }
 }
 
-void rotateCameraContinuous(RotationFlag* rotationFlag, float changeInSeconds) {
+void rotateCameraContinuous(RotationFlag* rotationFlag, Camera* camera, Ball* cueBall, float changeInSeconds) {
     double rotationSpeed = 60.0;
     if(*rotationFlag == ROTATION_CLOCKWISE) {
-        rotateCameraClockwise(&camera, rotationSpeed * changeInSeconds);
+        rotateCameraClockwise(camera, cueBall, rotationSpeed * changeInSeconds);
     }
     else if(*rotationFlag == ROTATION_ANTICLOCKWISE) {
-        rotateCameraCounterclockwise(&camera, rotationSpeed * changeInSeconds);
+        rotateCameraCounterclockwise(camera, cueBall, rotationSpeed * changeInSeconds);
     }
 }
 
-void rotateCameraClockwise(Camera* camera, float angle) {
+void rotateCameraClockwise(Camera* camera, Ball* cueBall, float angle) {
     float radians = angle * (M_PI / 180.0);
 
     Vector3 direction;
-    subtractVectors(direction, cueBall.ball.position, camera->position);
+    subtractVectors(direction, cueBall->ball.position, camera->position);
 
     // Normalize the direction vector
     float distance = sqrt(direction[0] * direction[0] + direction[2] * direction[2]);
@@ -134,15 +145,15 @@ void rotateCameraClockwise(Camera* camera, float angle) {
     float newZ = direction[0] * sin(radians) + direction[2] * cos(radians);
 
     // Scale the new direction to maintain the same distance from the ball
-    camera->position[0] = cueBall.ball.position[0] - newX * distance;
-    camera->position[2] = cueBall.ball.position[2] - newZ * distance;
+    camera->position[0] = cueBall->ball.position[0] - newX * distance;
+    camera->position[2] = cueBall->ball.position[2] - newZ * distance;
 }
 
-void rotateCameraCounterclockwise(Camera* camera, float angle) {
+void rotateCameraCounterclockwise(Camera* camera, Ball* cueBall, float angle) {
     float radians = angle * (M_PI / 180.0);
 
     Vector3 direction;
-    subtractVectors(direction, cueBall.ball.position, camera->position);
+    subtractVectors(direction, cueBall->ball.position, camera->position);
 
     // Normalize the direction vector
     float distance = sqrt(direction[0] * direction[0] + direction[2] * direction[2]);
@@ -154,35 +165,36 @@ void rotateCameraCounterclockwise(Camera* camera, float angle) {
     float newZ = -direction[0] * sin(radians) + direction[2] * cos(radians);
 
     // Scale the new direction to maintain the same distance from the ball
-    camera->position[0] = cueBall.ball.position[0] - newX * distance;
-    camera->position[2] = cueBall.ball.position[2] - newZ * distance;
+    camera->position[0] = cueBall->ball.position[0] - newX * distance;
+    camera->position[2] = cueBall->ball.position[2] - newZ * distance;
 }
 
-void updateCameraPosition(int* previousMoveCheck, float deltaTime) {
+void updateCameraPosition(int* previousMoveCheck, Camera* camera, Ball* cueBall, float deltaTime) {
     int isCurrentlyMoving = 0;
 
-    Vector3 velocity = {cueBall.velocity[0], cueBall.velocity[1], cueBall.velocity[2]};
+    Vector3 velocity = {cueBall->velocity[0], cueBall->velocity[1], cueBall->velocity[2]};
     if(velocity[0] != 0.0f || velocity[2] != 0.0f) {
         isCurrentlyMoving = 1;
     }
 
-    potentialCameraPosition[0] += cueBall.velocity[0] * deltaTime;
-    potentialCameraPosition[2] += cueBall.velocity[2] * deltaTime;
+    camera->potentialCameraPosition[0] += cueBall->velocity[0] * deltaTime;
+    camera->potentialCameraPosition[1] = 0.5f;
+    camera->potentialCameraPosition[2] += cueBall->velocity[2] * deltaTime;
 
     if(*previousMoveCheck == 1 && isCurrentlyMoving == 0) {
-        resetCamera(&camera, &cueBall.ball.position, &potentialCameraPosition);
+        resetCamera(camera, &cueBall->ball.position);
     }
     else if(*previousMoveCheck == 0 && isCurrentlyMoving == 1) {
-        viewTop(&camera);
+        viewTop(camera);
     }
 
     *previousMoveCheck = isCurrentlyMoving;
 }
 
-void resetCamera(Camera* camera, Point3* newLookat, Point3* newPosition) {
+void resetCamera(Camera* camera, Point3* newLookat) {
     Point3 newUp = {0.0f, 1.0f, 0.0f};
     for (int i = 0; i < 3; ++i) {
-        camera->position[i] = (*newPosition)[i];
+        camera->position[i] = camera->potentialCameraPosition[i];
         camera->lookat[i] = (*newLookat)[i];
         camera->up[i] = newUp[i];
     }

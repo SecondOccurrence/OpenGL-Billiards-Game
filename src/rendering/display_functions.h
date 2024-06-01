@@ -14,7 +14,6 @@
  *
  */
 
-
 #ifndef display_functions_h
 #define display_functions_h
 

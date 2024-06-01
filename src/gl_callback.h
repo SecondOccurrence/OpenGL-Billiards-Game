@@ -24,4 +24,6 @@ void upKeys(unsigned char key, int x, int y);
 
 void mouse(int button, int state, int x, int y);
 
+void animate(void);
+
 #endif

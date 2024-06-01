@@ -12,6 +12,7 @@ typedef struct Camera {
     Point3 position;
     Point3 lookat;
     Vector3 up;
+    Point3 potentialCameraPosition;
 } Camera;
 
 #endif

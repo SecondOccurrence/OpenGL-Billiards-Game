@@ -12,6 +12,9 @@
  *   Contributed by Abhijeet S, 34777306
  * - v1.2 (29/05/2024): added close function as callback for glCloseFunc
  *   Contributed by Kaden R, 34606207
+ * - v1.2 (01/06/2024): modularised animation code
+ *   Contributed by Josh S, 34195182
+ *
  */
 
 #include "../lib/opengl/opengl.h"
@@ -138,29 +141,15 @@ void animate() {
 
     float targetFrameTime = 1.0f / targetFrameRate;
     if(changeInSeconds >= targetFrameTime) {
-        if(cueHitFlag == CHARGING_SHOT) {
-            if(spacebarHoldTime < maxPower - 0.01) {
-                spacebarHoldTime += powerIncrement;
-            }
-        }
-        else if(cueHitFlag == HIT) {
-            Vector3 direction;
-            calculateVelocityDirection(&direction, &camera, &cueBall);
-            cueBall.velocity[0] += direction[0] * spacebarHoldTime;
-            cueBall.velocity[2] += direction[2] * spacebarHoldTime;
-
-            spacebarHoldTime = 0.0f;
-
-            cueHitFlag = IDLE;
-        }
-
         if(animation_flag == ANIMATION_ENABLED) {
-            checkPockets(object_balls_amount);
-            checkForCollisions(object_balls_amount);
-            ballMovement(object_balls_amount, changeInSeconds);
+            prepareForHit(&cueHitFlag, &spacebarHoldTime, &maxPower, &cueBall, &camera);
 
-            rotateCameraContinuous(&rotationFlag, changeInSeconds);
-            updateCameraPosition(&previousMoveCheck, changeInSeconds);
+            checkPockets(&table, &cueBall, balls, object_balls_amount, &camera);
+            checkForCollisions(&table, &cueBall, balls, object_balls_amount);
+            ballMovement(&cueBall, balls, object_balls_amount, changeInSeconds);
+
+            rotateCameraContinuous(&rotationFlag, &camera, &cueBall, changeInSeconds);
+            updateCameraPosition(&previousMoveCheck, &camera, &cueBall, changeInSeconds);
         }
 
         previousFrameTime = currentFrameTime;

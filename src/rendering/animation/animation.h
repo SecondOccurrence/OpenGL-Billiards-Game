@@ -22,24 +22,24 @@
 #include "../../data_structures/flags.h"
 #include "../../data_structures/objects.h"
 
-void animate();
+void prepareForHit(CueHitFlag* cueHitFlag, float* spacebarHoldTime, const float* maxPower, Ball* cueBall, Camera* camera);
 
-void checkPockets(int objectBallsSize);
+void checkPockets(Shape* table, Ball* cueBall, Ball* objectBalls, int objectBallsSize, Camera* camera);
 
-void resetCamera(Camera* camera, Point3* newLookat, Point3* newPosition);
+void checkForCollisions(Shape* table, Ball* cueBall, Ball* objectBalls, int objectBallsSize);
 
-void checkForCollisions(int objectBallsSize);
-
-void ballMovement(int objectBallsSize, float time);
+void ballMovement(Ball* cueBall, Ball* objectBalls, int objectBallsSize, float time);
 
 void updateVelocity(Ball* ball, GLfloat gravity, float seconds);
 
-void rotateCameraContinuous(RotationFlag* rotationFlag, float changeInSeconds);
+void rotateCameraContinuous(RotationFlag* rotationFlag, Camera* camera, Ball* cueBall, float changeInSeconds);
 
-void rotateCameraClockwise(Camera* camera, float angle);
+void rotateCameraClockwise(Camera* camera, Ball* cueBall, float angle);
 
-void rotateCameraCounterclockwise(Camera* camera, float angle);
+void rotateCameraCounterclockwise(Camera* camera, Ball* cueBall, float angle);
 
-void updateCameraPosition(int* previousMoveCheck, float deltaTime);
+void updateCameraPosition(int* previousMoveCheck, Camera* camera, Ball* cueBall, float deltaTime);
+
+void resetCamera(Camera* camera, Point3* newLookat);
 
 #endif

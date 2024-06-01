@@ -133,7 +133,7 @@ void resolvePenetration(Ball* ball1, Ball* ball2, GLfloat penDepth, Vector3* nor
 
 void calculateImpulse(Vector3* impulseVector, Ball* ball1, Ball* ball2, Vector3* collisionNormal) {
     const GLfloat impulseScaleFactor = 0.75f;
-    const GLfloat elasticity = 0.5f;
+    const GLfloat elasticity = 0.4f;
     Vector3 relativeVelocity;
     subtractVectors(relativeVelocity, ball2->velocity, ball1->velocity);
 

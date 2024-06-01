@@ -31,8 +31,13 @@
 #include "globals/flags.h"
 #include "globals/general.h"
 
-Camera camera;
-Point3 potentialCameraPosition = {0.0f, 0.0f, 0.0f};
+Camera camera = {
+    0,
+    {-4.0f, 0.5f, 0.0f},
+    {0.0f, 0.0f, 0.0f},
+    {0.0f, 1.0f, 0.0f},
+    {0.0f, 0.0f, 0.0f}
+};
 
 Shape table = {
     NULL,
@@ -74,7 +79,7 @@ Shape table = {
 Ball cueBall = {
    {{-2.5, 0.1, 0.0}, 0.1},
     {0.0, 0.0, 0.0},
-    1.0f
+    1.0f, 0
 };
 
 PlaneProperties planeProperties = {
@@ -96,7 +101,7 @@ CueHitFlag cueHitFlag = IDLE;
 
 int spacebarPressed = 0;
 float spacebarHoldTime = 0.0f;
-const float maxPower = 25.0f;
+const float maxPower = 30.0f;
 const float powerIncrement = 1.0f;
 
 int previousMoveCheck = 0;
@@ -111,14 +116,9 @@ void init() {
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glColor3f(1.0, 0.0, 0.0);
 
-    Point3 cameraPosition = {-4.0f, 0.5f, 0.0f};
-    Point3 upVec = {0.0f, 1.0f, 0.0f};
     for(int i = 0; i < 3; i++) {
-        camera.position[i] = cameraPosition[i];
         camera.lookat[i] = cueBall.ball.position[i];
-        camera.up[i] = upVec[i];
-
-        potentialCameraPosition[i] = cameraPosition[i];
+        camera.potentialCameraPosition[i] = camera.position[i];
     }
 
     glMatrixMode(GL_PROJECTION);

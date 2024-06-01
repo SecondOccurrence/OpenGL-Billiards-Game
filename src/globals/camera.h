@@ -4,5 +4,5 @@
 #include "../data_structures/camera.h"
 
 extern Camera camera;
-extern Point3 potentialCameraPosition;
+
 #endif
