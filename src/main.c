@@ -60,7 +60,12 @@ int main(int argc, char** argv) {
 
     glutReshapeFunc(myReshape);
 
+    // keyboard and mouse
+    glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF); // stop repeating keypresses when held down
     glutKeyboardFunc(keys);
+    glutKeyboardUpFunc(upKeys);
+    //glutMouseFunc(mouse);
+    //glutMouseWheelFunc(mouseWheel);
 
     init();
 

@@ -65,12 +65,7 @@ void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid
         }
         break;
     case ' ':
-        if(*spacebarPressFlag == 0) {
-            *spacebarPressFlag = 1;
-        }
-        else {
-            *spacebarPressFlag = 0;
-        }
+        *spacebarPressFlag = 1;
         break;
     case 27:
         glutLeaveMainLoop();
@@ -80,27 +75,32 @@ void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid
     }
 }
 
-void cameraKeys(unsigned char key, Camera* camera, RotationFlag* rotationFlag) {
+void cameraDownKeys(unsigned char key, Camera* camera, RotationFlag* rotationFlag) {
     switch(key) {
     case 'T':
+    case 't':
         viewTop(camera);
         break;
     case 'A':
     case 'a':
-        if(*rotationFlag == ROTATION_DISABLED) {
-            *rotationFlag = ROTATION_ANTICLOCKWISE;
-        }
-        else {
-            *rotationFlag = ROTATION_DISABLED;
-        }
+        *rotationFlag = ROTATION_ANTICLOCKWISE;
         break;
+    case 'D':
     case 'd':
-        if(*rotationFlag == ROTATION_DISABLED) {
-            *rotationFlag = ROTATION_CLOCKWISE;
-        }
-        else {
-            *rotationFlag = ROTATION_DISABLED;
-        }
+        *rotationFlag = ROTATION_CLOCKWISE;
+        break;
+    default:
+        break;
+    }
+}
+void cameraUpKeys(unsigned char key, Camera* camera, RotationFlag* rotationFlag) {
+    switch(key) {
+    case 'A':
+    case 'a':
+    case 'D':
+    case 'd':
+        *rotationFlag == ROTATION_DISABLED;
+        *rotationFlag = ROTATION_DISABLED;
         break;
     default:
         break;
@@ -121,5 +121,14 @@ void viewTop(Camera* camera) {
         camera->up[0] = newUp[0];
         camera->up[1] = newUp[1];
         camera->up[2] = newUp[2];
+    }
+}
+
+
+void toggleUpKeys(unsigned char key, int* spacebarPressFlag) {
+    switch(key) {
+    case ' ':
+        *spacebarPressFlag = 0;
+        break;
     }
 }

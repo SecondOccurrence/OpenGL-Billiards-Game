@@ -107,10 +107,16 @@ void myReshape(int width, int height) {
 void keys(unsigned char key, int x, int y) {
     toggleKeys(key, &animation_flag, &grid_flag, &axis_flag, &objects_flag, &spacebarPressed);
 
-    cameraKeys(key, &camera, &rotationFlag);
+    cameraDownKeys(key, &camera, &rotationFlag);
 
     glutPostRedisplay();
 }
+void upKeys(unsigned char key, int x, int y) {
+    toggleUpKeys(key, &spacebarPressed);
+    cameraUpKeys(key, &camera, &rotationFlag);
+    glutPostRedisplay();
+}
+
 
 void animate() {
     const int targetFrameRate = 60;

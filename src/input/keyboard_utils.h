@@ -22,10 +22,12 @@
 #include "../data_structures/geometry.h"
 #include "../data_structures/objects.h"
 
-void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid_flag, AxisFlag* axis_flag, ObjectsFlag* objects_flag, int* spacebarPressed);
+void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid_flag, AxisFlag* axis_flag, ObjectsFlag* objects_flag, int* spacebarPressFlag);
 
 void cameraKeys(unsigned char key, Camera* camera, RotationFlag* rotationFlag);
 
 void viewTop(Camera* camera);
+
+void toggleUpKeys(unsigned char key, int* spacebarPressFlag);
 
 #endif
