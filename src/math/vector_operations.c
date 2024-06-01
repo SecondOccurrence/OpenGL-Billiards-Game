@@ -15,10 +15,10 @@
 
 #include <math.h>
 
-void multiplyByScalar(Vector3 v, GLfloat scalar) {
-    v[0] = scalar * v[0];
-    v[1] = scalar * v[1];
-    v[2] = scalar * v[2];
+void multiplyByScalar(Vector3 result, Vector3 v, GLfloat scalar) {
+    result[0] = scalar * v[0];
+    result[1] = scalar * v[1];
+    result[2] = scalar * v[2];
 }
 
 void addVectors(Vector3 result, Vector3 v1, Vector3 v2) {
@@ -31,6 +31,12 @@ void subtractVectors(Vector3 result, Vector3 v1, Vector3 v2) {
     result[0] = v1[0] - v2[0];
     result[1] = v1[1] - v2[1];
     result[2] = v1[2] - v2[2];
+}
+
+void multiplyVectors(Vector3 result, Vector3 v1, Vector3 v2) {
+    result[0] = v1[0] * v2[0];
+    result[1] = v1[1] * v2[1];
+    result[2] = v1[2] * v2[2];
 }
 
 GLfloat calcDotProduct(Vector3 v1, Vector3 v2) {
@@ -70,6 +76,8 @@ void calcUnitNormal(Vector3 result, Vector3 A, Vector3 B, Vector3 C) {
 void calculateVelocityDirection(Vector3* endDirection, Camera* cam, Ball* cueBall) {
     Vector3 cameraForward;
     subtractVectors(cameraForward, cam->lookat, cam->position);
+    normaliseVector(cameraForward);
 
     subtractVectors(*endDirection, cueBall->ball.position, cam->position);
+    normaliseVector(*endDirection);
 }

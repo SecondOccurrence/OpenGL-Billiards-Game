@@ -25,4 +25,8 @@ typedef enum {
     ROTATION_DISABLED = 0, ROTATION_CLOCKWISE = 1, ROTATION_ANTICLOCKWISE = 2
 } RotationFlag;
 
+typedef enum {
+    IDLE = 0, CHARGING_SHOT = 1, HIT = 2
+} CueHitFlag;
+
 #endif

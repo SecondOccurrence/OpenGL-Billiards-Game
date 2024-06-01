@@ -103,12 +103,14 @@ void myReshape(int width, int height) {
 }
 
 void keys(unsigned char key, int x, int y) {
-    toggleKeys(key, &animation_flag, &grid_flag, &axis_flag, &objects_flag, &spacebarPressed);
+    toggleKeys(key, &animation_flag, &grid_flag, &axis_flag, &objects_flag, &cueHitFlag);
 
     cameraKeys(key, &camera, &rotationFlag);
 
     glutPostRedisplay();
 }
+
+#include <stdio.h>
 
 void animate() {
     const int targetFrameRate = 60;
@@ -118,18 +120,22 @@ void animate() {
 
     float targetFrameTime = 1.0f / targetFrameRate;
     if(changeInSeconds >= targetFrameTime) {
-        if(spacebarPressed == 1) {
-            if(spacebarHoldTime < 15.0f) {
-                spacebarHoldTime += 0.2f;
+        // into function
+        if(cueHitFlag == CHARGING_SHOT) {
+            if(spacebarHoldTime < 25.0f) {
+                spacebarHoldTime += 1.0f;
             }
         }
-        else {
+        else if(cueHitFlag == HIT) {
+            // ISSUE: only calculate velocity direction when the camera is forward facing
             Vector3 direction;
             calculateVelocityDirection(&direction, &camera, &cueBall);
             cueBall.velocity[0] += direction[0] * spacebarHoldTime;
             cueBall.velocity[2] += direction[2] * spacebarHoldTime;
 
             spacebarHoldTime = 0.0f;
+
+            cueHitFlag = IDLE;
         }
 
         if(animation_flag == ANIMATION_ENABLED) {

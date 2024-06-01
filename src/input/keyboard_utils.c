@@ -26,7 +26,7 @@
 
 #include <stdio.h>
 
-void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid_flag, AxisFlag* axis_flag, ObjectsFlag* objects_flag, int* spacebarPressFlag) {
+void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid_flag, AxisFlag* axis_flag, ObjectsFlag* objects_flag, CueHitFlag* cueHitFlag) {
     switch(key) {
     case 'P':
     case 'p':
@@ -65,11 +65,11 @@ void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid
         }
         break;
     case ' ':
-        if(*spacebarPressFlag == 0) {
-            *spacebarPressFlag = 1;
+        if(*cueHitFlag == IDLE) {
+            *cueHitFlag = CHARGING_SHOT;
         }
-        else {
-            *spacebarPressFlag = 0;
+        else if(*cueHitFlag == CHARGING_SHOT) {
+            *cueHitFlag = HIT;
         }
         break;
     case 27:

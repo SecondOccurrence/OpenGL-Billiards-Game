@@ -22,7 +22,7 @@
 #include "../data_structures/geometry.h"
 #include "../data_structures/objects.h"
 
-void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid_flag, AxisFlag* axis_flag, ObjectsFlag* objects_flag, int* spacebarPressed);
+void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid_flag, AxisFlag* axis_flag, ObjectsFlag* objects_flag, CueHitFlag* cueHitFlag);
 
 void cameraKeys(unsigned char key, Camera* camera, RotationFlag* rotationFlag);
 

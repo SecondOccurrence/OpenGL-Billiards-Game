@@ -49,21 +49,21 @@ void initialiseBalls(int N) {
 }
 
 void initialiseTriangle() {
-    float sphereSpacing = 0.35;
+    float sphereSpacing = 0.21;
 
     int spheresDrawn = 0;
     int row = 1;
 
     while (spheresDrawn < object_balls_amount) {
         // Calculate the starting Z position for the current row
-        float initialZ = -0.15 * (row - 1) / 2.0;
+        float initialZ = -0.21 * (row - 1) / 2.0;
 
         for (int i = 0; i < row && spheresDrawn < object_balls_amount; i++) {
             float z = initialZ + i * sphereSpacing;
             float x = initialX + (row - 1) * sphereSpacing;
 
             balls[spheresDrawn].ball.position[0] = x;
-            balls[spheresDrawn].ball.position[1] = 0.15;
+            balls[spheresDrawn].ball.position[1] = balls[spheresDrawn].ball.radius;
             balls[spheresDrawn].ball.position[2] = z;
 
             spheresDrawn++;

@@ -28,10 +28,14 @@ void ballPlaneCollision(Ball* cueBall, PlaneProperties* collider, int planeIndex
 
 Ball resolveCollision(Ball* ball, GLfloat distance, Vector3 planeNormal, int wallIteration);
 
-void ballToBallCollision(Ball* cueBall, Ball* otherBall);
-
-Ball resolveBallCollision(Ball* ball1, Vector3* normal);
-
 int collidesWithPocket(Ball* ball, Sphere* pocket);
+
+void ballToBallCollision(Ball* ball1, Ball* ball2);
+
+GLfloat calculateDistance(Vector3* pos1, Vector3* pos2);
+
+void resolvePenetration(Ball* ball1, Ball* ball2, GLfloat penDepth, Vector3* normal);
+
+void calculateImpulse(Vector3* impulseVector, Ball* ball1, Ball* ball2, Vector3* collisionNormal);
 
 #endif

@@ -19,11 +19,13 @@
 #include "../data_structures/camera.h"
 #include "../data_structures/geometry.h"
 
-void multiplyByScalar(Vector3 v, GLfloat scalar);
+void multiplyByScalar(Vector3 result, Vector3 v, GLfloat scalar);
 
 void addVectors(Vector3 result, Vector3 v1, Vector3 v2);
 
 void subtractVectors(Vector3 result, Vector3 v1, Vector3 v2);
+
+void multiplyVectors(Vector3 result, Vector3 v1, Vector3 v2);
 
 GLfloat calcDotProduct(Vector3 v1, Vector3 v2);
 

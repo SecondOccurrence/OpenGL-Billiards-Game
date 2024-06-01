@@ -28,6 +28,12 @@
 
 #include <math.h>
 
+
+// TODO: remove global for objects and camera
+//  maybe replace with data structures
+//  introduce ball-ball collision hit absorption
+//    fix velocity odd movement. perhaps to do with camera orientation velocity addition code
+
 void checkPockets(int objectBallsSize) {
     const int pockets = 6;
 
@@ -88,6 +94,7 @@ void ballMovement(int objectBallsSize, float seconds) {
     }
 }
 
+#include <stdio.h>
 void updateVelocity(Ball* ball, GLfloat gravity, float seconds) {
     const GLfloat velocityThreshold = 0.1f;
 

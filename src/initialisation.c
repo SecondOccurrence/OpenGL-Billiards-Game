@@ -92,6 +92,7 @@ ObjectsFlag objects_flag = OBJECTS_ENABLED;
 ObjectBallsShape object_balls_shape = TRIANGLE;
 
 RotationFlag rotationFlag = ROTATION_DISABLED;
+CueHitFlag cueHitFlag = IDLE;
 
 int spacebarPressed = 0;
 float spacebarHoldTime = 0.0f;
