@@ -1,4 +1,5 @@
 /*
+#include <stdio.h>
  * FILE: keyboard_utils.c
  * PURPOSE: function implementation for keyboard utility functions
  * DATE: 30/04/2024
@@ -80,27 +81,32 @@ void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid
     }
 }
 
-void cameraKeys(unsigned char key, Camera* camera, RotationFlag* rotationFlag) {
+void cameraDownKeys(unsigned char key, Camera* camera, RotationFlag* rotationFlag) {
     switch(key) {
     case 'T':
+    case 't':
         viewTop(camera);
         break;
     case 'A':
     case 'a':
-        if(*rotationFlag == ROTATION_DISABLED) {
-            *rotationFlag = ROTATION_ANTICLOCKWISE;
-        }
-        else {
-            *rotationFlag = ROTATION_DISABLED;
-        }
+        *rotationFlag = ROTATION_ANTICLOCKWISE;
         break;
+    case 'D':
     case 'd':
-        if(*rotationFlag == ROTATION_DISABLED) {
-            *rotationFlag = ROTATION_CLOCKWISE;
-        }
-        else {
-            *rotationFlag = ROTATION_DISABLED;
-        }
+        *rotationFlag = ROTATION_CLOCKWISE;
+        break;
+    default:
+        break;
+    }
+}
+
+void cameraUpKeys(unsigned char key, RotationFlag* rotationFlag) {
+    switch(key) {
+    case 'A':
+    case 'a':
+    case 'D':
+    case 'd':
+        *rotationFlag = ROTATION_DISABLED;
         break;
     default:
         break;
@@ -121,5 +127,40 @@ void viewTop(Camera* camera) {
         camera->up[0] = newUp[0];
         camera->up[1] = newUp[1];
         camera->up[2] = newUp[2];
+    }
+}
+
+void toggleUpKeys(unsigned char key, int* spacebarPressFlag) {
+    switch(key) {
+    case ' ':
+        *spacebarPressFlag = 0;
+        break;
+    }
+}
+
+void toggleMouse(int button, int* spacebarPressFlag) {
+    switch(button) {
+    case 0: // left click
+        *spacebarPressFlag = 1;
+        break;
+    case 1: // right click
+        break;
+    case 2: // middle (wheel) click
+        break;
+    default:
+        break;
+    }
+}
+void toggleUpMouse(int button, int* spacebarPressFlag) {
+    switch(button) {
+    case 0: // left click release
+        *spacebarPressFlag = 0;
+        break;
+    case 1: // right click release
+        break;
+    case 2: // middle (wheel) click release
+        break;
+    default:
+        break;
     }
 }

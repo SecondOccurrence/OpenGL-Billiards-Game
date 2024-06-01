@@ -37,4 +37,6 @@ void displayAxis(AxisFlag axis_flag);
 
 void displayGrid(GridFlag grid_flag);
 
+void displayText();
+
 #endif

@@ -59,6 +59,7 @@ void checkPockets(int objectBallsSize) {
                 for(int k = 0; k < 3; k++) {
                     balls[j].ball.position[k] = pocketPoint[k];
                 }
+                balls[j].pocketed = 1;
             }
         }
     }
@@ -94,7 +95,6 @@ void ballMovement(int objectBallsSize, float seconds) {
     }
 }
 
-#include <stdio.h>
 void updateVelocity(Ball* ball, GLfloat gravity, float seconds) {
     const GLfloat velocityThreshold = 0.1f;
 

@@ -22,6 +22,7 @@
 #include "modeling/object_loading.h"
 #include "rendering/animation/animation.h"
 #include "math/vector_operations.h"
+#include "rendering/text.h"
 
 #include "globals/camera.h"
 #include "globals/flags.h"
@@ -33,6 +34,7 @@ extern Shape table;
 void myDisplay(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
@@ -41,11 +43,12 @@ void myDisplay(void) {
               camera.up[0], camera.up[1], camera.up[2]);
 
     displayObject(objects_flag);
-    displayObject3D(table.drawing, objects_flag);
     displayAxis(axis_flag);
     displayGrid(grid_flag);
-
+    displayObject3D(table.drawing, objects_flag);
     displayBalls();
+
+    displayText();
 
     glutSwapBuffers();
 }
@@ -105,12 +108,27 @@ void myReshape(int width, int height) {
 void keys(unsigned char key, int x, int y) {
     toggleKeys(key, &animation_flag, &grid_flag, &axis_flag, &objects_flag, &cueHitFlag);
 
-    cameraKeys(key, &camera, &rotationFlag);
+    cameraDownKeys(key, &camera, &rotationFlag);
 
     glutPostRedisplay();
 }
 
-#include <stdio.h>
+void upKeys(unsigned char key, int x, int y) {
+    toggleUpKeys(key, &spacebarPressed);
+
+    cameraUpKeys(key, &rotationFlag);
+
+    glutPostRedisplay();
+}
+
+void mouse(int button, int state, int x, int y) {
+    if (state == 1) {
+        toggleUpMouse(button, &spacebarPressed);
+    }
+    else {
+        toggleMouse(button, &spacebarPressed);
+    }
+}
 
 void animate() {
     const int targetFrameRate = 60;
@@ -120,14 +138,12 @@ void animate() {
 
     float targetFrameTime = 1.0f / targetFrameRate;
     if(changeInSeconds >= targetFrameTime) {
-        // into function
         if(cueHitFlag == CHARGING_SHOT) {
-            if(spacebarHoldTime < 25.0f) {
-                spacebarHoldTime += 1.0f;
+            if(spacebarHoldTime < maxPower - 0.01) {
+                spacebarHoldTime += powerIncrement;
             }
         }
         else if(cueHitFlag == HIT) {
-            // ISSUE: only calculate velocity direction when the camera is forward facing
             Vector3 direction;
             calculateVelocityDirection(&direction, &camera, &cueBall);
             cueBall.velocity[0] += direction[0] * spacebarHoldTime;
@@ -146,7 +162,7 @@ void animate() {
             rotateCameraContinuous(&rotationFlag, changeInSeconds);
             updateCameraPosition(&previousMoveCheck, changeInSeconds);
         }
-        
+
         previousFrameTime = currentFrameTime;
     }
 

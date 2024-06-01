@@ -96,6 +96,9 @@ CueHitFlag cueHitFlag = IDLE;
 
 int spacebarPressed = 0;
 float spacebarHoldTime = 0.0f;
+const float maxPower = 25.0f;
+const float powerIncrement = 1.0f;
+
 int previousMoveCheck = 0;
 
 int object_balls_amount = 0;

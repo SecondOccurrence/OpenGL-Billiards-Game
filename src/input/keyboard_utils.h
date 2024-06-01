@@ -24,8 +24,16 @@
 
 void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid_flag, AxisFlag* axis_flag, ObjectsFlag* objects_flag, CueHitFlag* cueHitFlag);
 
-void cameraKeys(unsigned char key, Camera* camera, RotationFlag* rotationFlag);
+void cameraDownKeys(unsigned char key, Camera* camera, RotationFlag* rotationFlag);
+
+void cameraUpKeys(unsigned char key, RotationFlag* rotationFlag);
 
 void viewTop(Camera* camera);
+
+void toggleUpKeys(unsigned char key, int* spacebarPressFlag);
+
+void toggleMouse(int button, int* spacebarPressFlag);
+
+void toggleUpMouse(int button, int* spacebarPressFlag);
 
 #endif

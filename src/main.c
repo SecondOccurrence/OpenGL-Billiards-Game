@@ -11,7 +11,6 @@
  *
  */
 
-
 #include "../lib/opengl/opengl.h"
 
 #include "initialisation.h"
@@ -22,11 +21,10 @@
 #include "rendering/animation/animation.h"
 #include "modeling/object_loading.h"
 #include "input/user_input.h"
+#include "rendering/display_functions.h"
 
 #include "globals/general.h"
 #include "globals/objects.h"
-
-const int TIMERMSECS = 20;
 
 const int windowWidth = 1024;
 const int windowHeight = 786;
@@ -60,7 +58,10 @@ int main(int argc, char** argv) {
 
     glutReshapeFunc(myReshape);
 
+    glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF);
     glutKeyboardFunc(keys);
+    glutKeyboardUpFunc(upKeys);
+    glutMouseFunc(mouse);
 
     init();
 

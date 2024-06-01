@@ -25,6 +25,8 @@
 
 #include "../globals/objects.h"
 #include "../globals/general.h"
+#include "./text.h"
+
 #include <time.h>
 #include <stdio.h>
 
@@ -45,6 +47,7 @@ void initialiseBalls(int N) {
         balls[i].ball.position[0] = 0.0f;
         balls[i].ball.position[1] = 0.0f;
         balls[i].ball.position[2] = 0.0f;
+        balls[i].pocketed = 0;
     }
 }
 
@@ -138,5 +141,33 @@ void displayGrid(GridFlag grid_flag) {
     if(grid_flag == GRID_ENABLED) {
         drawWiredGrid(30.0, 6.0);
     }
+    glPopMatrix();
+}
+
+void displayText() {
+    GLint width = glutGet(GLUT_SCREEN_WIDTH);
+    GLint height = glutGet(GLUT_SCREEN_HEIGHT);
+
+    glPushMatrix();
+
+        // Change to orthographic view for text
+        glMatrixMode(GL_PROJECTION);
+        glPushMatrix();
+            glLoadIdentity();
+            gluOrtho2D(0, width, height, 0);
+            glMatrixMode(GL_MODELVIEW);
+            glPushMatrix();
+                glLoadIdentity();
+
+                // display text elements
+                text_power();
+                text_remaining();
+
+        // reset view
+                glMatrixMode(GL_PROJECTION);
+            glPopMatrix();
+            glMatrixMode(GL_MODELVIEW);
+        glPopMatrix();
+
     glPopMatrix();
 }
