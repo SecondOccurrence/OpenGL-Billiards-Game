@@ -53,6 +53,7 @@ void checkPockets(int objectBallsSize) {
                 for(int k = 0; k < 3; k++) {
                     balls[j].ball.position[k] = pocketPoint[k];
                 }
+                balls[j].pocketed = 1;
             }
         }
     }

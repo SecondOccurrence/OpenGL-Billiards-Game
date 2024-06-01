@@ -45,6 +45,7 @@ void initialiseBalls(int N) {
         balls[i].ball.position[0] = 0.0f;
         balls[i].ball.position[1] = 0.0f;
         balls[i].ball.position[2] = 0.0f;
+        balls[i].pocketed = 0;
     }
 }
 
@@ -141,12 +142,9 @@ void displayGrid(GridFlag grid_flag) {
     glPopMatrix();
 }
 
-void displayPowerText() {
+void displayText() {
     GLint width = glutGet(GLUT_SCREEN_WIDTH);
     GLint height = glutGet(GLUT_SCREEN_HEIGHT);
-
-    GLfloat colour[3] = {1.0f, 0.335f, 0.1f};
-
 
     glPushMatrix();
 
@@ -159,17 +157,9 @@ void displayPowerText() {
             glPushMatrix();
                 glLoadIdentity();
 
-                glColor3f(colour[0], colour[1], colour[2]);
-
-                // set string
-                char str[15];
-                int powerPercentage = (int)(spacebarHoldTime/maxPower*100);
-                if (powerPercentage > 98.5) powerPercentage = 100; // powerPercentage stops at 99, check if it is above 98.5 and set to 100 if so
-                sprintf(str, "Power: %i%", powerPercentage);
-
-                // render string
-                glRasterPos2f(100.0f, 100.0f);
-                glutBitmapString(GLUT_BITMAP_HELVETICA_18, str);
+                // display text elements
+                text_power();
+                text_remaining();
 
         // reset view
                 glMatrixMode(GL_PROJECTION);

@@ -47,7 +47,7 @@ void myDisplay(void) {
     displayGrid(grid_flag);
     displayBalls();
 
-    displayPowerText();
+    displayText();
 
     glutSwapBuffers();
 }

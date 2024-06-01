@@ -12,6 +12,7 @@ typedef struct {
     Sphere ball;
     Vector3 velocity;
     GLfloat mass;
+    int pocketed;
 } Ball;
 
 typedef struct {
