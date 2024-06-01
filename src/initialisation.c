@@ -95,12 +95,14 @@ RotationFlag rotationFlag = ROTATION_DISABLED;
 
 int spacebarPressed = 0;
 float spacebarHoldTime = 0.0f;
+const float maxPower = 15.0f;
+const float powerIncrement = 0.2f;
+
 int previousMoveCheck = 0;
 
 int object_balls_amount = 0;
 
 void init() {
-    table.drawing = readOFFFile("../public/3D-data/Table_Coloured.off");
 
     setLight();
 

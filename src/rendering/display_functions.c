@@ -140,3 +140,42 @@ void displayGrid(GridFlag grid_flag) {
     }
     glPopMatrix();
 }
+
+void displayPowerText() {
+    GLint width = glutGet(GLUT_SCREEN_WIDTH);
+    GLint height = glutGet(GLUT_SCREEN_HEIGHT);
+
+    GLfloat colour[3] = {1.0f, 0.335f, 0.1f};
+
+
+    glPushMatrix();
+
+        // Change to orthographic view for text
+        glMatrixMode(GL_PROJECTION);
+        glPushMatrix();
+            glLoadIdentity();
+            gluOrtho2D(0, width, height, 0);
+            glMatrixMode(GL_MODELVIEW);
+            glPushMatrix();
+                glLoadIdentity();
+
+                glColor3f(colour[0], colour[1], colour[2]);
+
+                // set string
+                char str[15];
+                int powerPercentage = (int)(spacebarHoldTime/maxPower*100);
+                if (powerPercentage > 98.5) powerPercentage = 100; // powerPercentage stops at 99, check if it is above 98.5 and set to 100 if so
+                sprintf(str, "Power: %i%", powerPercentage);
+
+                // render string
+                glRasterPos2f(100.0f, 100.0f);
+                glutBitmapString(GLUT_BITMAP_HELVETICA_18, str);
+
+        // reset view
+                glMatrixMode(GL_PROJECTION);
+            glPopMatrix();
+            glMatrixMode(GL_MODELVIEW);
+        glPopMatrix();
+
+    glPopMatrix();
+}

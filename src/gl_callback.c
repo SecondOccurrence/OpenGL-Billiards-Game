@@ -33,6 +33,7 @@ extern Shape table;
 void myDisplay(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
@@ -44,8 +45,9 @@ void myDisplay(void) {
     displayObject3D(table.drawing, objects_flag);
     displayAxis(axis_flag);
     displayGrid(grid_flag);
-
     displayBalls();
+
+    displayPowerText();
 
     glutSwapBuffers();
 }
@@ -119,8 +121,8 @@ void animate() {
     float targetFrameTime = 1.0f / targetFrameRate;
     if(changeInSeconds >= targetFrameTime) {
         if(spacebarPressed == 1) {
-            if(spacebarHoldTime < 15.0f) {
-                spacebarHoldTime += 0.2f;
+            if(spacebarHoldTime < maxPower-0.01) { // -0.01 to keep power below or equal to max
+                spacebarHoldTime += powerIncrement;
             }
         }
         else {
@@ -140,7 +142,7 @@ void animate() {
             rotateCameraContinuous(&rotationFlag, changeInSeconds);
             updateCameraPosition(&previousMoveCheck, changeInSeconds);
         }
-        
+
         previousFrameTime = currentFrameTime;
     }
 

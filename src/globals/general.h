@@ -7,5 +7,7 @@ extern int previousFrameTime;
 extern int currentFrameTime;
 
 extern float spacebarHoldTime;
+extern const float maxPower;
+extern const float powerIncrement;
 
 #endif
