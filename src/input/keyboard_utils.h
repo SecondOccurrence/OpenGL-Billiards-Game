@@ -30,4 +30,8 @@ void viewTop(Camera* camera);
 
 void toggleUpKeys(unsigned char key, int* spacebarPressFlag);
 
+// mouse
+void toggleMouse(int button, int* spacebarPressFlag);
+void toggleUpMouse(int button, int* spacebarPressFlag);
+
 #endif

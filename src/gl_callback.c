@@ -116,7 +116,14 @@ void upKeys(unsigned char key, int x, int y) {
     cameraUpKeys(key, &camera, &rotationFlag);
     glutPostRedisplay();
 }
-
+void mouse(int button, int state, int x, int y) {
+    if (state == 1) {
+        toggleUpMouse(button, &spacebarPressed);
+    }
+    else {
+        toggleMouse(button, &spacebarPressed);
+    }
+}
 
 void animate() {
     const int targetFrameRate = 60;

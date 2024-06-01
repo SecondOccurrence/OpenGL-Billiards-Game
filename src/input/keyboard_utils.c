@@ -132,3 +132,33 @@ void toggleUpKeys(unsigned char key, int* spacebarPressFlag) {
         break;
     }
 }
+
+// mouse
+void toggleMouse(int button, int* spacebarPressFlag) {
+    switch(button) {
+    case 0: // left click
+        *spacebarPressFlag = 1;
+        break;
+    case 1: // right click
+        break;
+    case 2: // middle (wheel) click
+        break;
+    default:
+        printf("invalid button: [%i] ", button);
+        break;
+    }
+}
+void toggleUpMouse(int button, int* spacebarPressFlag) {
+    switch(button) {
+    case 0: // left click release
+        *spacebarPressFlag = 0;
+        break;
+    case 1: // right click release
+        break;
+    case 2: // middle (wheel) click release
+        break;
+    default:
+        printf("invalid button: [%i] ", button);
+        break;
+    }
+}

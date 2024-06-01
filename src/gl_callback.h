@@ -25,6 +25,7 @@ void myReshape(int width, int height);
 
 void keys(unsigned char key, int x, int y);
 void upKeys(unsigned char key, int x, int y);
-void downKeys(unsigned char key, int x, int y);
+
+void mouse(int button, int state, int x, int y);
 
 #endif
