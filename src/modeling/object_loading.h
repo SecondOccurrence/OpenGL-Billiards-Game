@@ -26,8 +26,22 @@
 
 #include "../data_structures/geometry.h"
 
+/**
+ * @brief reads object data from an OFF file
+ *
+ * @param file_name - path to the file to read
+ * @return Object3D* address to the data struct storing the off file data
+ * @post read the OFF file and stores the data in a struct, this struct's address is returned.
+ */
 Object3D* readOFFFile(const char* file_name);
 
+/**
+ * @brief frees memory before exiting program
+ *
+ * @return void
+ * @pre table struct and object balls have allocated memory
+ * @post table struct and object balls' memory are free'd
+ */
 void exitApplication(void);
 
 #endif

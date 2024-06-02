@@ -27,22 +27,22 @@
 #include <stdio.h>
 
 void drawObject(Object3D* obj) {
-        //// draw the object
-        for (int i = 0; i < obj->nfaces; i++) { // for each face in object
-            //// draw the polygon
-            glBegin(GL_POLYGON); // begin drawing polygon
+    //// draw the object
+    for (int i = 0; i < obj->nfaces; i++) { // for each face in object
+                                            //// draw the polygon
+        glBegin(GL_POLYGON); // begin drawing polygon
 
-            // set colour
-            if (obj->hasColour) glColor3f(obj->faces[i].colour[0], obj->faces[i].colour[1], obj->faces[i].colour[2]);
-            else glColor3f(1,1,1); // default for no colour
-            for (int j = 0; j < obj->faces[i].vertexCount; j++) { // for each vertex of face
-                int vertexNum = obj->faces[i].vertices[j];
-                glVertex3fv(obj->vertices[vertexNum]); // add vertex to polygon
-            }
-
-            glEnd();
-
+        // set colour
+        if (obj->hasColour) glColor3f(obj->faces[i].colour[0], obj->faces[i].colour[1], obj->faces[i].colour[2]);
+        else glColor3f(1,1,1); // default for no colour
+        for (int j = 0; j < obj->faces[i].vertexCount; j++) { // for each vertex of face
+            int vertexNum = obj->faces[i].vertices[j];
+            glVertex3fv(obj->vertices[vertexNum]); // add vertex to polygon
         }
+
+        glEnd();
+
+    }
 }
 
 void drawTriangle(Point3* vertices) {
