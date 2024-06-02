@@ -69,9 +69,6 @@ void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid
         if(*cueHitFlag == IDLE) {
             *cueHitFlag = CHARGING_SHOT;
         }
-        else if(*cueHitFlag == CHARGING_SHOT) {
-            *cueHitFlag = HIT;
-        }
         break;
     case 27:
         glutLeaveMainLoop();
@@ -130,36 +127,37 @@ void viewTop(Camera* camera) {
     }
 }
 
-void toggleUpKeys(unsigned char key, int* spacebarPressFlag) {
+void toggleUpKeys(unsigned char key, CueHitFlag* cueHitFlag) {
     switch(key) {
     case ' ':
-        *spacebarPressFlag = 0;
+        if(*cueHitFlag == CHARGING_SHOT) {
+            *cueHitFlag = HIT;
+        }
         break;
     }
 }
 
 void toggleMouse(int button, CueHitFlag* cueHitFlag) {
     switch(button) {
-    case 0: // left click
+    case 0: // left click press
         if(*cueHitFlag == IDLE) {
             *cueHitFlag = CHARGING_SHOT;
         }
-        else if(*cueHitFlag == CHARGING_SHOT) {
-            *cueHitFlag = HIT;
-        }
         break;
-    case 1: // right click
+    case 1: // right click press
         break;
-    case 2: // middle (wheel) click
+    case 2: // middle (wheel) click press
         break;
     default:
         break;
     }
 }
-void toggleUpMouse(int button) {
-/* The following lines have been commented for quick implementation
+void toggleUpMouse(int button, CueHitFlag* cueHitFlag) {
     switch(button) {
     case 0: // left click release
+        if(*cueHitFlag == CHARGING_SHOT) {
+            *cueHitFlag = HIT;
+        }
         break;
     case 1: // right click release
         break;
@@ -168,5 +166,4 @@ void toggleUpMouse(int button) {
     default:
         break;
     }
-*/
 }

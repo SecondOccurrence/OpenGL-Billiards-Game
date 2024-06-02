@@ -117,7 +117,7 @@ void keys(unsigned char key, int x, int y) {
 }
 
 void upKeys(unsigned char key, int x, int y) {
-    toggleUpKeys(key, &spacebarPressed);
+    toggleUpKeys(key, &cueHitFlag);
 
     cameraUpKeys(key, &rotationFlag);
 
@@ -126,7 +126,7 @@ void upKeys(unsigned char key, int x, int y) {
 
 void mouse(int button, int state, int x, int y) {
     if (state == 1) {
-        toggleUpMouse(button);
+        toggleUpMouse(button, &cueHitFlag);
     }
     else {
         toggleMouse(button, &cueHitFlag);
