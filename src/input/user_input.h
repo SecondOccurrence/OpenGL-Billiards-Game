@@ -12,6 +12,12 @@
 #ifndef user_input_h
 #define user_input_h
 
+/**
+ * @brief retrieves user input for object ball generation and amount
+ *
+ * @return void
+ * @post objectBallsShape and objectBallsAmount globals variables are set
+ */
 void userInput();
 
 #endif
