@@ -22,18 +22,71 @@
 #include "../data_structures/geometry.h"
 #include "../data_structures/objects.h"
 
+/**
+ * @brief keybinds related to toggling on/off flags
+ *
+ * @param key - the key pressed
+ * @param animation_flag - the animation flag
+ * @param grid_flag - the grid flag
+ * @param axis_flag - the axis flag
+ * @param objects_flag - the objects flag
+ * @param cueHitFlag - the cue hit flag
+ * @return void
+ */
 void toggleKeys(unsigned char key, AnimationFlag* animation_flag, GridFlag* grid_flag, AxisFlag* axis_flag, ObjectsFlag* objects_flag, CueHitFlag* cueHitFlag);
 
+/**
+ * @brief keybinds related to camera operations
+ *
+ * @param key - the key pressed
+ * @param camera - the camera
+ * @param rotationFlag - the rotation flag
+ * @return void
+ */
 void cameraDownKeys(unsigned char key, Camera* camera, RotationFlag* rotationFlag);
 
+/**
+ * @brief keybinds related to camera operations: called only when a key is released
+ *
+ * @param key - the key pressed
+ * @param rotationFlag - the rotationFlag
+ * @return void
+ */
 void cameraUpKeys(unsigned char key, RotationFlag* rotationFlag);
 
+/**
+ * @brief sets the camera to look top-down at the origin
+ *
+ * @param camera - the camera
+ * @return
+ */
 void viewTop(Camera* camera);
 
+/**
+ * @brief general keybinds: only called on key release
+ *
+ * @param key - the key pressed
+ * @param spacebarPressFlag - flag indicating if the spacebar is pressed
+ * @return void
+ */
 void toggleUpKeys(unsigned char key, int* spacebarPressFlag);
 
+/**
+ * @brief mouse bindings
+ *
+ * @param button - integer representing the mouse button pressed
+ * @param spacebarPressFlag - flag indicating if the spacebar is pressed
+ * @return void
+ */
 void toggleMouse(int button, int* spacebarPressFlag);
 
+/**
+ * @brief mouse bindings: only called on key release
+ *
+ * @param button - integer representing the mouse button pressed
+ * @param spacebarPressFlag - flag indicating if the spacebar is pressed
+ * @return void
+ */
 void toggleUpMouse(int button, int* spacebarPressFlag);
 
 #endif
