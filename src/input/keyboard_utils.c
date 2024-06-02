@@ -138,10 +138,15 @@ void toggleUpKeys(unsigned char key, int* spacebarPressFlag) {
     }
 }
 
-void toggleMouse(int button, int* spacebarPressFlag) {
+void toggleMouse(int button, CueHitFlag* cueHitFlag) {
     switch(button) {
     case 0: // left click
-        *spacebarPressFlag = 1;
+        if(*cueHitFlag == IDLE) {
+            *cueHitFlag = CHARGING_SHOT;
+        }
+        else if(*cueHitFlag == CHARGING_SHOT) {
+            *cueHitFlag = HIT;
+        }
         break;
     case 1: // right click
         break;
@@ -151,10 +156,10 @@ void toggleMouse(int button, int* spacebarPressFlag) {
         break;
     }
 }
-void toggleUpMouse(int button, int* spacebarPressFlag) {
+void toggleUpMouse(int button) {
+/* The following lines have been commented for quick implementation
     switch(button) {
     case 0: // left click release
-        *spacebarPressFlag = 0;
         break;
     case 1: // right click release
         break;
@@ -163,4 +168,5 @@ void toggleUpMouse(int button, int* spacebarPressFlag) {
     default:
         break;
     }
+*/
 }

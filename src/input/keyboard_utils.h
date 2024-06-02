@@ -72,21 +72,21 @@ void viewTop(Camera* camera);
 void toggleUpKeys(unsigned char key, int* spacebarPressFlag);
 
 /**
- * @brief mouse bindings
+ * @brief mouse click bindings
  *
  * @param button - integer representing the mouse button pressed
- * @param spacebarPressFlag - flag indicating if the spacebar is pressed
+ * @param cueHitFlag - the cue hit flag
  * @return void
  */
-void toggleMouse(int button, int* spacebarPressFlag);
+void toggleMouse(int button, CueHitFlag* cueHitFlag);
+
 
 /**
- * @brief mouse bindings: only called on key release
+ * @brief mouse bindings: only called on mouse click release. Currently unused but implemented for future updates.
  *
- * @param button - integer representing the mouse button pressed
- * @param spacebarPressFlag - flag indicating if the spacebar is pressed
+ * @param button - integer representing the mouse button released
  * @return void
  */
-void toggleUpMouse(int button, int* spacebarPressFlag);
+ void toggleUpMouse(int button);
 
 #endif

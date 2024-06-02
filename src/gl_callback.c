@@ -126,10 +126,10 @@ void upKeys(unsigned char key, int x, int y) {
 
 void mouse(int button, int state, int x, int y) {
     if (state == 1) {
-        toggleUpMouse(button, &spacebarPressed);
+        toggleUpMouse(button);
     }
     else {
-        toggleMouse(button, &spacebarPressed);
+        toggleMouse(button, &cueHitFlag);
     }
 }
 
